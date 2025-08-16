@@ -1,0 +1,1 @@
+// File deleted - no auth system

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Supabase Recovery - PDFrow</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+    <style>
+        .test-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+        .url-display {
+            background: var(--primary-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.8rem;
+            word-break: break-all;
+            border: 1px solid var(--border-color);
+        }
+        .test-button {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+        .console-output {
+            background: var(--primary-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.875rem;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <div class="test-container">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h1>🔐 Supabase Recovery Test</h1>
+                <p>Test password reset link processing</p>
+            </div>
+
+            <div class="url-display" id="currentUrl">Loading current URL...</div>
+
+            <div style="margin: 2rem 0;">
+                <h3>Test Actions:</h3>
+                <button class="auth-submit-btn test-button" id="requestReset">
+                    Request Password Reset (test@example.com)
+                </button>
+                <button class="google-auth-btn test-button" id="simulateLink">
+                    Simulate Supabase Reset Link
+                </button>
+                <button class="profile-btn secondary test-button" id="clearUrl">
+                    Clear URL
+                </button>
+            </div>
+
+            <div>
+                <h3>Console Output:</h3>
+                <div class="console-output" id="console">Initializing...</div>
+                <button class="profile-btn secondary" id="clearConsole">Clear Console</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="index.html" class="btn-auth btn-login">← Back to Main Site</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase and Auth Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    
+    <script>
+        const consoleEl = document.getElementById('console');
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        // Intercept console output
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            consoleEl.textContent += '\n[LOG] ' + args.join(' ');
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            consoleEl.textContent += '\n[ERROR] ' + args.join(' ');
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        };
+
+        function updateUrl() {
+            document.getElementById('currentUrl').textContent = window.location.href;
+        }
+
+        function waitForAuth() {
+            if (window.pdfrowAuth && window.pdfrowAuth.isInitialized) {
+                console.log('✅ Auth system ready');
+                bindEvents();
+            } else {
+                console.log('⏳ Waiting for auth system...');
+                setTimeout(waitForAuth, 500);
+            }
+        }
+
+        function bindEvents() {
+            document.getElementById('requestReset').addEventListener('click', async () => {
+                console.log('🔄 Requesting password reset...');
+                const result = await window.pdfrowAuth.resetPassword('test@example.com');
+                console.log('📧 Reset result:', result);
+            });
+
+            document.getElementById('simulateLink').addEventListener('click', () => {
+                console.log('🔄 Simulating Supabase recovery link...');
+                const resetUrl = window.location.href.split('#')[0] + 
+                    '#access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fake_recovery_token_for_testing&type=recovery&expires_in=3600&refresh_token=fake_refresh_token';
+                window.location.href = resetUrl;
+            });
+
+            document.getElementById('clearUrl').addEventListener('click', () => {
+                const cleanUrl = window.location.href.split('#')[0].split('?')[0];
+                window.history.replaceState({}, '', cleanUrl);
+                updateUrl();
+                console.log('🧹 URL cleared');
+            });
+
+            document.getElementById('clearConsole').addEventListener('click', () => {
+                consoleEl.textContent = 'Console cleared...';
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUrl();
+            console.log('🚀 Recovery test page loaded');
+            console.log('🔍 Current URL:', window.location.href);
+            waitForAuth();
+        });
+    </script>
+</body>
+</html>

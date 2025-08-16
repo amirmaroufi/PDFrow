@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form - PDFrow</title>
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .form-header p {
+            color: #666;
+            margin: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00f5ff;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .form-group input[type="file"] {
+            padding: 8px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-top: 4px;
+        }
+        
+        .checkbox-group label {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(45deg, #00f5ff, #667eea);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .required {
+            color: #ff4757;
+        }
+        
+        .honey-pot {
+            display: none !important;
+            opacity: 0;
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h1>Contact PDFrow</h1>
+            <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+        </div>
+        
+        <!-- Success message will be shown by FormSubmit.co after submission -->
+        
+        <form action="https://formsubmit.co/contact@pdfrow.com" method="POST" enctype="multipart/form-data">
+            <!-- FormSubmit.co Configuration -->
+            <input type="hidden" name="_next" value="https://pdfrow.com/thank-you.html">
+            <input type="hidden" name="_subject" value="New Contact Form Submission - PDFrow">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            
+            <!-- Honeypot for spam protection -->
+            <input type="text" name="_honey" class="honey-pot" tabindex="-1" autocomplete="off">
+            
+            <div class="form-group">
+                <label for="name">Full Name <span class="required">*</span></label>
+                <input type="text" id="name" name="name" required maxlength="100" 
+                       placeholder="Enter your full name">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required 
+                       placeholder="Enter your email address">
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">Subject <span class="required">*</span></label>
+                <select id="subject" name="subject" required>
+                    <option value="">Please select a topic</option>
+                    <option value="General Question">General Question</option>
+                    <option value="Bug Report">Bug Report</option>
+                    <option value="Feature Request">Feature Request</option>
+                    <option value="General Feedback">General Feedback</option>
+                    <option value="Business Inquiry">Business Inquiry</option>
+                    <option value="Technical Support">Technical Support</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Message <span class="required">*</span></label>
+                <textarea id="message" name="message" required maxlength="2000" 
+                          placeholder="Please describe your question or feedback in detail..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="attachment">Attachment (Optional)</label>
+                <input type="file" id="attachment" name="attachment" 
+                       accept=".pdf,.jpg,.jpeg,.png,.txt,.doc,.docx">
+                <small style="color: #666; font-size: 14px;">
+                    Supported formats: PDF, JPG, PNG, TXT, DOC, DOCX (Max 10MB)
+                </small>
+            </div>
+            
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">
+                    I agree to the <a href="terms-conditions.html" target="_blank" style="color: #00f5ff;">Terms & Conditions</a> 
+                    and <a href="privacy-policy.html" target="_blank" style="color: #00f5ff;">Privacy Policy</a> <span class="required">*</span>
+                </label>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                Send Message
+            </button>
+        </form>
+        
+        <script>
+            // Add loading state to submit button
+            document.querySelector('form').addEventListener('submit', function(e) {
+                const submitBtn = document.querySelector('.submit-btn');
+                
+                // Basic validation
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value.trim();
+                const terms = document.getElementById('terms').checked;
+                const honeypot = document.querySelector('input[name="_honey"]').value;
+                
+                // Check honeypot
+                if (honeypot) {
+                    alert('Spam detected. Please try again.');
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Check required fields
+                if (!name || !email || !subject || !message || !terms) {
+                    alert('Please fill in all required fields and accept the terms.');
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Please enter a valid email address.');
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+                
+                // Form will submit naturally to FormSubmit.co
+            });
+        </script>
+    </div>
+</body>
+</html>

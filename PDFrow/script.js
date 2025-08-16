@@ -1,0 +1,4498 @@
+class PDFrowConverter {
+    constructor() {
+        this.tools = new Map();
+        this.librariesLoaded = new Set();
+        this.libraryPromises = new Map();
+        this.initializeTools();
+        this.initializeEventListeners();
+        this.initializeThemeToggle();
+        this.initializeFloatingSupport();
+        
+        // Initialize FAQ functionality
+        this.initializeFAQ();
+        
+        // Initialize smooth scrolling
+        this.initializeSmoothScrolling();
+        
+        // Update footer year automatically
+        this.updateFooterYear();
+        
+        // Initialize language selector
+        this.initializeLanguageSelector();
+        
+        // Initialize contact form
+        this.initializeContactForm();
+        
+        // Initialize page modals (Terms & Privacy)
+        this.initializePageModals();
+        
+        // Initialize blog
+        this.initializeBlog();
+        
+        // Check for tool selection from blog
+        this.checkBlogToolSelection();
+        
+        // Initialize mobile tool collapse functionality
+        this.initializeMobileCollapse();
+    }
+
+    // Immediate library loading for performance optimization
+    async loadLibrary(name, url) {
+        if (this.librariesLoaded.has(name)) {
+            return true;
+        }
+
+        if (this.libraryPromises.has(name)) {
+            return this.libraryPromises.get(name);
+        }
+
+        const promise = new Promise((resolve, reject) => {
+            console.log(`📦 Loading ${name} library...`);
+            this.showLibraryLoadingToast(name, true);
+            
+            const script = document.createElement('script');
+            script.src = url;
+            script.onload = () => {
+                this.librariesLoaded.add(name);
+                console.log(`✅ ${name} loaded successfully`);
+                this.showLibraryLoadingToast(name, false);
+                resolve(true);
+            };
+            script.onerror = () => {
+                console.error(`❌ Failed to load ${name}`);
+                this.showLibraryLoadingToast(name, false);
+                reject(new Error(`Failed to load ${name} library`));
+            };
+            document.head.appendChild(script);
+        });
+
+        this.libraryPromises.set(name, promise);
+        return promise;
+    }
+
+    // Preload libraries immediately when user shows intent to use tools
+    async preloadLibrariesForTool(toolType) {
+        const librariesToLoad = [];
+
+        switch (toolType) {
+            case 'jpg-to-pdf':
+            case 'png-to-jpg':
+            case 'jpg-to-png':
+                librariesToLoad.push(['jsPDF', 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js']);
+                break;
+            
+            case 'pdf-to-jpg':
+            case 'add-page-numbers':
+            case 'add-watermark':
+            case 'split-pdf':
+                librariesToLoad.push(
+                    ['pdfjsLib', 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'],
+                    ['PDFLib', 'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js']
+                );
+                break;
+            
+            case 'compress-pdf':
+            case 'merge-pdf':
+                librariesToLoad.push(['PDFLib', 'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js']);
+                break;
+        }
+
+        // Load all required libraries immediately
+        const loadPromises = librariesToLoad.map(([name, url]) => this.loadLibrary(name, url));
+        
+        try {
+            await Promise.all(loadPromises);
+            console.log(`🚀 All libraries loaded immediately for ${toolType}`);
+        } catch (error) {
+            console.error(`Error loading libraries for ${toolType}:`, error);
+        }
+    }
+
+    initializeTools() {
+        const toolCards = document.querySelectorAll('.tool-card');
+        toolCards.forEach(card => {
+            const toolType = card.dataset.tool;
+            const toolData = {
+                card: card,
+                files: [],
+                uploadArea: card.querySelector('.upload-area'),
+                fileInput: card.querySelector('.file-input'),
+                filesList: card.querySelector('.files-list'),
+                convertBtn: card.querySelector('.convert-btn'),
+                results: card.querySelector('.results'),
+                convertedFiles: []
+            };
+            
+            // Add preview-specific elements for page numbering tool
+            if (toolType === 'add-page-numbers') {
+                toolData.previewSection = card.querySelector('#preview-section');
+                toolData.previewCanvas = card.querySelector('#preview-canvas');
+                toolData.pageInfo = card.querySelector('#page-info');
+                toolData.prevPageBtn = card.querySelector('#prev-page');
+                toolData.nextPageBtn = card.querySelector('#next-page');
+                toolData.currentPreviewPage = 0;
+                toolData.previewPDF = null;
+            }
+            
+            // Add preview-specific elements for watermark tool
+            if (toolType === 'add-watermark') {
+                toolData.previewSection = card.querySelector('#watermark-preview-section');
+                toolData.previewCanvas = card.querySelector('#watermark-preview-canvas');
+                toolData.pageInfo = card.querySelector('#watermark-page-info');
+                toolData.prevPageBtn = card.querySelector('#watermark-prev-page');
+                toolData.nextPageBtn = card.querySelector('#watermark-next-page');
+                toolData.currentPreviewPage = 0;
+                toolData.previewPDF = null;
+                toolData.watermarkImage = null;
+            }
+            
+            // Add specific elements for split PDF tool
+            if (toolType === 'split-pdf') {
+                toolData.previewSection = card.querySelector('.pdf-preview-section');
+                toolData.thumbnailsContainer = card.querySelector('.page-thumbnails');
+                toolData.splitOptions = card.querySelector('.split-options');
+                toolData.selectAllBtn = card.querySelector('.select-all-btn');
+                toolData.clearSelectionBtn = card.querySelector('.clear-selection-btn');
+                toolData.selectionInfo = card.querySelector('.selection-info');
+                toolData.splitTabs = card.querySelectorAll('.split-tab');
+                toolData.splitModes = card.querySelectorAll('.split-mode');
+                toolData.pageInput = card.querySelector('.page-input');
+                toolData.rangeStart = card.querySelector('.range-start');
+                toolData.rangeEnd = card.querySelector('.range-end');
+                toolData.splitActionBtns = card.querySelectorAll('.split-action-btn');
+                toolData.selectedPages = new Set();
+                toolData.currentPDF = null;
+                toolData.pdfPages = [];
+                toolData.isDragging = false;
+                toolData.dragStartIndex = null;
+            }
+            
+            this.tools.set(toolType, toolData);
+        });
+    }
+
+    initializeEventListeners() {
+        this.tools.forEach((tool, toolType) => {
+            const { uploadArea, fileInput, convertBtn, card } = tool;
+
+            // Immediate library loading on first user interaction for performance
+            const loadLibrariesOnce = (() => {
+                let loaded = false;
+                return () => {
+                    if (!loaded) {
+                        loaded = true;
+                        this.preloadLibrariesForTool(toolType);
+                    }
+                };
+            })();
+
+            // Trigger immediate loading on any tool interaction
+            card.addEventListener('mouseenter', loadLibrariesOnce, { once: true });
+            uploadArea.addEventListener('click', () => {
+                loadLibrariesOnce();
+                fileInput.click();
+            });
+            uploadArea.addEventListener('dragover', (e) => {
+                loadLibrariesOnce();
+                this.handleDragOver(e, uploadArea);
+            });
+            uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e, uploadArea));
+            uploadArea.addEventListener('drop', (e) => {
+                loadLibrariesOnce();
+                this.handleDrop(e, toolType);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                loadLibrariesOnce();
+                this.handleFileSelect(e, toolType);
+            });
+            convertBtn.addEventListener('click', () => {
+                loadLibrariesOnce();
+                if (toolType === 'split-pdf') {
+                    // For split PDF, the convert button triggers preview initialization
+                    if (tool.files.length > 0) {
+                        this.initializeSplitPDFPreview(toolType);
+                    }
+                } else {
+                    this.convertFiles(toolType);
+                }
+            });
+            
+            // Add event listeners for page numbering options
+            if (toolType === 'add-page-numbers') {
+                const fontSizeRange = tool.card.querySelector('#font-size');
+                const rangeValue = tool.card.querySelector('.range-value');
+                const positionSelect = tool.card.querySelector('#position');
+                const fontFamilySelect = tool.card.querySelector('#font-family');
+                const numberFormatSelect = tool.card.querySelector('#number-format');
+                const startPageInput = tool.card.querySelector('#start-page');
+                
+                fontSizeRange.addEventListener('input', (e) => {
+                    rangeValue.textContent = e.target.value + 'pt';
+                    this.updatePreview(toolType);
+                });
+                
+                positionSelect.addEventListener('change', () => this.updatePreview(toolType));
+                fontFamilySelect.addEventListener('change', () => this.updatePreview(toolType));
+                numberFormatSelect.addEventListener('change', () => this.updatePreview(toolType));
+                startPageInput.addEventListener('input', () => this.updatePreview(toolType));
+                
+                // Color options
+                const colorOptions = tool.card.querySelectorAll('input[name="text-color"]');
+                colorOptions.forEach(option => {
+                    option.addEventListener('change', () => this.updatePreview(toolType));
+                });
+                
+                // Preview navigation
+                tool.prevPageBtn.addEventListener('click', () => this.navigatePreview(toolType, -1));
+                tool.nextPageBtn.addEventListener('click', () => this.navigatePreview(toolType, 1));
+            }
+            
+            // Add event listeners for watermark options
+            if (toolType === 'add-watermark') {
+                const watermarkTypeOptions = tool.card.querySelectorAll('input[name="watermark-type"]');
+                const watermarkTextsContainer = tool.card.querySelector('.watermark-texts-container');
+                const addTextBtn = tool.card.querySelector('#add-text-btn');
+                const watermarkFontSize = tool.card.querySelector('#watermark-font-size');
+                const watermarkFont = tool.card.querySelector('#watermark-font');
+                const watermarkColorOptions = tool.card.querySelectorAll('input[name="watermark-color"]');
+                const watermarkImage = tool.card.querySelector('#watermark-image');
+                const watermarkPosition = tool.card.querySelector('#watermark-position');
+                const watermarkOpacity = tool.card.querySelector('#watermark-opacity');
+                const watermarkRotation = tool.card.querySelector('#watermark-rotation');
+                
+                // Type switching
+                watermarkTypeOptions.forEach(option => {
+                    option.addEventListener('change', (e) => {
+                        const textOptions = tool.card.querySelector('#text-watermark-options');
+                        const imageOptions = tool.card.querySelector('#image-watermark-options');
+                        
+                        if (e.target.value === 'text') {
+                            textOptions.style.display = 'block';
+                            imageOptions.style.display = 'none';
+                        } else {
+                            textOptions.style.display = 'none';
+                            imageOptions.style.display = 'block';
+                        }
+                        this.updateWatermarkPreview(toolType);
+                    });
+                });
+                
+                // Range inputs with live values
+                watermarkFontSize.addEventListener('input', (e) => {
+                    const rangeValue = tool.card.querySelector('#watermark-font-size + .range-value');
+                    rangeValue.textContent = e.target.value + 'pt';
+                    this.updateWatermarkPreview(toolType);
+                });
+                
+                watermarkOpacity.addEventListener('input', (e) => {
+                    const rangeValue = tool.card.querySelector('#watermark-opacity + .range-value');
+                    rangeValue.textContent = e.target.value + '%';
+                    this.updateWatermarkPreview(toolType);
+                });
+                
+                watermarkRotation.addEventListener('input', (e) => {
+                    const rangeValue = tool.card.querySelector('#watermark-rotation + .range-value');
+                    rangeValue.textContent = e.target.value + '°';
+                    this.updateWatermarkPreview(toolType);
+                });
+                
+                // Add text functionality
+                addTextBtn.addEventListener('click', () => this.addWatermarkText(toolType));
+                this.setupWatermarkTextListeners(toolType);
+                
+                // Other options
+                watermarkFont.addEventListener('change', () => this.updateWatermarkPreview(toolType));
+                watermarkPosition.addEventListener('change', () => this.updateWatermarkPreview(toolType));
+                
+                watermarkColorOptions.forEach(option => {
+                    option.addEventListener('change', () => this.updateWatermarkPreview(toolType));
+                });
+                
+                watermarkImage.addEventListener('change', (e) => {
+                    this.loadWatermarkImage(e.target.files[0], toolType);
+                });
+                
+                // Preview navigation
+                tool.prevPageBtn.addEventListener('click', () => this.navigatePreview(toolType, -1));
+                tool.nextPageBtn.addEventListener('click', () => this.navigatePreview(toolType, 1));
+            }
+            
+            // Add event listeners for split PDF tool
+            if (toolType === 'split-pdf') {
+                // Tab switching
+                tool.splitTabs.forEach(tab => {
+                    tab.addEventListener('click', () => this.switchSplitMode(toolType, tab.dataset.mode));
+                });
+                
+                // Selection controls
+                tool.selectAllBtn.addEventListener('click', () => this.selectAllPages(toolType));
+                tool.clearSelectionBtn.addEventListener('click', () => this.clearPageSelection(toolType));
+                
+                // Split action buttons
+                tool.splitActionBtns.forEach(btn => {
+                    btn.addEventListener('click', () => this.handleSplitAction(toolType, btn.dataset.action));
+                });
+                
+                // Page input for manual page selection
+                tool.pageInput.addEventListener('input', () => this.updatePageSelectionFromInput(toolType));
+                
+                // Range inputs
+                tool.rangeStart.addEventListener('input', () => this.updateRangePreview(toolType));
+                tool.rangeEnd.addEventListener('input', () => this.updateRangePreview(toolType));
+                
+                // File upload specific to split PDF (single file only)
+                fileInput.addEventListener('change', (e) => {
+                    const files = Array.from(e.target.files);
+                    if (files.length > 0) {
+                        // Clear existing files first for split PDF (single file mode)
+                        tool.files = [];
+                        this.addFiles([files[0]], toolType); // Only take first file
+                    }
+                });
+            }
+        });
+    }
+
+    handleDragOver(e, uploadArea) {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    }
+
+    handleDragLeave(e, uploadArea) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+    }
+
+    handleDrop(e, toolType) {
+        e.preventDefault();
+        const tool = this.tools.get(toolType);
+        tool.uploadArea.classList.remove('dragover');
+        const files = Array.from(e.dataTransfer.files);
+        this.addFiles(files, toolType);
+    }
+
+    handleFileSelect(e, toolType) {
+        const files = Array.from(e.target.files);
+        this.addFiles(files, toolType);
+    }
+
+    addFiles(files, toolType) {
+        const tool = this.tools.get(toolType);
+        const acceptedTypes = this.getAcceptedTypes(toolType);
+        const maxFileSize = 10 * 1024 * 1024; // 10MB in bytes
+        
+        const validFiles = files.filter(file => {
+            if (!acceptedTypes.includes(file.type)) {
+                return false;
+            }
+            if (file.size > maxFileSize) {
+                alert(`File "${file.name}" is too large. Maximum file size is 10MB.`);
+                return false;
+            }
+            return true;
+        });
+
+        validFiles.forEach(file => {
+            if (!tool.files.some(f => f.name === file.name && f.size === file.size)) {
+                tool.files.push(file);
+            }
+        });
+
+        this.renderFilesList(toolType);
+        this.updateConvertButton(toolType);
+        
+        // Show options when files are uploaded for advanced tools
+        if ((toolType === 'add-page-numbers' || toolType === 'add-watermark') && tool.files.length > 0) {
+            this.showToolOptions(toolType);
+        }
+        
+        // Initialize preview for page numbering tool
+        if (toolType === 'add-page-numbers' && tool.files.length > 0) {
+            this.initializePreview(toolType);
+        }
+        
+        // Initialize preview for watermark tool
+        if (toolType === 'add-watermark' && tool.files.length > 0) {
+            this.initializeWatermarkPreview(toolType);
+        }
+        
+        // For split PDF tool, we don't auto-initialize preview - user clicks convert button
+    }
+
+    getAcceptedTypes(toolType) {
+        switch (toolType) {
+            case 'jpg-to-pdf':
+            case 'jpg-to-png':
+                return ['image/jpeg', 'image/jpg'];
+            case 'png-to-jpg':
+                return ['image/png'];
+            case 'pdf-to-jpg':
+            case 'compress-pdf':
+            case 'merge-pdf':
+            case 'add-page-numbers':
+            case 'add-watermark':
+            case 'split-pdf':
+                return ['application/pdf'];
+            default:
+                return [];
+        }
+    }
+
+    removeFile(toolType, index) {
+        const tool = this.tools.get(toolType);
+        tool.files.splice(index, 1);
+        this.renderFilesList(toolType);
+        this.updateConvertButton(toolType);
+        
+        // Reset file input when no files are left
+        if (tool.files.length === 0) {
+            tool.fileInput.value = '';
+        }
+        
+        // Hide options if no files left for advanced tools
+        if ((toolType === 'add-page-numbers' || toolType === 'add-watermark') && tool.files.length === 0) {
+            this.hideToolOptions(toolType);
+        }
+        
+        // Hide preview for split PDF if no files
+        if (toolType === 'split-pdf' && tool.files.length === 0) {
+            this.hideSplitPDFPreview(toolType);
+        }
+    }
+
+    renderFilesList(toolType) {
+        const tool = this.tools.get(toolType);
+        
+        if (tool.files.length === 0) {
+            tool.filesList.innerHTML = '';
+            return;
+        }
+
+        tool.filesList.innerHTML = tool.files.map((file, index) => `
+            <div class="file-item">
+                <div class="file-info">
+                    <div class="file-icon">${this.getFileIcon(file.type)}</div>
+                    <div class="file-details">
+                        <h4>${file.name}</h4>
+                        <p>${this.formatFileSize(file.size)} • ${file.type.split('/')[1].toUpperCase()}</p>
+                    </div>
+                </div>
+                <div class="file-actions">
+                    <button class="remove-btn" onclick="converter.removeFile('${toolType}', ${index})">Remove</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    getFileIcon(type) {
+        if (type.includes('jpeg') || type.includes('jpg')) return '🖼️';
+        if (type.includes('png')) return '🖼️';
+        if (type.includes('pdf')) return '📄';
+        return '📄';
+    }
+
+    formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    setButtonLoading(button, isLoading) {
+        if (isLoading) {
+            button.disabled = true;
+            button.dataset.originalText = button.textContent;
+            button.innerHTML = '<div class="loading-spinner"></div> Processing...';
+            button.classList.add('loading');
+        } else {
+            button.disabled = false;
+            button.textContent = button.dataset.originalText || button.textContent.replace('Processing...', '');
+            button.classList.remove('loading');
+            delete button.dataset.originalText;
+        }
+    }
+
+    showError(container, message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.innerHTML = `
+            <div class="error-icon">⚠️</div>
+            <div class="error-text">${message}</div>
+        `;
+        container.appendChild(errorDiv);
+        
+        // Auto-remove error after 5 seconds
+        setTimeout(() => {
+            if (errorDiv.parentNode) {
+                errorDiv.remove();
+            }
+        }, 5000);
+    }
+
+    showLibraryLoadingToast(libraryName, isLoading = true) {
+        // Remove any existing library loading toasts
+        const existingToast = document.querySelector('.library-loading-toast');
+        if (existingToast) {
+            existingToast.remove();
+        }
+
+        if (!isLoading) return;
+
+        const toast = document.createElement('div');
+        toast.className = 'library-loading-toast';
+        toast.innerHTML = `
+            <div class="loading-spinner"></div>
+            <span>Loading ${libraryName} library...</span>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        // Auto-remove after 10 seconds if still there
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 10000);
+    }
+
+    updateConvertButton(toolType) {
+        const tool = this.tools.get(toolType);
+        const canConvert = tool.files.length > 0;
+        tool.convertBtn.disabled = !canConvert;
+        
+        // Update button text for split-pdf tool
+        if (toolType === 'split-pdf') {
+            tool.convertBtn.textContent = canConvert ? 'Preview & Split PDF' : 'Split PDF';
+        }
+        
+        // Update convert hint visibility
+        const convertHint = tool.card.querySelector('.convert-hint');
+        if (convertHint) {
+            if (canConvert) {
+                convertHint.classList.add('hidden');
+                tool.convertBtn.removeAttribute('title');
+            } else {
+                convertHint.classList.remove('hidden');
+                // Re-add appropriate title based on tool type
+                this.updateButtonTitle(toolType);
+            }
+        }
+    }
+
+    updateButtonTitle(toolType) {
+        const tool = this.tools.get(toolType);
+        const titles = {
+            'jpg-to-pdf': 'Please upload JPG files first',
+            'png-to-jpg': 'Please upload PNG files first', 
+            'jpg-to-png': 'Please upload JPG files first',
+            'pdf-to-jpg': 'Please upload PDF files first',
+            'compress-pdf': 'Please upload PDF files first',
+            'merge-pdf': 'Please upload multiple PDF files first',
+            'add-page-numbers': 'Please upload PDF files first',
+            'add-watermark': 'Please upload PDF files first',
+            'split-pdf': 'Please upload a PDF file first'
+        };
+        
+        if (titles[toolType]) {
+            tool.convertBtn.setAttribute('title', titles[toolType]);
+        }
+    }
+
+    async convertFiles(toolType) {
+        const tool = this.tools.get(toolType);
+        if (tool.files.length === 0) return;
+
+        // Show loading state on convert button
+        this.setButtonLoading(tool.convertBtn, true);
+        
+        // Show detailed progress bar with status
+        tool.results.innerHTML = `
+            <div class="conversion-progress">
+                <div class="progress-header">
+                    <div class="progress-status">
+                        <div class="loading-spinner"></div>
+                        <span class="progress-text">Preparing files...</span>
+                    </div>
+                    <span class="progress-counter">0 / ${tool.files.length}</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        `;
+        
+        const progressFill = tool.results.querySelector('.progress-fill');
+        const progressText = tool.results.querySelector('.progress-text');
+        const progressCounter = tool.results.querySelector('.progress-counter');
+        const convertedFiles = [];
+
+        if (toolType === 'merge-pdf') {
+            // Special handling for PDF merge
+            try {
+                progressText.textContent = 'Merging PDF files...';
+                progressCounter.textContent = `Processing ${tool.files.length} files`;
+                const mergedPDF = await this.mergePDFs(tool.files);
+                convertedFiles.push(mergedPDF);
+                progressFill.style.width = '100%';
+                progressText.textContent = 'Merge complete!';
+            } catch (error) {
+                console.error('Error merging PDFs:', error);
+                progressText.textContent = 'Error merging files';
+                this.showError(tool.results, 'Failed to merge PDF files. Please try again.');
+            }
+        } else {
+            // Regular file conversion
+            for (let i = 0; i < tool.files.length; i++) {
+                const file = tool.files[i];
+                const progress = ((i + 1) / tool.files.length) * 100;
+                
+                // Update progress indicators
+                progressFill.style.width = `${progress}%`;
+                progressText.textContent = `Converting ${file.name}...`;
+                progressCounter.textContent = `${i + 1} / ${tool.files.length}`;
+
+                try {
+                    const convertedFile = await this.convertFile(file, toolType);
+                    if (convertedFile && convertedFile.multipleFiles) {
+                        convertedFiles.push(...convertedFile.files);
+                    } else if (convertedFile) {
+                        convertedFiles.push(convertedFile);
+                    }
+                } catch (error) {
+                    console.error(`Error converting ${file.name}:`, error);
+                    progressText.textContent = `Error converting ${file.name}`;
+                    // Continue with other files even if one fails
+                }
+            }
+            
+            if (convertedFiles.length > 0) {
+                progressText.textContent = 'Conversion complete!';
+            } else {
+                progressText.textContent = 'No files were converted successfully';
+            }
+        }
+
+        // Reset button loading state
+        this.setButtonLoading(tool.convertBtn, false);
+        
+        tool.convertedFiles = convertedFiles;
+        this.renderResults(toolType, convertedFiles);
+    }
+
+    async convertFile(file, toolType) {
+        if (toolType === 'pdf-to-jpg') {
+            return this.convertPDFToJPG(file);
+        } else if (toolType === 'compress-pdf') {
+            return this.compressPDF(file);
+        } else if (toolType === 'merge-pdf') {
+            return null; // Merge PDF is handled differently in convertFiles method
+        } else if (toolType === 'add-page-numbers') {
+            return this.addPageNumbers(file);
+        } else if (toolType === 'add-watermark') {
+            return this.addWatermark(file);
+        }
+
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0);
+
+                        if (toolType === 'jpg-to-pdf') {
+                            this.convertToPDF(img, file.name).then(resolve).catch(reject);
+                        } else if (toolType === 'png-to-jpg') {
+                            const jpegDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+                            const blob = this.dataURLToBlob(jpegDataUrl);
+                            resolve({
+                                name: this.changeFileExtension(file.name, 'jpg'),
+                                blob: blob,
+                                type: 'image/jpeg'
+                            });
+                        } else if (toolType === 'jpg-to-png') {
+                            const pngDataUrl = canvas.toDataURL('image/png');
+                            const blob = this.dataURLToBlob(pngDataUrl);
+                            resolve({
+                                name: this.changeFileExtension(file.name, 'png'),
+                                blob: blob,
+                                type: 'image/png'
+                            });
+                        }
+                    };
+                    img.src = e.target.result;
+                } catch (error) {
+                    reject(error);
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    async convertToPDF(img, originalName) {
+        // Ensure jsPDF is loaded for immediate performance
+        await this.loadLibrary('jsPDF', 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+        
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+        
+        const imgWidth = img.width;
+        const imgHeight = img.height;
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        
+        const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+        const width = imgWidth * ratio;
+        const height = imgHeight * ratio;
+        
+        const x = (pdfWidth - width) / 2;
+        const y = (pdfHeight - height) / 2;
+        
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = imgWidth;
+        canvas.height = imgHeight;
+        ctx.drawImage(img, 0, 0);
+        
+        const imgData = canvas.toDataURL('image/jpeg', 0.9);
+        pdf.addImage(imgData, 'JPEG', x, y, width, height);
+        
+        const pdfBlob = pdf.output('blob');
+        
+        return {
+            name: this.changeFileExtension(originalName, 'pdf'),
+            blob: pdfBlob,
+            type: 'application/pdf'
+        };
+    }
+
+    dataURLToBlob(dataURL) {
+        const arr = dataURL.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], { type: mime });
+    }
+
+    changeFileExtension(filename, newExtension) {
+        const nameWithoutExt = filename.substring(0, filename.lastIndexOf('.')) || filename;
+        return `${nameWithoutExt}.${newExtension}`;
+    }
+
+    async convertPDFToJPG(file) {
+        try {
+            // Ensure PDF.js is loaded for immediate performance
+            await this.loadLibrary('pdfjsLib', 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+            
+            // Initialize PDF.js worker
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+            const convertedFiles = [];
+
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const page = await pdf.getPage(pageNum);
+                const scale = 2.0; // Higher scale for better quality
+                const viewport = page.getViewport({ scale });
+
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+
+                await page.render({
+                    canvasContext: ctx,
+                    viewport: viewport
+                }).promise;
+
+                const jpegDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+                const blob = this.dataURLToBlob(jpegDataUrl);
+                
+                const baseFileName = this.changeFileExtension(file.name, '');
+                const fileName = pdf.numPages > 1 ? 
+                    `${baseFileName}_page_${pageNum}.jpg` : 
+                    `${baseFileName}.jpg`;
+
+                convertedFiles.push({
+                    name: fileName,
+                    blob: blob,
+                    type: 'image/jpeg'
+                });
+            }
+
+            return { multipleFiles: true, files: convertedFiles };
+        } catch (error) {
+            console.error('Error converting PDF to JPG:', error);
+            throw error;
+        }
+    }
+
+    async compressPDF(file) {
+        try {
+            // Ensure PDF-lib is loaded for immediate performance
+            await this.loadLibrary('PDFLib', 'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js');
+            
+            const arrayBuffer = await file.arrayBuffer();
+            const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+            
+            // Compress by reducing image quality and removing unnecessary data
+            const pdfBytes = await pdfDoc.save({
+                useObjectStreams: false,
+                addDefaultPage: false,
+                objectsPerTick: 50,
+            });
+
+            // Additional compression by re-processing images at lower quality
+            const compressedPdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+            const finalPdfBytes = await compressedPdfDoc.save({
+                useObjectStreams: true,
+                addDefaultPage: false,
+            });
+
+            const blob = new Blob([finalPdfBytes], { type: 'application/pdf' });
+            const originalSize = file.size;
+            const compressedSize = blob.size;
+            const compressionRatio = ((originalSize - compressedSize) / originalSize * 100).toFixed(1);
+
+            return {
+                name: this.changeFileExtension(file.name, '') + '_compressed.pdf',
+                blob: blob,
+                type: 'application/pdf',
+                compressionInfo: `${compressionRatio}% reduction (${this.formatFileSize(originalSize)} → ${this.formatFileSize(compressedSize)})`
+            };
+        } catch (error) {
+            console.error('Error compressing PDF:', error);
+            throw error;
+        }
+    }
+
+    async mergePDFs(files) {
+        try {
+            // Ensure PDF-lib is loaded for immediate performance
+            await this.loadLibrary('PDFLib', 'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js');
+            
+            const mergedPdf = await PDFLib.PDFDocument.create();
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                copiedPages.forEach((page) => mergedPdf.addPage(page));
+            }
+
+            const pdfBytes = await mergedPdf.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            
+            // Generate merged filename
+            const baseNames = files.map(f => this.changeFileExtension(f.name, '')).slice(0, 2);
+            const mergedName = baseNames.length > 1 ? 
+                `${baseNames[0]}_and_${files.length - 1}_more_merged.pdf` : 
+                `${baseNames[0]}_merged.pdf`;
+
+            return {
+                name: mergedName,
+                blob: blob,
+                type: 'application/pdf',
+                mergeInfo: `${files.length} files merged into one PDF`
+            };
+        } catch (error) {
+            console.error('Error merging PDFs:', error);
+            throw error;
+        }
+    }
+
+    async addPageNumbers(file) {
+        try {
+            // Ensure PDF-lib is loaded for immediate performance
+            await this.loadLibrary('PDFLib', 'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js');
+            
+            const arrayBuffer = await file.arrayBuffer();
+            const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+            
+            // Get page numbering options from the UI
+            const tool = this.tools.get('add-page-numbers');
+            const position = tool.card.querySelector('#position').value;
+            const fontSize = parseInt(tool.card.querySelector('#font-size').value);
+            const fontFamily = tool.card.querySelector('#font-family').value;
+            const numberFormat = tool.card.querySelector('#number-format').value;
+            const startPage = parseInt(tool.card.querySelector('#start-page').value);
+            const textColor = tool.card.querySelector('input[name="text-color"]:checked').value;
+            
+            const pages = pdfDoc.getPages();
+            const totalPages = pages.length;
+            
+            // Embed font
+            let font;
+            switch (fontFamily) {
+                case 'Times-Roman':
+                    font = await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRoman);
+                    break;
+                case 'Courier':
+                    font = await pdfDoc.embedFont(PDFLib.StandardFonts.Courier);
+                    break;
+                default:
+                    font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+            }
+            
+            pages.forEach((page, index) => {
+                const pageNumber = index + startPage;
+                const { width, height } = page.getSize();
+                
+                // Generate page number text based on format
+                let pageText;
+                switch (numberFormat) {
+                    case 'page-of-total':
+                        pageText = `Page ${pageNumber} of ${totalPages + startPage - 1}`;
+                        break;
+                    case 'dash-format':
+                        pageText = `- ${pageNumber} -`;
+                        break;
+                    default:
+                        pageText = pageNumber.toString();
+                }
+                
+                // Calculate position
+                const textWidth = font.widthOfTextAtSize(pageText, fontSize);
+                let x, y;
+                
+                switch (position) {
+                    case 'top-left':
+                        x = 20;
+                        y = height - 20;
+                        break;
+                    case 'top-center':
+                        x = (width - textWidth) / 2;
+                        y = height - 20;
+                        break;
+                    case 'top-right':
+                        x = width - textWidth - 20;
+                        y = height - 20;
+                        break;
+                    case 'bottom-left':
+                        x = 20;
+                        y = 20;
+                        break;
+                    case 'bottom-right':
+                        x = width - textWidth - 20;
+                        y = 20;
+                        break;
+                    default: // bottom-center
+                        x = (width - textWidth) / 2;
+                        y = 20;
+                }
+                
+                // Add page number to page
+                const colorRGB = this.getTextColor(textColor, false);
+                page.drawText(pageText, {
+                    x: x,
+                    y: y,
+                    size: fontSize,
+                    font: font,
+                    color: PDFLib.rgb(colorRGB.r, colorRGB.g, colorRGB.b),
+                });
+            });
+            
+            const pdfBytes = await pdfDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            
+            return {
+                name: this.changeFileExtension(file.name, '') + '_numbered.pdf',
+                blob: blob,
+                type: 'application/pdf',
+                numberingInfo: `Page numbers added (${numberFormat} format, ${position} position)`
+            };
+        } catch (error) {
+            console.error('Error adding page numbers:', error);
+            throw error;
+        }
+    }
+
+    async initializePreview(toolType) {
+        const tool = this.tools.get(toolType);
+        if (tool.files.length === 0) return;
+        
+        try {
+            // Ensure PDF.js is loaded for immediate performance
+            await this.loadLibrary('pdfjsLib', 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+            
+            // Initialize PDF.js worker
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            
+            const firstFile = tool.files[0];
+            const arrayBuffer = await firstFile.arrayBuffer();
+            tool.previewPDF = await pdfjsLib.getDocument(arrayBuffer).promise;
+            tool.currentPreviewPage = 1;
+            
+            // Show preview section
+            tool.previewSection.style.display = 'block';
+            
+            // Update page info
+            tool.pageInfo.textContent = `Page ${tool.currentPreviewPage} of ${tool.previewPDF.numPages}`;
+            
+            // Update navigation buttons
+            tool.prevPageBtn.disabled = tool.currentPreviewPage === 1;
+            tool.nextPageBtn.disabled = tool.currentPreviewPage === tool.previewPDF.numPages;
+            
+            // Render first page
+            await this.renderPreviewPage(toolType);
+        } catch (error) {
+            console.error('Error initializing preview:', error);
+        }
+    }
+
+    async renderPreviewPage(toolType) {
+        const tool = this.tools.get(toolType);
+        if (!tool.previewPDF) return;
+        
+        try {
+            const page = await tool.previewPDF.getPage(tool.currentPreviewPage);
+            const scale = 0.8; // Smaller scale for preview
+            const viewport = page.getViewport({ scale });
+            
+            const canvas = tool.previewCanvas;
+            const ctx = canvas.getContext('2d');
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            
+            // Render PDF page
+            await page.render({
+                canvasContext: ctx,
+                viewport: viewport
+            }).promise;
+            
+            // Add page number overlay
+            this.renderPageNumberOverlay(toolType, ctx, viewport);
+        } catch (error) {
+            console.error('Error rendering preview page:', error);
+        }
+    }
+
+    renderPageNumberOverlay(toolType, ctx, viewport) {
+        const tool = this.tools.get(toolType);
+        
+        // Get current settings
+        const position = tool.card.querySelector('#position').value;
+        const fontSize = parseInt(tool.card.querySelector('#font-size').value) * 0.8; // Scale for preview
+        const fontFamily = tool.card.querySelector('#font-family').value;
+        const numberFormat = tool.card.querySelector('#number-format').value;
+        const startPage = parseInt(tool.card.querySelector('#start-page').value);
+        const textColor = tool.card.querySelector('input[name="text-color"]:checked').value;
+        
+        const currentPageNumber = tool.currentPreviewPage + startPage - 1;
+        const totalPages = tool.previewPDF.numPages + startPage - 1;
+        
+        // Generate page number text
+        let pageText;
+        switch (numberFormat) {
+            case 'page-of-total':
+                pageText = `Page ${currentPageNumber} of ${totalPages}`;
+                break;
+            case 'dash-format':
+                pageText = `- ${currentPageNumber} -`;
+                break;
+            default:
+                pageText = currentPageNumber.toString();
+        }
+        
+        // Set font
+        let fontName = 'Arial';
+        switch (fontFamily) {
+            case 'Times-Roman':
+                fontName = 'Times, serif';
+                break;
+            case 'Courier':
+                fontName = 'Courier, monospace';
+                break;
+            default:
+                fontName = 'Arial, sans-serif';
+        }
+        
+        ctx.font = `${fontSize}px ${fontName}`;
+        ctx.fillStyle = this.getTextColor(textColor, true); // Get color with preview visibility
+        ctx.textAlign = 'left';
+        
+        // Calculate position
+        const textMetrics = ctx.measureText(pageText);
+        const textWidth = textMetrics.width;
+        let x, y;
+        
+        switch (position) {
+            case 'top-left':
+                x = 20;
+                y = 30;
+                break;
+            case 'top-center':
+                x = (viewport.width - textWidth) / 2;
+                y = 30;
+                break;
+            case 'top-right':
+                x = viewport.width - textWidth - 20;
+                y = 30;
+                break;
+            case 'bottom-left':
+                x = 20;
+                y = viewport.height - 10;
+                break;
+            case 'bottom-right':
+                x = viewport.width - textWidth - 20;
+                y = viewport.height - 10;
+                break;
+            default: // bottom-center
+                x = (viewport.width - textWidth) / 2;
+                y = viewport.height - 10;
+        }
+        
+        // Draw page number with background for visibility
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.fillRect(x - 2, y - fontSize - 2, textWidth + 4, fontSize + 4);
+        
+        ctx.fillStyle = this.getTextColor(textColor, true);
+        ctx.fillText(pageText, x, y);
+    }
+
+    getTextColor(colorName, forPreview = false) {
+        const colors = {
+            black: forPreview ? 'rgba(0, 0, 0, 0.9)' : { r: 0, g: 0, b: 0 },
+            gray: forPreview ? 'rgba(102, 102, 102, 0.9)' : { r: 0.4, g: 0.4, b: 0.4 },
+            blue: forPreview ? 'rgba(33, 150, 243, 0.9)' : { r: 0.13, g: 0.59, b: 0.95 },
+            red: forPreview ? 'rgba(244, 67, 54, 0.9)' : { r: 0.96, g: 0.26, b: 0.21 },
+            green: forPreview ? 'rgba(76, 175, 80, 0.9)' : { r: 0.3, g: 0.69, b: 0.31 }
+        };
+        
+        return colors[colorName] || colors.black;
+    }
+
+    async updatePreview(toolType) {
+        const tool = this.tools.get(toolType);
+        if (tool.previewPDF) {
+            await this.renderPreviewPage(toolType);
+        }
+    }
+
+    navigatePreview(toolType, direction) {
+        const tool = this.tools.get(toolType);
+        if (!tool.previewPDF) return;
+        
+        const newPage = tool.currentPreviewPage + direction;
+        if (newPage >= 1 && newPage <= tool.previewPDF.numPages) {
+            tool.currentPreviewPage = newPage;
+            
+            // Update page info
+            tool.pageInfo.textContent = `Page ${tool.currentPreviewPage} of ${tool.previewPDF.numPages}`;
+            
+            // Update navigation buttons
+            tool.prevPageBtn.disabled = tool.currentPreviewPage === 1;
+            tool.nextPageBtn.disabled = tool.currentPreviewPage === tool.previewPDF.numPages;
+            
+            // Re-render page
+            this.renderPreviewPage(toolType);
+        }
+    }
+
+    renderResults(toolType, convertedFiles) {
+        const tool = this.tools.get(toolType);
+        
+        // Store the converted files for download
+        tool.convertedFiles = convertedFiles;
+        
+        if (convertedFiles.length === 0) {
+            tool.results.innerHTML = '<p>No files were converted successfully.</p>';
+            return;
+        }
+
+        tool.results.innerHTML = `
+            <h3>Converted Files:</h3>
+            ${convertedFiles.map((file, index) => `
+                <div class="result-item">
+                    <div class="result-info">
+                        <div class="result-icon">${this.getResultIcon(file.type)}</div>
+                        <div>
+                            <h4>${file.name}</h4>
+                            <p>${this.formatFileSize(file.blob.size)} • ${file.type.split('/')[1].toUpperCase()}</p>
+                            ${file.compressionInfo ? `<p class="compression-info">📉 ${file.compressionInfo}</p>` : ''}
+                            ${file.mergeInfo ? `<p class="merge-info">🔗 ${file.mergeInfo}</p>` : ''}
+                            ${file.numberingInfo ? `<p class="numbering-info">🔢 ${file.numberingInfo}</p>` : ''}
+                            ${file.watermarkInfo ? `<p class="watermark-info">💧 ${file.watermarkInfo}</p>` : ''}
+                            ${file.extractInfo ? `<p class="extract-info">✂️ ${file.extractInfo}</p>` : ''}
+                            ${file.splitInfo ? `<p class="split-info">📁 ${file.splitInfo}</p>` : ''}
+                        </div>
+                    </div>
+                    <button class="download-btn" onclick="converter.downloadFile('${toolType}', ${index})">Download</button>
+                </div>
+            `).join('')}
+        `;
+    }
+
+    getResultIcon(type) {
+        if (type.includes('pdf')) return '📄';
+        if (type.includes('jpeg') || type.includes('jpg')) return '🖼️';
+        if (type.includes('png')) return '🖼️';
+        if (type.includes('zip')) return '📦';
+        return '📁';
+    }
+
+    downloadFile(toolType, index) {
+        const tool = this.tools.get(toolType);
+        console.log('Download attempt - toolType:', toolType, 'index:', index);
+        console.log('convertedFiles:', tool.convertedFiles);
+        
+        if (!tool.convertedFiles || !tool.convertedFiles[index]) {
+            console.error('No file found at index', index);
+            this.showError(tool.results, 'Download failed: File not found');
+            return;
+        }
+        
+        const file = tool.convertedFiles[index];
+        console.log('Downloading file:', file.name, 'Size:', file.blob.size);
+        
+        try {
+            const url = URL.createObjectURL(file.blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = file.name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            console.log('Download initiated successfully');
+        } catch (error) {
+            console.error('Download error:', error);
+            this.showError(tool.results, `Download failed: ${error.message}`);
+        }
+        
+        // Show success banner after download
+        this.showSuccessBanner();
+        
+        // Auto-remove file from the list after download
+        this.removeFileAfterDownload(toolType, index);
+    }
+
+    async addWatermark(file) {
+        try {
+            // Ensure PDF-lib is loaded for immediate performance
+            await this.loadLibrary('PDFLib', 'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js');
+            
+            const arrayBuffer = await file.arrayBuffer();
+            const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+            
+            // Get watermark options from the UI
+            const tool = this.tools.get('add-watermark');
+            const watermarkType = tool.card.querySelector('input[name="watermark-type"]:checked').value;
+            const position = tool.card.querySelector('#watermark-position').value;
+            const opacity = parseInt(tool.card.querySelector('#watermark-opacity').value) / 100;
+            const rotation = parseInt(tool.card.querySelector('#watermark-rotation').value);
+            
+            const pages = pdfDoc.getPages();
+            
+            for (const page of pages) {
+                const { width, height } = page.getSize();
+                
+                if (watermarkType === 'text') {
+                    await this.addTextWatermarkToPage(page, width, height, tool, opacity, position, rotation, pdfDoc);
+                } else if (watermarkType === 'image' && tool.watermarkImage) {
+                    await this.addImageWatermarkToPage(page, width, height, tool, opacity, position, rotation, pdfDoc);
+                }
+            }
+            
+            const pdfBytes = await pdfDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            
+            return {
+                name: this.changeFileExtension(file.name, '') + '_watermarked.pdf',
+                blob: blob,
+                type: 'application/pdf',
+                watermarkInfo: `${watermarkType} watermark added (${position} position, ${Math.round(opacity * 100)}% opacity)`
+            };
+        } catch (error) {
+            console.error('Error adding watermark:', error);
+            throw error;
+        }
+    }
+
+    async addTextWatermarkToPage(page, width, height, tool, opacity, position, rotation, pdfDoc) {
+        const texts = this.getWatermarkTexts('add-watermark');
+        if (texts.length === 0) return;
+        
+        const fontSize = parseInt(tool.card.querySelector('#watermark-font-size').value);
+        const fontFamily = tool.card.querySelector('#watermark-font').value;
+        const textColor = tool.card.querySelector('input[name="watermark-color"]:checked').value;
+        
+        // Embed font
+        let font;
+        switch (fontFamily) {
+            case 'Times-Roman':
+                font = await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRoman);
+                break;
+            case 'Courier':
+                font = await pdfDoc.embedFont(PDFLib.StandardFonts.Courier);
+                break;
+            default:
+                font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+        }
+        
+        // Get color
+        const colorRGB = this.getTextColor(textColor, false);
+        
+        // For diagonal positioning, arrange texts diagonally across the page
+        if (position === 'diagonal') {
+            const spacingX = width / (texts.length + 1); // Horizontal spacing
+            const spacingY = height / (texts.length + 1); // Vertical spacing
+            
+            texts.forEach((text, index) => {
+                const textWidth = font.widthOfTextAtSize(text, fontSize);
+                const textHeight = font.heightAtSize(fontSize);
+                
+                // Create a true diagonal pattern from top-left to bottom-right
+                const x = (index + 1) * spacingX - textWidth / 2;
+                const y = height - (index + 1) * spacingY;
+                
+                page.drawText(text, {
+                    x: Math.max(50, Math.min(x, width - textWidth - 50)), // Keep within bounds
+                    y: Math.max(50, Math.min(y, height - 50)), // Keep within bounds
+                    size: fontSize,
+                    font: font,
+                    color: PDFLib.rgb(colorRGB.r, colorRGB.g, colorRGB.b),
+                    opacity: opacity,
+                    rotate: PDFLib.degrees(rotation),
+                });
+            });
+        } else {
+            // For other positions, stack texts vertically
+            const spacing = fontSize * 1.2;
+            const totalHeight = texts.length * spacing;
+            
+            texts.forEach((text, index) => {
+                const textWidth = font.widthOfTextAtSize(text, fontSize);
+                const textHeight = font.heightAtSize(fontSize);
+                
+                // Calculate base position for the first text
+                const basePos = this.calculateWatermarkPosition(position, width, height, textWidth, totalHeight);
+                
+                // Adjust y position for each text
+                const x = basePos.x;
+                const y = basePos.y - index * spacing;
+                
+                page.drawText(text, {
+                    x: x,
+                    y: y,
+                    size: fontSize,
+                    font: font,
+                    color: PDFLib.rgb(colorRGB.r, colorRGB.g, colorRGB.b),
+                    opacity: opacity,
+                    rotate: PDFLib.degrees(rotation),
+                });
+            });
+        }
+    }
+
+    async addImageWatermarkToPage(page, width, height, tool, opacity, position, rotation, pdfDoc) {
+        if (!tool.watermarkImage) return;
+        
+        try {
+            const imageBytes = await tool.watermarkImage.arrayBuffer();
+            let image;
+            
+            if (tool.watermarkImage.type === 'image/png') {
+                image = await pdfDoc.embedPng(imageBytes);
+            } else {
+                image = await pdfDoc.embedJpg(imageBytes);
+            }
+            
+            const imageDims = image.scale(0.3); // Scale down the image
+            
+            // Calculate position
+            const { x, y } = this.calculateWatermarkPosition(position, width, height, imageDims.width, imageDims.height);
+            
+            // Add image watermark
+            page.drawImage(image, {
+                x: x,
+                y: y,
+                width: imageDims.width,
+                height: imageDims.height,
+                opacity: opacity,
+                rotate: PDFLib.degrees(rotation),
+            });
+        } catch (error) {
+            console.error('Error adding image watermark:', error);
+        }
+    }
+
+    calculateWatermarkPosition(position, pageWidth, pageHeight, itemWidth, itemHeight) {
+        let x, y;
+        
+        switch (position) {
+            case 'top-left':
+                x = 50;
+                y = pageHeight - itemHeight - 50;
+                break;
+            case 'top-center':
+                x = (pageWidth - itemWidth) / 2;
+                y = pageHeight - itemHeight - 50;
+                break;
+            case 'top-right':
+                x = pageWidth - itemWidth - 50;
+                y = pageHeight - itemHeight - 50;
+                break;
+            case 'bottom-left':
+                x = 50;
+                y = 50;
+                break;
+            case 'bottom-center':
+                x = (pageWidth - itemWidth) / 2;
+                y = 50;
+                break;
+            case 'bottom-right':
+                x = pageWidth - itemWidth - 50;
+                y = 50;
+                break;
+            case 'diagonal':
+                x = (pageWidth - itemWidth) / 2;
+                y = (pageHeight - itemHeight) / 2;
+                break;
+            default: // center
+                x = (pageWidth - itemWidth) / 2;
+                y = (pageHeight - itemHeight) / 2;
+        }
+        
+        return { x, y };
+    }
+
+    async loadWatermarkImage(file, toolType) {
+        if (!file) return;
+        
+        const tool = this.tools.get(toolType);
+        tool.watermarkImage = file;
+        this.updateWatermarkPreview(toolType);
+    }
+
+    async initializeWatermarkPreview(toolType) {
+        const tool = this.tools.get(toolType);
+        if (tool.files.length === 0) return;
+        
+        try {
+            // Ensure PDF.js is loaded for immediate performance
+            await this.loadLibrary('pdfjsLib', 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+            
+            // Initialize PDF.js worker
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            
+            const firstFile = tool.files[0];
+            const arrayBuffer = await firstFile.arrayBuffer();
+            tool.previewPDF = await pdfjsLib.getDocument(arrayBuffer).promise;
+            tool.currentPreviewPage = 1;
+            
+            // Show preview section
+            tool.previewSection.style.display = 'block';
+            
+            // Update page info
+            tool.pageInfo.textContent = `Page ${tool.currentPreviewPage} of ${tool.previewPDF.numPages}`;
+            
+            // Update navigation buttons
+            tool.prevPageBtn.disabled = tool.currentPreviewPage === 1;
+            tool.nextPageBtn.disabled = tool.currentPreviewPage === tool.previewPDF.numPages;
+            
+            // Render first page
+            await this.renderWatermarkPreviewPage(toolType);
+        } catch (error) {
+            console.error('Error initializing watermark preview:', error);
+        }
+    }
+
+    async renderWatermarkPreviewPage(toolType) {
+        const tool = this.tools.get(toolType);
+        if (!tool.previewPDF) return;
+        
+        try {
+            const page = await tool.previewPDF.getPage(tool.currentPreviewPage);
+            const scale = 0.6; // Smaller scale for preview
+            const viewport = page.getViewport({ scale });
+            
+            const canvas = tool.previewCanvas;
+            const ctx = canvas.getContext('2d');
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            
+            // Render PDF page
+            await page.render({
+                canvasContext: ctx,
+                viewport: viewport
+            }).promise;
+            
+            // Add watermark overlay
+            this.renderWatermarkOverlay(toolType, ctx, viewport);
+        } catch (error) {
+            console.error('Error rendering watermark preview page:', error);
+        }
+    }
+
+    renderWatermarkOverlay(toolType, ctx, viewport) {
+        const tool = this.tools.get(toolType);
+        
+        // Get current settings
+        const watermarkType = tool.card.querySelector('input[name="watermark-type"]:checked').value;
+        const position = tool.card.querySelector('#watermark-position').value;
+        const opacity = parseInt(tool.card.querySelector('#watermark-opacity').value) / 100;
+        const rotation = parseInt(tool.card.querySelector('#watermark-rotation').value);
+        
+        ctx.save();
+        ctx.globalAlpha = opacity;
+        
+        if (watermarkType === 'text') {
+            this.renderTextWatermarkOverlay(tool, ctx, viewport, position, rotation);
+        } else if (watermarkType === 'image' && tool.watermarkImage) {
+            this.renderImageWatermarkOverlay(tool, ctx, viewport, position, rotation);
+        }
+        
+        ctx.restore();
+    }
+
+    renderTextWatermarkOverlay(tool, ctx, viewport, position, rotation) {
+        const texts = this.getWatermarkTexts('add-watermark');
+        if (texts.length === 0) return;
+        
+        const fontSize = parseInt(tool.card.querySelector('#watermark-font-size').value) * 0.6; // Scale for preview
+        const fontFamily = tool.card.querySelector('#watermark-font').value;
+        const textColor = tool.card.querySelector('input[name="watermark-color"]:checked').value;
+        
+        // Set font
+        let fontName = 'Arial';
+        switch (fontFamily) {
+            case 'Times-Roman':
+                fontName = 'Times, serif';
+                break;
+            case 'Courier':
+                fontName = 'Courier, monospace';
+                break;
+            default:
+                fontName = 'Arial, sans-serif';
+        }
+        
+        ctx.font = `${fontSize}px ${fontName}`;
+        ctx.fillStyle = this.getTextColor(textColor, true);
+        
+        // For diagonal positioning, arrange texts diagonally across the page
+        if (position === 'diagonal') {
+            const spacingX = viewport.width / (texts.length + 1); // Horizontal spacing
+            const spacingY = viewport.height / (texts.length + 1); // Vertical spacing
+            
+            texts.forEach((text, index) => {
+                ctx.save();
+                
+                const textMetrics = ctx.measureText(text);
+                const textWidth = textMetrics.width;
+                const textHeight = fontSize;
+                
+                // Create a true diagonal pattern from top-left to bottom-right
+                const x = (index + 1) * spacingX - textWidth / 2;
+                const y = viewport.height - (index + 1) * spacingY;
+                
+                const boundedX = Math.max(30, Math.min(x, viewport.width - textWidth - 30));
+                const boundedY = Math.max(30, Math.min(y, viewport.height - 30));
+                
+                // Apply rotation
+                ctx.translate(boundedX + textWidth / 2, boundedY + textHeight / 2);
+                ctx.rotate((rotation * Math.PI) / 180);
+                ctx.translate(-textWidth / 2, -textHeight / 2);
+                
+                ctx.fillText(text, 0, textHeight * 0.8);
+                ctx.restore();
+            });
+        } else {
+            // For other positions, stack texts vertically
+            const spacing = fontSize * 1.2;
+            const totalHeight = texts.length * spacing;
+            
+            texts.forEach((text, index) => {
+                ctx.save();
+                
+                const textMetrics = ctx.measureText(text);
+                const textWidth = textMetrics.width;
+                const textHeight = fontSize;
+                
+                // Calculate base position for the first text
+                const basePos = this.calculateWatermarkPosition(position, viewport.width, viewport.height, textWidth, totalHeight);
+                
+                const x = basePos.x;
+                const y = basePos.y - index * spacing;
+                
+                // Apply rotation
+                ctx.translate(x + textWidth / 2, y + textHeight / 2);
+                ctx.rotate((rotation * Math.PI) / 180);
+                ctx.translate(-textWidth / 2, -textHeight / 2);
+                
+                ctx.fillText(text, 0, textHeight * 0.8);
+                ctx.restore();
+            });
+        }
+    }
+
+    renderImageWatermarkOverlay(tool, ctx, viewport, position, rotation) {
+        if (!tool.watermarkImageElement) return;
+        
+        const img = tool.watermarkImageElement;
+        const scaledWidth = img.width * 0.2;
+        const scaledHeight = img.height * 0.2;
+        
+        // Calculate position
+        const { x, y } = this.calculateWatermarkPosition(position, viewport.width, viewport.height, scaledWidth, scaledHeight);
+        
+        // Apply rotation
+        ctx.translate(x + scaledWidth / 2, y + scaledHeight / 2);
+        ctx.rotate((rotation * Math.PI) / 180);
+        ctx.translate(-scaledWidth / 2, -scaledHeight / 2);
+        
+        ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
+    }
+
+    async updateWatermarkPreview(toolType) {
+        const tool = this.tools.get(toolType);
+        
+        // Load image for preview if needed
+        const watermarkType = tool.card.querySelector('input[name="watermark-type"]:checked').value;
+        if (watermarkType === 'image' && tool.watermarkImage && !tool.watermarkImageElement) {
+            const img = new Image();
+            img.onload = () => {
+                tool.watermarkImageElement = img;
+                if (tool.previewPDF) {
+                    this.renderWatermarkPreviewPage(toolType);
+                }
+            };
+            img.src = URL.createObjectURL(tool.watermarkImage);
+        } else if (tool.previewPDF) {
+            await this.renderWatermarkPreviewPage(toolType);
+        }
+    }
+
+    addWatermarkText(toolType) {
+        const tool = this.tools.get(toolType);
+        const container = tool.card.querySelector('.watermark-texts-container');
+        const addBtn = tool.card.querySelector('#add-text-btn');
+        
+        const textItem = document.createElement('div');
+        textItem.className = 'watermark-text-item';
+        textItem.innerHTML = `
+            <input type="text" class="watermark-text-input" placeholder="Enter watermark text" value="">
+            <button type="button" class="remove-text-btn">×</button>
+        `;
+        
+        container.insertBefore(textItem, addBtn);
+        
+        // Add event listeners for the new text input
+        const textInput = textItem.querySelector('.watermark-text-input');
+        const removeBtn = textItem.querySelector('.remove-text-btn');
+        
+        textInput.addEventListener('input', () => this.updateWatermarkPreview(toolType));
+        removeBtn.addEventListener('click', () => {
+            textItem.remove();
+            this.updateRemoveButtonsVisibility(toolType);
+            this.updateWatermarkPreview(toolType);
+        });
+        
+        this.updateRemoveButtonsVisibility(toolType);
+        textInput.focus();
+    }
+
+    setupWatermarkTextListeners(toolType) {
+        const tool = this.tools.get(toolType);
+        const existingInputs = tool.card.querySelectorAll('.watermark-text-input');
+        const existingRemoveBtns = tool.card.querySelectorAll('.remove-text-btn');
+        
+        existingInputs.forEach(input => {
+            input.addEventListener('input', () => this.updateWatermarkPreview(toolType));
+        });
+        
+        existingRemoveBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const textItem = e.target.closest('.watermark-text-item');
+                textItem.remove();
+                this.updateRemoveButtonsVisibility(toolType);
+                this.updateWatermarkPreview(toolType);
+            });
+        });
+        
+        this.updateRemoveButtonsVisibility(toolType);
+    }
+
+    updateRemoveButtonsVisibility(toolType) {
+        const tool = this.tools.get(toolType);
+        const textItems = tool.card.querySelectorAll('.watermark-text-item');
+        const removeButtons = tool.card.querySelectorAll('.remove-text-btn');
+        
+        // Show remove buttons only if there's more than one text item
+        removeButtons.forEach(btn => {
+            btn.style.display = textItems.length > 1 ? 'flex' : 'none';
+        });
+    }
+
+    getWatermarkTexts(toolType) {
+        const tool = this.tools.get(toolType);
+        const textInputs = tool.card.querySelectorAll('.watermark-text-input');
+        return Array.from(textInputs).map(input => input.value).filter(text => text.trim() !== '');
+    }
+
+    initializeThemeToggle() {
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // Define theme order: light -> dimmed -> dark -> light...
+        const themes = ['light', 'dimmed', 'dark'];
+        
+        // Check for saved theme preference or default to dark mode
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        
+        // Apply saved theme
+        this.setTheme(savedTheme);
+        
+        // Theme toggle event listener - cycles through all three themes
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = this.getCurrentTheme();
+            const currentIndex = themes.indexOf(currentTheme);
+            const nextIndex = (currentIndex + 1) % themes.length;
+            const nextTheme = themes[nextIndex];
+            
+            this.setTheme(nextTheme);
+            localStorage.setItem('theme', nextTheme);
+        });
+    }
+
+    getCurrentTheme() {
+        const body = document.body;
+        if (body.classList.contains('light-mode')) return 'light';
+        if (body.classList.contains('dimmed-mode')) return 'dimmed';
+        return 'dark';
+    }
+
+    setTheme(theme) {
+        const body = document.body;
+        
+        // Remove all theme classes
+        body.classList.remove('light-mode', 'dimmed-mode', 'dark-mode');
+        
+        // Add the appropriate theme class
+        switch (theme) {
+            case 'light':
+                body.classList.add('light-mode');
+                break;
+            case 'dimmed':
+                body.classList.add('dimmed-mode');
+                break;
+            case 'dark':
+            default:
+                body.classList.add('dark-mode');
+                break;
+        }
+        
+        // Add smooth transition effect
+        body.style.transition = 'all 0.3s ease';
+        setTimeout(() => {
+            body.style.transition = '';
+        }, 300);
+    }
+    
+    initializeFAQ() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                if (isActive) {
+                    item.classList.remove('active');
+                } else {
+                    item.classList.add('active');
+                }
+            });
+        });
+    }
+    
+    initializeMobileCollapse() {
+        // Only initialize on mobile/tablet screens
+        const isMobile = () => window.innerWidth <= 768;
+        
+        const initCollapse = () => {
+            if (!isMobile()) return;
+            
+            const toolCards = document.querySelectorAll('.tool-card');
+            
+            toolCards.forEach((card, index) => {
+                // Skip if already initialized
+                if (card.dataset.collapseInitialized) return;
+                
+                const collapseHeader = card.querySelector('.tool-collapse-header');
+                const toolContent = card.querySelector('.tool-content');
+                
+                if (!collapseHeader || !toolContent) return;
+                
+                // Start collapsed by default (except first tool)
+                if (index > 0) {
+                    card.classList.add('collapsed');
+                }
+                
+                // Add click handler
+                collapseHeader.addEventListener('click', () => {
+                    card.classList.toggle('collapsed');
+                });
+                
+                card.dataset.collapseInitialized = 'true';
+            });
+        };
+        
+        // Initialize on load
+        initCollapse();
+        
+        // Re-initialize on window resize (when switching between mobile/desktop)
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                // Reset initialization flags when switching to/from mobile
+                document.querySelectorAll('.tool-card').forEach(card => {
+                    if (!isMobile()) {
+                        card.classList.remove('collapsed');
+                        card.removeAttribute('data-collapse-initialized');
+                    }
+                });
+                initCollapse();
+            }, 250);
+        });
+    }
+    
+    initializeSmoothScrolling() {
+        // Handle all navigation links and buttons with anchor hrefs
+        const smoothScrollHandler = (e) => {
+            const link = e.currentTarget;
+            const href = link.getAttribute('href');
+            
+            if (href && href.startsWith('#') && href !== '#') {
+                e.preventDefault();
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    // Get the actual navigation height
+                    const nav = document.querySelector('.main-nav');
+                    let navHeight = 0;
+                    
+                    if (nav) {
+                        const navRect = nav.getBoundingClientRect();
+                        navHeight = navRect.height;
+                    }
+                    
+                    // Get target element position
+                    const targetRect = targetElement.getBoundingClientRect();
+                    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const targetPosition = targetRect.top + currentScrollTop - navHeight - 30;
+                    
+                    // Smooth scroll to target
+                    window.scrollTo({
+                        top: Math.max(0, targetPosition),
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        };
+        
+        // Apply to all relevant elements
+        const navLinks = document.querySelectorAll('.nav-link, .btn-primary, .btn-secondary, a[href^="#"]');
+        navLinks.forEach(link => {
+            link.addEventListener('click', smoothScrollHandler);
+        });
+        
+        // Also ensure any dynamically added links work
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a[href^="#"]');
+            if (link && !link.hasAttribute('data-scroll-handled')) {
+                link.setAttribute('data-scroll-handled', 'true');
+                smoothScrollHandler(e);
+            }
+        });
+    }
+    
+    updateFooterYear() {
+        const currentYearElement = document.getElementById('current-year');
+        if (currentYearElement) {
+            const currentYear = new Date().getFullYear();
+            currentYearElement.textContent = currentYear;
+        }
+    }
+    
+    initializeLanguageSelector() {
+        const languageBtn = document.getElementById('languageBtn');
+        const languageMenu = document.getElementById('languageMenu');
+        const languageDropdown = document.querySelector('.language-dropdown');
+        const currentFlag = document.getElementById('currentFlag');
+        const currentLang = document.getElementById('currentLang');
+        const languageItems = document.querySelectorAll('.language-item');
+        
+        // Get saved language or default to English
+        const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+        
+        // Load saved language on page load
+        this.loadLanguage(savedLanguage);
+        
+        // Toggle dropdown
+        languageBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('open');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+            languageDropdown.classList.remove('open');
+        });
+        
+        // Handle language selection
+        languageItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const selectedLang = item.dataset.lang;
+                const selectedFlag = item.dataset.flag;
+                const selectedName = item.querySelector('span:last-child').textContent;
+                
+                // Update button display
+                currentFlag.textContent = selectedFlag;
+                currentLang.textContent = selectedName;
+                
+                // Save selected language
+                localStorage.setItem('selectedLanguage', selectedLang);
+                
+                // Load translations
+                this.loadLanguage(selectedLang);
+                
+                // Close dropdown
+                languageDropdown.classList.remove('open');
+            });
+        });
+    }
+    
+    loadLanguage(langCode) {
+        const translations = this.getTranslations(langCode);
+        
+        // Update all elements with data-translate attribute
+        document.querySelectorAll('[data-translate]').forEach(element => {
+            const key = element.getAttribute('data-translate');
+            if (translations[key]) {
+                element.textContent = translations[key];
+            }
+        });
+        
+        // Update current language display
+        const currentFlag = document.getElementById('currentFlag');
+        const currentLang = document.getElementById('currentLang');
+        const langInfo = this.getLanguageInfo(langCode);
+        
+        if (currentFlag && currentLang && langInfo) {
+            currentFlag.textContent = langInfo.flag;
+            currentLang.textContent = langInfo.name;
+        }
+    }
+    
+    getLanguageInfo(langCode) {
+        const languages = {
+            'en': { name: 'English', flag: '🇺🇸' },
+            'es': { name: 'Español', flag: '🇪🇸' },
+            'fr': { name: 'Français', flag: '🇫🇷' },
+            'de': { name: 'Deutsch', flag: '🇩🇪' },
+            'it': { name: 'Italiano', flag: '🇮🇹' },
+            'tr': { name: 'Türkçe', flag: '🇹🇷' },
+            'pt': { name: 'Português', flag: '🇵🇹' },
+            'ru': { name: 'Русский', flag: '🇷🇺' },
+            'zh': { name: '中文', flag: '🇨🇳' },
+            'ja': { name: '日本語', flag: '🇯🇵' },
+            'ar': { name: 'العربية', flag: '🇸🇦' },
+            'hi': { name: 'हिन्दी', flag: '🇮🇳' }
+        };
+        return languages[langCode];
+    }
+    
+    getTranslations(langCode) {
+        const translations = {
+            'en': {
+                // Navigation
+                'nav_tools': 'Tools',
+                'nav_features': 'Features',
+                'nav_how_it_works': 'How It Works',
+                'nav_faq': 'FAQ',
+                // Hero Section
+                'hero_badge': 'Next-Gen Document Processing',
+                'hero_title_1': 'Convert, Compress, and Edit Documents Online with',
+                'hero_title_2': 'Professional Precision',
+                'hero_subtitle': 'Experience Fast PDF Conversion, Compression, and Editing Online – No Software Required',
+                'btn_start_converting': 'Start Converting',
+                'stat_files_processed': 'Files Processed',
+                'stat_uptime': 'Uptime',
+                'stat_average_speed': 'Average Speed',
+                // Tools Section
+                'tools_title': 'Powerful Document Tools',
+                'tools_subtitle': 'Choose from our comprehensive suite of document processing tools',
+                // Tool Cards
+                'tool_jpg_to_pdf_title': 'JPG to PDF',
+                'tool_jpg_to_pdf_desc': 'Convert JPG images to PDF documents',
+                'tool_png_to_jpg_title': 'PNG to JPG',
+                'tool_png_to_jpg_desc': 'Convert PNG images to JPG format',
+                'tool_jpg_to_png_title': 'JPG to PNG',
+                'tool_jpg_to_png_desc': 'Convert JPG images to PNG format',
+                'tool_pdf_to_jpg_title': 'PDF to JPG',
+                'tool_pdf_to_jpg_desc': 'Convert PDF pages to JPG images',
+                'tool_compress_pdf_title': 'Compress PDF',
+                'tool_compress_pdf_desc': 'Reduce PDF file size for easier sharing',
+                'tool_merge_pdf_title': 'Merge PDF',
+                'tool_merge_pdf_desc': 'Combine multiple PDF files into one',
+                'tool_add_page_numbers_title': 'Add Page Numbers',
+                'tool_add_page_numbers_desc': 'Add page numbers to PDFs with custom positioning and styling',
+                'tool_add_watermark_title': 'Add Watermark',
+                'tool_add_watermark_desc': 'Add text or image watermarks to PDFs with custom styling',
+                // Upload Areas
+                'drop_jpg_files': 'Drop JPG files here',
+                'drop_png_files': 'Drop PNG files here',
+                'drop_pdf_files': 'Drop PDF files here',
+                'or_click_browse': 'or click to browse',
+                'or_click_browse_multiple': 'or click to browse (multiple files)',
+                // Convert Buttons
+                'convert_to_pdf': 'Convert to PDF',
+                'convert_to_jpg': 'Convert to JPG',
+                'convert_to_png': 'Convert to PNG',
+                'compress_pdf_btn': 'Compress PDF',
+                'merge_pdfs_btn': 'Merge PDFs',
+                'add_page_numbers_btn': 'Add Page Numbers',
+                'add_watermark_btn': 'Add Watermark',
+                // Convert Hints
+                'hint_upload_files_first': 'Upload files above to enable conversion',
+                'hint_upload_multiple_files': 'Upload 2 or more PDF files above to enable merging',
+                // Features Section
+                'features_title': 'Why Choose PDFrow?',
+                'features_subtitle': 'Experience the future of document processing with our advanced features',
+                'feature_lightning_fast_title': 'Lightning Fast',
+                'feature_lightning_fast_desc': 'Process documents in seconds with our optimized algorithms and advanced client-side processing technology.',
+                'feature_secure_title': '100% Secure',
+                'feature_secure_desc': 'Your files never leave your browser. All processing happens locally for maximum privacy and security.',
+                'feature_no_installation_title': 'No Installation',
+                'feature_no_installation_desc': 'Works directly in your browser. No software downloads, no updates, no hassle. Just instant access.',
+                'feature_multi_device_title': 'Multi-Device',
+                'feature_multi_device_desc': 'Access from any device - desktop, tablet, or mobile. Responsive design ensures perfect experience everywhere.',
+                'feature_high_quality_title': 'High Quality',
+                'feature_high_quality_desc': 'Professional compression and conversion algorithms maintain document quality while optimizing file sizes.',
+                'feature_always_free_title': 'Always Free',
+                'feature_always_free_desc': 'Core functionality is completely free. No hidden costs, no subscriptions, no limitations on file processing.',
+                // How It Works Section
+                'how_it_works_title': 'How It Works',
+                'how_it_works_subtitle': 'Simple, fast, and secure document processing in three easy steps',
+                'step_upload_title': 'Upload Your Files',
+                'step_upload_desc': 'Drag and drop your documents or click to browse. Supports PDF, JPG, PNG formats. Files are processed locally in your browser for maximum security.',
+                'step_choose_title': 'Choose Your Tool',
+                'step_choose_desc': 'Select from our comprehensive toolkit: convert, compress, merge, add watermarks, or page numbers. Advanced options available for customization.',
+                'step_download_title': 'Download Results',
+                'step_download_desc': 'Get your processed files instantly. Download individually or batch download all files. Files are automatically cleaned up for your privacy.',
+                // FAQ Section
+                'faq_title': 'Frequently Asked Questions',
+                'faq_subtitle': 'Everything you need to know about PDFrow',
+                'faq_q1': 'Is PDFrow really free to use?',
+                'faq_a1': 'Yes! PDFrow is completely free to use. All core functionality including conversion, compression, merging, and editing tools are available at no cost. No hidden fees or subscription required.',
+                'faq_q2': 'Are my files secure and private?',
+                'faq_a2': 'Absolutely! Your files never leave your browser. All processing happens locally on your device using client-side JavaScript. We don\'t store, access, or transmit your documents anywhere.',
+                'faq_q3': 'What file formats are supported?',
+                'faq_a3': 'We support the most common document and image formats: PDF, JPG, JPEG, and PNG. Each tool is optimized for specific format conversions and processing tasks.',
+                'faq_q4': 'Is there a file size limit?',
+                'faq_a4': 'Maximum file size is 10MB per file. This limit ensures optimal performance and processing speed for all users.',
+                'faq_q5': 'Do I need to install any software?',
+                'faq_a5': 'No installation required! PDFrow works entirely in your web browser. Just visit our website and start using the tools immediately. Compatible with Chrome, Firefox, Safari, and Edge.',
+                'faq_q6': 'Can I use PDFrow on mobile devices?',
+                'faq_a6': 'Yes! PDFrow is fully responsive and works on smartphones, tablets, and desktop computers. The interface adapts to your screen size for optimal user experience.',
+                // Footer
+                'language': 'Language',
+                'footer_description': 'Next-generation document processing platform. Fast, secure, and always free.',
+                'footer_tools_title': 'Tools',
+                'footer_pdf_converter': 'PDF Converter',
+                'footer_image_converter': 'Image Converter',
+                'footer_pdf_compressor': 'PDF Compressor',
+                'footer_pdf_merger': 'PDF Merger',
+                'footer_features_title': 'Features',
+                'footer_add_watermarks': 'Add Watermarks',
+                'footer_page_numbers': 'Page Numbers',
+                'footer_batch_processing': 'Batch Processing',
+                'footer_privacy_first': 'Privacy First',
+                'footer_support_title': 'Support',
+                'footer_faq': 'FAQ',
+                'footer_how_it_works': 'How It Works',
+                'footer_contact': 'Contact',
+                'footer_help_center': 'Help Center',
+                'footer_copyright': '© 2025 PDFrow. All rights reserved. Made with ❤️ for document processing.',
+                // Contact Form
+                'contact_form_title': 'How can we help you today?',
+                'contact_form_subtitle': 'Questions, bug reports, feature requests, or general feedback',
+                'contact_select_topic': 'Select a topic',
+                'contact_option_question': 'Ask a question',
+                'contact_option_bug': 'Report a bug',
+                'contact_option_feature': 'Request a feature',
+                'contact_option_feedback': 'General feedback',
+                'contact_option_business': 'Business inquiry',
+                'contact_name_placeholder': 'Your full name',
+                'contact_message_placeholder': 'Tell us more details...',
+                'contact_attach_file': 'Attach a file (optional)',
+                'contact_email_placeholder': 'Your email address',
+                'contact_terms_text': 'I\'ve read and accepted the',
+                'contact_terms_link': 'Terms & Conditions',
+                'contact_and': 'and',
+                'contact_privacy_link': 'Privacy Policy',
+                'contact_submit_btn': 'Send Message',
+                'contact_confidential_note': 'All your information will be treated confidentially'
+            },
+            'es': {
+                // Navigation
+                'nav_tools': 'Herramientas',
+                'nav_features': 'Características',
+                'nav_how_it_works': 'Cómo Funciona',
+                'nav_faq': 'FAQ',
+                // Hero Section
+                'hero_badge': 'Procesamiento de Documentos de Nueva Generación',
+                'hero_title_1': 'Transforma Tus Documentos con',
+                'hero_title_2': 'Precisión Profesional',
+                'hero_subtitle': 'Experimenta conversión, compresión y edición de documentos ultrarrápida con nuestra plataforma web avanzada. Sin descargas, sin límites, solo rendimiento puro.',
+                'btn_start_converting': 'Comenzar a Convertir',
+                'stat_files_processed': 'Archivos Procesados',
+                'stat_uptime': 'Tiempo Activo',
+                'stat_average_speed': 'Velocidad Promedio',
+                // Tools Section
+                'tools_title': 'Herramientas Potentes para Documentos',
+                'tools_subtitle': 'Elige de nuestro completo conjunto de herramientas de procesamiento de documentos',
+                // Tool Cards
+                'tool_jpg_to_pdf_title': 'JPG a PDF',
+                'tool_jpg_to_pdf_desc': 'Convierte imágenes JPG a documentos PDF',
+                'tool_png_to_jpg_title': 'PNG a JPG',
+                'tool_png_to_jpg_desc': 'Convierte imágenes PNG a formato JPG',
+                'tool_jpg_to_png_title': 'JPG a PNG',
+                'tool_jpg_to_png_desc': 'Convierte imágenes JPG a formato PNG',
+                'tool_pdf_to_jpg_title': 'PDF a JPG',
+                'tool_pdf_to_jpg_desc': 'Convierte páginas PDF a imágenes JPG',
+                'tool_compress_pdf_title': 'Comprimir PDF',
+                'tool_compress_pdf_desc': 'Reduce el tamaño del archivo PDF para compartir fácilmente',
+                'tool_merge_pdf_title': 'Fusionar PDF',
+                'tool_merge_pdf_desc': 'Combina múltiples archivos PDF en uno',
+                'tool_add_page_numbers_title': 'Agregar Números de Página',
+                'tool_add_page_numbers_desc': 'Agrega números de página a PDFs con posicionamiento y estilo personalizados',
+                'tool_add_watermark_title': 'Agregar Marca de Agua',
+                'tool_add_watermark_desc': 'Agrega marcas de agua de texto o imagen a PDFs con estilo personalizado',
+                // Upload Areas
+                'drop_jpg_files': 'Suelta archivos JPG aquí',
+                'drop_png_files': 'Suelta archivos PNG aquí',
+                'drop_pdf_files': 'Suelta archivos PDF aquí',
+                'or_click_browse': 'o haz clic para navegar',
+                'or_click_browse_multiple': 'o haz clic para navegar (múltiples archivos)',
+                // Convert Buttons
+                'convert_to_pdf': 'Convertir a PDF',
+                'convert_to_jpg': 'Convertir a JPG',
+                'convert_to_png': 'Convertir a PNG',
+                'compress_pdf_btn': 'Comprimir PDF',
+                'merge_pdfs_btn': 'Fusionar PDFs',
+                'add_page_numbers_btn': 'Agregar Números de Página',
+                'add_watermark_btn': 'Agregar Marca de Agua',
+                // Convert Hints
+                'hint_upload_files_first': 'Sube archivos arriba para habilitar la conversión',
+                'hint_upload_multiple_files': 'Sube 2 o más archivos PDF arriba para habilitar la fusión',
+                // Features Section
+                'features_title': '¿Por Qué Elegir PDFrow?',
+                'features_subtitle': 'Experimenta el futuro del procesamiento de documentos con nuestras características avanzadas',
+                'feature_lightning_fast_title': 'Súper Rápido',
+                'feature_lightning_fast_desc': 'Procesa documentos en segundos con nuestros algoritmos optimizados y tecnología avanzada de procesamiento del lado del cliente.',
+                'feature_secure_title': '100% Seguro',
+                'feature_secure_desc': 'Tus archivos nunca salen de tu navegador. Todo el procesamiento ocurre localmente para máxima privacidad y seguridad.',
+                'feature_no_installation_title': 'Sin Instalación',
+                'feature_no_installation_desc': 'Funciona directamente en tu navegador. Sin descargas de software, sin actualizaciones, sin complicaciones. Solo acceso instantáneo.',
+                'feature_multi_device_title': 'Multi-Dispositivo',
+                'feature_multi_device_desc': 'Accede desde cualquier dispositivo - escritorio, tablet o móvil. El diseño responsivo asegura una experiencia perfecta en todas partes.',
+                'feature_high_quality_title': 'Alta Calidad',
+                'feature_high_quality_desc': 'Los algoritmos profesionales de compresión y conversión mantienen la calidad del documento mientras optimizan los tamaños de archivo.',
+                'feature_always_free_title': 'Siempre Gratis',
+                'feature_always_free_desc': 'La funcionalidad principal es completamente gratuita. Sin costos ocultos, sin suscripciones, sin limitaciones en el procesamiento de archivos.',
+                // How It Works Section
+                'how_it_works_title': 'Cómo Funciona',
+                'how_it_works_subtitle': 'Procesamiento de documentos simple, rápido y seguro en tres pasos fáciles',
+                'step_upload_title': 'Sube Tus Archivos',
+                'step_upload_desc': 'Arrastra y suelta tus documentos o haz clic para navegar. Compatible con formatos PDF, JPG, PNG. Los archivos se procesan localmente en tu navegador para máxima seguridad.',
+                'step_choose_title': 'Elige Tu Herramienta',
+                'step_choose_desc': 'Selecciona de nuestro conjunto completo de herramientas: convertir, comprimir, fusionar, agregar marcas de agua o números de página. Opciones avanzadas disponibles para personalización.',
+                'step_download_title': 'Descarga Resultados',
+                'step_download_desc': 'Obtén tus archivos procesados instantáneamente. Descarga individualmente o descarga por lotes todos los archivos. Los archivos se limpian automáticamente para tu privacidad.',
+                // FAQ Section
+                'faq_title': 'Preguntas Frecuentes',
+                'faq_subtitle': 'Todo lo que necesitas saber sobre PDFrow',
+                'faq_q1': '¿PDFrow es realmente gratis de usar?',
+                'faq_a1': '¡Sí! PDFrow es completamente gratis de usar. Toda la funcionalidad principal incluyendo conversión, compresión, fusión y herramientas de edición están disponibles sin costo. Sin tarifas ocultas o suscripción requerida.',
+                'faq_q2': '¿Son mis archivos seguros y privados?',
+                'faq_a2': '¡Absolutamente! Tus archivos nunca salen de tu navegador. Todo el procesamiento ocurre localmente en tu dispositivo usando JavaScript del lado del cliente. No almacenamos, accedemos o transmitimos tus documentos en ningún lugar.',
+                'faq_q3': '¿Qué formatos de archivo son compatibles?',
+                'faq_a3': 'Soportamos los formatos de documento e imagen más comunes: PDF, JPG, JPEG y PNG. Cada herramienta está optimizada para conversiones de formato específicas y tareas de procesamiento.',
+                'faq_q4': '¿Hay un límite de tamaño de archivo?',
+                'faq_a4': 'El tamaño máximo de archivo es 10MB por archivo. Este límite asegura un rendimiento óptimo y velocidad de procesamiento para todos los usuarios.',
+                'faq_q5': '¿Necesito instalar algún software?',
+                'faq_a5': '¡No se requiere instalación! PDFrow funciona completamente en tu navegador web. Solo visita nuestro sitio web y comienza a usar las herramientas inmediatamente. Compatible con Chrome, Firefox, Safari y Edge.',
+                'faq_q6': '¿Puedo usar PDFrow en dispositivos móviles?',
+                'faq_a6': '¡Sí! PDFrow es completamente responsivo y funciona en smartphones, tablets y computadoras de escritorio. La interfaz se adapta al tamaño de tu pantalla para una experiencia de usuario óptima.',
+                // Footer
+                'language': 'Idioma',
+                'footer_description': 'Plataforma de procesamiento de documentos de nueva generación. Rápida, segura y siempre gratuita.',
+                'footer_tools_title': 'Herramientas',
+                'footer_pdf_converter': 'Convertidor de PDF',
+                'footer_image_converter': 'Convertidor de Imágenes',
+                'footer_pdf_compressor': 'Compresor de PDF',
+                'footer_pdf_merger': 'Fusionador de PDF',
+                'footer_features_title': 'Características',
+                'footer_add_watermarks': 'Agregar Marcas de Agua',
+                'footer_page_numbers': 'Números de Página',
+                'footer_batch_processing': 'Procesamiento por Lotes',
+                'footer_privacy_first': 'Privacidad Primero',
+                'footer_support_title': 'Soporte',
+                'footer_faq': 'FAQ',
+                'footer_how_it_works': 'Cómo Funciona',
+                'footer_contact': 'Contacto',
+                'footer_help_center': 'Centro de Ayuda',
+                'footer_copyright': '© 2025 PDFrow. Todos los derechos reservados. Hecho con ❤️ para el procesamiento de documentos.',
+                // Contact Form
+                'contact_form_title': '¿Cómo podemos ayudarte hoy?',
+                'contact_form_subtitle': 'Preguntas, reportes de errores, solicitudes de funciones o comentarios generales',
+                'contact_select_topic': 'Selecciona un tema',
+                'contact_option_question': 'Hacer una pregunta',
+                'contact_option_bug': 'Reportar un error',
+                'contact_option_feature': 'Solicitar una función',
+                'contact_option_feedback': 'Comentarios generales',
+                'contact_option_business': 'Consulta comercial',
+                'contact_name_placeholder': 'Tu nombre completo',
+                'contact_message_placeholder': 'Cuéntanos más detalles...',
+                'contact_attach_file': 'Adjuntar un archivo (opcional)',
+                'contact_email_placeholder': 'Tu dirección de correo electrónico',
+                'contact_terms_text': 'He leído y aceptado los',
+                'contact_terms_link': 'Términos y Condiciones',
+                'contact_and': 'y la',
+                'contact_privacy_link': 'Política de Privacidad',
+                'contact_submit_btn': 'Enviar Mensaje',
+                'contact_confidential_note': 'Toda tu información será tratada de forma confidencial'
+            },
+            'fr': {
+                // Navigation
+                'nav_tools': 'Outils',
+                'nav_features': 'Fonctionnalités',
+                'nav_how_it_works': 'Comment Ça Marche',
+                'nav_faq': 'FAQ',
+                // Hero Section
+                'hero_badge': 'Traitement de Documents Nouvelle Génération',
+                'hero_title_1': 'Transformez Vos Documents avec',
+                'hero_title_2': 'Précision Professionnelle',
+                'hero_subtitle': 'Découvrez la conversion, compression et édition de documents ultra-rapide avec notre plateforme web avancée. Pas de téléchargements, pas de limites, juste des performances pures.',
+                'btn_start_converting': 'Commencer la Conversion',
+                'stat_files_processed': 'Fichiers Traités',
+                'stat_uptime': 'Temps de Fonctionnement',
+                'stat_average_speed': 'Vitesse Moyenne',
+                // Tools Section
+                'tools_title': 'Outils Documentaires Puissants',
+                'tools_subtitle': 'Choisissez parmi notre suite complète d\'outils de traitement de documents',
+                // Tool Cards
+                'tool_jpg_to_pdf_title': 'JPG vers PDF',
+                'tool_jpg_to_pdf_desc': 'Convertir les images JPG en documents PDF',
+                'tool_png_to_jpg_title': 'PNG vers JPG',
+                'tool_png_to_jpg_desc': 'Convertir les images PNG au format JPG',
+                'tool_jpg_to_png_title': 'JPG vers PNG',
+                'tool_jpg_to_png_desc': 'Convertir les images JPG au format PNG',
+                'tool_pdf_to_jpg_title': 'PDF vers JPG',
+                'tool_pdf_to_jpg_desc': 'Convertir les pages PDF en images JPG',
+                'tool_compress_pdf_title': 'Compresser PDF',
+                'tool_compress_pdf_desc': 'Réduire la taille du fichier PDF pour un partage plus facile',
+                'tool_merge_pdf_title': 'Fusionner PDF',
+                'tool_merge_pdf_desc': 'Combiner plusieurs fichiers PDF en un seul',
+                'tool_add_page_numbers_title': 'Ajouter Numéros de Page',
+                'tool_add_page_numbers_desc': 'Ajouter des numéros de page aux PDFs avec positionnement et style personnalisés',
+                'tool_add_watermark_title': 'Ajouter Filigrane',
+                'tool_add_watermark_desc': 'Ajouter des filigranes de texte ou d\'image aux PDFs avec style personnalisé',
+                // Upload Areas
+                'drop_jpg_files': 'Déposez les fichiers JPG ici',
+                'drop_png_files': 'Déposez les fichiers PNG ici',
+                'drop_pdf_files': 'Déposez les fichiers PDF ici',
+                'or_click_browse': 'ou cliquez pour parcourir',
+                'or_click_browse_multiple': 'ou cliquez pour parcourir (plusieurs fichiers)',
+                // Convert Buttons
+                'convert_to_pdf': 'Convertir en PDF',
+                'convert_to_jpg': 'Convertir en JPG',
+                'convert_to_png': 'Convertir en PNG',
+                'compress_pdf_btn': 'Compresser PDF',
+                'merge_pdfs_btn': 'Fusionner PDFs',
+                'add_page_numbers_btn': 'Ajouter Numéros de Page',
+                'add_watermark_btn': 'Ajouter Filigrane',
+                // Features Section
+                'features_title': 'Pourquoi Choisir PDFrow ?',
+                'features_subtitle': 'Découvrez l\'avenir du traitement de documents avec nos fonctionnalités avancées',
+                'feature_lightning_fast_title': 'Ultra Rapide',
+                'feature_lightning_fast_desc': 'Traitez des documents en quelques secondes grâce à nos algorithmes optimisés et à notre technologie avancée de traitement côté client.',
+                'feature_secure_title': '100% Sécurisé',
+                'feature_secure_desc': 'Vos fichiers ne quittent jamais votre navigateur. Tout le traitement se fait localement pour une confidentialité et une sécurité maximales.',
+                'feature_no_installation_title': 'Aucune Installation',
+                'feature_no_installation_desc': 'Fonctionne directement dans votre navigateur. Pas de téléchargement de logiciel, pas de mises à jour, aucun tracas. Juste un accès instantané.',
+                'feature_multi_device_title': 'Multi-Appareils',
+                'feature_multi_device_desc': 'Accédez depuis n\'importe quel appareil - ordinateur, tablette ou mobile. Le design réactif assure une expérience parfaite partout.',
+                'feature_high_quality_title': 'Haute Qualité',
+                'feature_high_quality_desc': 'Les algorithmes professionnels de compression et de conversion maintiennent la qualité du document tout en optimisant les tailles de fichier.',
+                'feature_always_free_title': 'Toujours Gratuit',
+                'feature_always_free_desc': 'Les fonctionnalités principales sont entièrement gratuites. Pas de coûts cachés, pas d\'abonnements, pas de limitations sur le traitement des fichiers.',
+                // How It Works Section
+                'how_it_works_title': 'Comment Ça Marche',
+                'how_it_works_subtitle': 'Traitement de documents simple, rapide et sécurisé en trois étapes faciles',
+                'step_upload_title': 'Téléchargez Vos Fichiers',
+                'step_upload_desc': 'Glissez-déposez vos documents ou cliquez pour parcourir. Prend en charge les formats PDF, JPG, PNG. Les fichiers sont traités localement dans votre navigateur pour une sécurité maximale.',
+                'step_choose_title': 'Choisissez Votre Outil',
+                'step_choose_desc': 'Sélectionnez dans notre boîte à outils complète : convertir, compresser, fusionner, ajouter des filigranes ou des numéros de page. Options avancées disponibles pour la personnalisation.',
+                'step_download_title': 'Téléchargez les Résultats',
+                'step_download_desc': 'Obtenez vos fichiers traités instantanément. Téléchargez individuellement ou par lots tous les fichiers. Les fichiers sont automatiquement nettoyés pour votre confidentialité.',
+                // FAQ Section
+                'faq_title': 'Questions Fréquemment Posées',
+                'faq_subtitle': 'Tout ce que vous devez savoir sur PDFrow',
+                'faq_q1': 'PDFrow est-il vraiment gratuit à utiliser ?',
+                'faq_a1': 'Oui ! PDFrow est entièrement gratuit à utiliser. Toutes les fonctionnalités principales, y compris la conversion, la compression, la fusion et les outils d\'édition sont disponibles sans frais. Aucun frais caché ou abonnement requis.',
+                'faq_q2': 'Mes fichiers sont-ils sécurisés et privés ?',
+                'faq_a2': 'Absolument ! Vos fichiers ne quittent jamais votre navigateur. Tout le traitement se fait localement sur votre appareil en utilisant JavaScript côté client. Nous ne stockons, n\'accédons ni ne transmettons vos documents nulle part.',
+                'faq_q3': 'Quels formats de fichiers sont pris en charge ?',
+                'faq_a3': 'Nous prenons en charge les formats de documents et d\'images les plus courants : PDF, JPG, JPEG et PNG. Chaque outil est optimisé pour des conversions de format spécifiques et des tâches de traitement.',
+                'faq_q4': 'Y a-t-il une limite de taille de fichier ?',
+                'faq_a4': 'La taille maximale de fichier est de 10MB par fichier. Cette limite garantit des performances optimales et une vitesse de traitement pour tous les utilisateurs.',
+                'faq_q5': 'Dois-je installer un logiciel ?',
+                'faq_a5': 'Aucune installation requise ! PDFrow fonctionne entièrement dans votre navigateur web. Visitez simplement notre site web et commencez à utiliser les outils immédiatement. Compatible avec Chrome, Firefox, Safari et Edge.',
+                'faq_q6': 'Puis-je utiliser PDFrow sur des appareils mobiles ?',
+                'faq_a6': 'Oui ! PDFrow est entièrement réactif et fonctionne sur smartphones, tablettes et ordinateurs de bureau. L\'interface s\'adapte à la taille de votre écran pour une expérience utilisateur optimale.',
+                // Footer
+                'language': 'Langue',
+                'footer_description': 'Plateforme de traitement de documents de nouvelle génération. Rapide, sécurisée et toujours gratuite.',
+                'footer_tools_title': 'Outils',
+                'footer_pdf_converter': 'Convertisseur PDF',
+                'footer_image_converter': 'Convertisseur d\'Images',
+                'footer_pdf_compressor': 'Compresseur PDF',
+                'footer_pdf_merger': 'Fusionneur PDF',
+                'footer_features_title': 'Fonctionnalités',
+                'footer_add_watermarks': 'Ajouter Filigranes',
+                'footer_page_numbers': 'Numéros de Page',
+                'footer_batch_processing': 'Traitement par Lots',
+                'footer_privacy_first': 'Confidentialité d\'Abord',
+                'footer_support_title': 'Support',
+                'footer_faq': 'FAQ',
+                'footer_how_it_works': 'Comment Ça Marche',
+                'footer_contact': 'Contact',
+                'footer_help_center': 'Centre d\'Aide',
+                'footer_copyright': '© 2025 PDFrow. Tous droits réservés. Fait avec ❤️ pour le traitement de documents.',
+                // Contact Form
+                'contact_form_title': 'Comment pouvons-nous vous aider aujourd\'hui ?',
+                'contact_form_subtitle': 'Questions, rapports de bogues, demandes de fonctionnalités ou commentaires généraux',
+                'contact_select_topic': 'Sélectionner un sujet',
+                'contact_option_question': 'Poser une question',
+                'contact_option_bug': 'Signaler un bogue',
+                'contact_option_feature': 'Demander une fonctionnalité',
+                'contact_option_feedback': 'Commentaires généraux',
+                'contact_option_business': 'Demande commerciale',
+                'contact_message_placeholder': 'Dites-nous plus de détails...',
+                'contact_attach_file': 'Joindre un fichier (optionnel)',
+                'contact_email_placeholder': 'Votre adresse e-mail',
+                'contact_terms_text': 'J\'ai lu et accepté les',
+                'contact_terms_link': 'Conditions Générales',
+                'contact_and': 'et',
+                'contact_privacy_link': 'Politique de Confidentialité',
+                'contact_submit_btn': 'Envoyer le Message',
+                'contact_confidential_note': 'Toutes vos informations seront traitées de manière confidentielle'
+            },
+            'de': {
+                // Navigation
+                'nav_tools': 'Werkzeuge',
+                'nav_features': 'Funktionen',
+                'nav_how_it_works': 'Wie es Funktioniert',
+                'nav_faq': 'FAQ',
+                // Hero Section
+                'hero_badge': 'Dokumentenverarbeitung der Nächsten Generation',
+                'hero_title_1': 'Verwandeln Sie Ihre Dokumente mit',
+                'hero_title_2': 'Professioneller Präzision',
+                'hero_subtitle': 'Erleben Sie blitzschnelle Dokumentenkonvertierung, -komprimierung und -bearbeitung mit unserer fortschrittlichen webbasierten Plattform. Keine Downloads, keine Grenzen, nur reine Leistung.',
+                'btn_start_converting': 'Konvertierung Starten',
+                'stat_files_processed': 'Verarbeitete Dateien',
+                'stat_uptime': 'Betriebszeit',
+                'stat_average_speed': 'Durchschnittsgeschwindigkeit',
+                // Tools Section
+                'tools_title': 'Leistungsstarke Dokument-Tools',
+                'tools_subtitle': 'Wählen Sie aus unserer umfassenden Suite von Dokumentenverarbeitungstools',
+                // Tool Cards
+                'tool_jpg_to_pdf_title': 'JPG zu PDF',
+                'tool_jpg_to_pdf_desc': 'JPG-Bilder in PDF-Dokumente umwandeln',
+                'tool_png_to_jpg_title': 'PNG zu JPG',
+                'tool_png_to_jpg_desc': 'PNG-Bilder in JPG-Format umwandeln',
+                'tool_jpg_to_png_title': 'JPG zu PNG',
+                'tool_jpg_to_png_desc': 'JPG-Bilder in PNG-Format umwandeln',
+                'tool_pdf_to_jpg_title': 'PDF zu JPG',
+                'tool_pdf_to_jpg_desc': 'PDF-Seiten in JPG-Bilder umwandeln',
+                'tool_compress_pdf_title': 'PDF Komprimieren',
+                'tool_compress_pdf_desc': 'PDF-Dateigröße für einfacheres Teilen reduzieren',
+                'tool_merge_pdf_title': 'PDF Zusammenführen',
+                'tool_merge_pdf_desc': 'Mehrere PDF-Dateien zu einer kombinieren',
+                'tool_add_page_numbers_title': 'Seitenzahlen Hinzufügen',
+                'tool_add_page_numbers_desc': 'Seitenzahlen zu PDFs mit benutzerdefinierter Positionierung und Styling hinzufügen',
+                'tool_add_watermark_title': 'Wasserzeichen Hinzufügen',
+                'tool_add_watermark_desc': 'Text- oder Bildwasserzeichen zu PDFs mit benutzerdefiniertem Styling hinzufügen',
+                // Upload Areas
+                'drop_jpg_files': 'JPG-Dateien hier ablegen',
+                'drop_png_files': 'PNG-Dateien hier ablegen',
+                'drop_pdf_files': 'PDF-Dateien hier ablegen',
+                'or_click_browse': 'oder klicken zum Durchsuchen',
+                'or_click_browse_multiple': 'oder klicken zum Durchsuchen (mehrere Dateien)',
+                // Convert Buttons
+                'convert_to_pdf': 'Zu PDF Konvertieren',
+                'convert_to_jpg': 'Zu JPG Konvertieren',
+                'convert_to_png': 'Zu PNG Konvertieren',
+                'compress_pdf_btn': 'PDF Komprimieren',
+                'merge_pdfs_btn': 'PDFs Zusammenführen',
+                'add_page_numbers_btn': 'Seitenzahlen Hinzufügen',
+                'add_watermark_btn': 'Wasserzeichen Hinzufügen',
+                // Features Section
+                'features_title': 'Warum PDFrow Wählen?',
+                'features_subtitle': 'Erleben Sie die Zukunft der Dokumentenverarbeitung mit unseren fortschrittlichen Funktionen',
+                'feature_lightning_fast_title': 'Blitzschnell',
+                'feature_lightning_fast_desc': 'Verarbeiten Sie Dokumente in Sekunden mit unseren optimierten Algorithmen und fortschrittlicher Client-seitiger Verarbeitungstechnologie.',
+                'feature_secure_title': '100% Sicher',
+                'feature_secure_desc': 'Ihre Dateien verlassen niemals Ihren Browser. Die gesamte Verarbeitung erfolgt lokal für maximalen Datenschutz und Sicherheit.',
+                'feature_no_installation_title': 'Keine Installation',
+                'feature_no_installation_desc': 'Funktioniert direkt in Ihrem Browser. Keine Software-Downloads, keine Updates, kein Aufwand. Nur sofortiger Zugriff.',
+                'feature_multi_device_title': 'Multi-Gerät',
+                'feature_multi_device_desc': 'Zugriff von jedem Gerät - Desktop, Tablet oder Handy. Responsives Design sorgt für perfekte Erfahrung überall.',
+                'feature_high_quality_title': 'Hohe Qualität',
+                'feature_high_quality_desc': 'Professionelle Komprimierungs- und Konvertierungsalgorithmen erhalten die Dokumentqualität bei optimierten Dateigrößen.',
+                'feature_always_free_title': 'Immer Kostenlos',
+                'feature_always_free_desc': 'Kernfunktionalität ist vollständig kostenlos. Keine versteckten Kosten, keine Abonnements, keine Einschränkungen bei der Dateiverarbeitung.',
+                // How It Works Section
+                'how_it_works_title': 'Wie Es Funktioniert',
+                'how_it_works_subtitle': 'Einfache, schnelle und sichere Dokumentenverarbeitung in drei einfachen Schritten',
+                'step_upload_title': 'Dateien Hochladen',
+                'step_upload_desc': 'Ziehen Sie Ihre Dokumente per Drag & Drop oder klicken Sie zum Durchsuchen. Unterstützt PDF-, JPG-, PNG-Formate. Dateien werden lokal in Ihrem Browser für maximale Sicherheit verarbeitet.',
+                'step_choose_title': 'Tool Auswählen',
+                'step_choose_desc': 'Wählen Sie aus unserem umfassenden Toolkit: konvertieren, komprimieren, zusammenführen, Wasserzeichen oder Seitenzahlen hinzufügen. Erweiterte Optionen für Anpassungen verfügbar.',
+                'step_download_title': 'Ergebnisse Herunterladen',
+                'step_download_desc': 'Erhalten Sie Ihre verarbeiteten Dateien sofort. Einzeln oder als Batch-Download aller Dateien. Dateien werden automatisch für Ihren Datenschutz bereinigt.',
+                // FAQ Section
+                'faq_title': 'Häufig Gestellte Fragen',
+                'faq_subtitle': 'Alles was Sie über PDFrow wissen müssen',
+                'faq_q1': 'Ist PDFrow wirklich kostenlos zu verwenden?',
+                'faq_a1': 'Ja! PDFrow ist vollständig kostenlos zu verwenden. Alle Kernfunktionen einschließlich Konvertierung, Komprimierung, Zusammenführung und Bearbeitungstools sind kostenlos verfügbar. Keine versteckten Gebühren oder Abonnement erforderlich.',
+                'faq_q2': 'Sind meine Dateien sicher und privat?',
+                'faq_a2': 'Absolut! Ihre Dateien verlassen niemals Ihren Browser. Die gesamte Verarbeitung erfolgt lokal auf Ihrem Gerät mit Client-seitigem JavaScript. Wir speichern, greifen nicht zu oder übertragen Ihre Dokumente nirgendwo.',
+                'faq_q3': 'Welche Dateiformate werden unterstützt?',
+                'faq_a3': 'Wir unterstützen die gängigsten Dokument- und Bildformate: PDF, JPG, JPEG und PNG. Jedes Tool ist für spezifische Formatkonvertierungen und Verarbeitungsaufgaben optimiert.',
+                'faq_q4': 'Gibt es eine Dateigrößenbegrenzung?',
+                'faq_a4': 'Die maximale Dateigröße beträgt 10MB pro Datei. Diese Grenze gewährleistet optimale Leistung und Verarbeitungsgeschwindigkeit für alle Benutzer.',
+                'faq_q5': 'Muss ich Software installieren?',
+                'faq_a5': 'Keine Installation erforderlich! PDFrow funktioniert vollständig in Ihrem Webbrowser. Besuchen Sie einfach unsere Website und beginnen Sie sofort mit der Nutzung der Tools. Kompatibel mit Chrome, Firefox, Safari und Edge.',
+                'faq_q6': 'Kann ich PDFrow auf mobilen Geräten verwenden?',
+                'faq_a6': 'Ja! PDFrow ist vollständig responsiv und funktioniert auf Smartphones, Tablets und Desktop-Computern. Die Benutzeroberfläche passt sich Ihrer Bildschirmgröße für optimale Benutzererfahrung an.',
+                // Footer
+                'language': 'Sprache',
+                'footer_description': 'Dokumentenverarbeitungsplattform der nächsten Generation. Schnell, sicher und immer kostenlos.',
+                'footer_tools_title': 'Werkzeuge',
+                'footer_pdf_converter': 'PDF-Konverter',
+                'footer_image_converter': 'Bild-Konverter',
+                'footer_pdf_compressor': 'PDF-Komprimierer',
+                'footer_pdf_merger': 'PDF-Zusammenführer',
+                'footer_features_title': 'Funktionen',
+                'footer_add_watermarks': 'Wasserzeichen Hinzufügen',
+                'footer_page_numbers': 'Seitenzahlen',
+                'footer_batch_processing': 'Batch-Verarbeitung',
+                'footer_privacy_first': 'Datenschutz Zuerst',
+                'footer_support_title': 'Support',
+                'footer_faq': 'FAQ',
+                'footer_how_it_works': 'Wie Es Funktioniert',
+                'footer_contact': 'Kontakt',
+                'footer_help_center': 'Hilfe-Center',
+                'footer_copyright': '© 2025 PDFrow. Alle Rechte vorbehalten. Mit ❤️ für Dokumentenverarbeitung erstellt.',
+                // Contact Form
+                'contact_form_title': 'Wie können wir Ihnen heute helfen?',
+                'contact_form_subtitle': 'Fragen, Fehlerberichte, Funktionsanfragen oder allgemeines Feedback',
+                'contact_select_topic': 'Ein Thema auswählen',
+                'contact_option_question': 'Eine Frage stellen',
+                'contact_option_bug': 'Einen Fehler melden',
+                'contact_option_feature': 'Eine Funktion anfragen',
+                'contact_option_feedback': 'Allgemeines Feedback',
+                'contact_option_business': 'Geschäftsanfrage',
+                'contact_message_placeholder': 'Erzählen Sie uns mehr Details...',
+                'contact_attach_file': 'Datei anhängen (optional)',
+                'contact_email_placeholder': 'Ihre E-Mail-Adresse',
+                'contact_terms_text': 'Ich habe die',
+                'contact_terms_link': 'Allgemeinen Geschäftsbedingungen',
+                'contact_and': 'und',
+                'contact_privacy_link': 'Datenschutzrichtlinie',
+                'contact_submit_btn': 'Nachricht Senden',
+                'contact_confidential_note': 'Alle Ihre Informationen werden vertraulich behandelt'
+            },
+            'it': {
+                // Navigation
+                'nav_tools': 'Strumenti',
+                'nav_features': 'Caratteristiche',
+                'nav_how_it_works': 'Come Funziona',
+                'nav_faq': 'FAQ',
+                // Hero Section
+                'hero_badge': 'Elaborazione Documenti di Nuova Generazione',
+                'hero_title_1': 'Trasforma i Tuoi Documenti con',
+                'hero_title_2': 'Precisione Professionale',
+                'hero_subtitle': 'Sperimenta conversione, compressione e modifica di documenti ultra-veloce con la nostra piattaforma web avanzata. Nessun download, nessun limite, solo prestazioni pure.',
+                'btn_start_converting': 'Inizia a Convertire',
+                'stat_files_processed': 'File Elaborati',
+                'stat_uptime': 'Tempo di Attività',
+                'stat_average_speed': 'Velocità Media',
+                // Tools Section
+                'tools_title': 'Potenti Strumenti per Documenti',
+                'tools_subtitle': 'Scegli dalla nostra suite completa di strumenti per l\'elaborazione dei documenti',
+                // Tool Cards
+                'tool_jpg_to_pdf_title': 'JPG in PDF',
+                'tool_jpg_to_pdf_desc': 'Convertire immagini JPG in documenti PDF',
+                'tool_png_to_jpg_title': 'PNG in JPG',
+                'tool_png_to_jpg_desc': 'Convertire immagini PNG in formato JPG',
+                'tool_jpg_to_png_title': 'JPG in PNG',
+                'tool_jpg_to_png_desc': 'Convertire immagini JPG in formato PNG',
+                'tool_pdf_to_jpg_title': 'PDF in JPG',
+                'tool_pdf_to_jpg_desc': 'Convertire pagine PDF in immagini JPG',
+                'tool_compress_pdf_title': 'Comprimi PDF',
+                'tool_compress_pdf_desc': 'Ridurre le dimensioni del file PDF per una condivisione più facile',
+                'tool_merge_pdf_title': 'Unisci PDF',
+                'tool_merge_pdf_desc': 'Combinare più file PDF in uno',
+                'tool_add_page_numbers_title': 'Aggiungi Numeri di Pagina',
+                'tool_add_page_numbers_desc': 'Aggiungere numeri di pagina ai PDF con posizionamento e stile personalizzati',
+                'tool_add_watermark_title': 'Aggiungi Filigrana',
+                'tool_add_watermark_desc': 'Aggiungere filigrane di testo o immagine ai PDF con stile personalizzato',
+                // Upload Areas
+                'drop_jpg_files': 'Trascina i file JPG qui',
+                'drop_png_files': 'Trascina i file PNG qui',
+                'drop_pdf_files': 'Trascina i file PDF qui',
+                'or_click_browse': 'o clicca per sfogliare',
+                'or_click_browse_multiple': 'o clicca per sfogliare (file multipli)',
+                // Convert Buttons
+                'convert_to_pdf': 'Converti in PDF',
+                'convert_to_jpg': 'Converti in JPG',
+                'convert_to_png': 'Converti in PNG',
+                'compress_pdf_btn': 'Comprimi PDF',
+                'merge_pdfs_btn': 'Unisci PDF',
+                'add_page_numbers_btn': 'Aggiungi Numeri di Pagina',
+                'add_watermark_btn': 'Aggiungi Filigrana',
+                // Features Section
+                'features_title': 'Perché Scegliere PDFrow?',
+                'features_subtitle': 'Sperimenta il futuro dell\'elaborazione dei documenti con le nostre funzionalità avanzate',
+                'feature_lightning_fast_title': 'Veloce come un Fulmine',
+                'feature_lightning_fast_desc': 'Elabora documenti in secondi con i nostri algoritmi ottimizzati e la tecnologia avanzata di elaborazione lato client.',
+                'feature_secure_title': '100% Sicuro',
+                'feature_secure_desc': 'I tuoi file non lasciano mai il tuo browser. Tutta l\'elaborazione avviene localmente per massima privacy e sicurezza.',
+                'feature_no_installation_title': 'Nessuna Installazione',
+                'feature_no_installation_desc': 'Funziona direttamente nel tuo browser. Nessun download di software, nessun aggiornamento, nessun problema. Solo accesso istantaneo.',
+                'feature_multi_device_title': 'Multi-Dispositivo',
+                'feature_multi_device_desc': 'Accesso da qualsiasi dispositivo - desktop, tablet o mobile. Il design responsive garantisce un\'esperienza perfetta ovunque.',
+                'feature_high_quality_title': 'Alta Qualità',
+                'feature_high_quality_desc': 'Gli algoritmi professionali di compressione e conversione mantengono la qualità del documento ottimizzando le dimensioni dei file.',
+                'feature_always_free_title': 'Sempre Gratuito',
+                'feature_always_free_desc': 'Le funzionalità principali sono completamente gratuite. Nessun costo nascosto, nessun abbonamento, nessuna limitazione nell\'elaborazione dei file.',
+                // How It Works Section
+                'how_it_works_title': 'Come Funziona',
+                'how_it_works_subtitle': 'Elaborazione di documenti semplice, veloce e sicura in tre semplici passaggi',
+                'step_upload_title': 'Carica i Tuoi File',
+                'step_upload_desc': 'Trascina e rilascia i tuoi documenti o clicca per sfogliare. Supporta formati PDF, JPG, PNG. I file vengono elaborati localmente nel tuo browser per la massima sicurezza.',
+                'step_choose_title': 'Scegli il Tuo Strumento',
+                'step_choose_desc': 'Seleziona dal nostro toolkit completo: convertire, comprimere, unire, aggiungere filigrane o numeri di pagina. Opzioni avanzate disponibili per la personalizzazione.',
+                'step_download_title': 'Scarica i Risultati',
+                'step_download_desc': 'Ottieni i tuoi file elaborati istantaneamente. Scarica individualmente o scarica in batch tutti i file. I file vengono automaticamente puliti per la tua privacy.',
+                // FAQ Section
+                'faq_title': 'Domande Frequenti',
+                'faq_subtitle': 'Tutto quello che devi sapere su PDFrow',
+                'faq_q1': 'PDFrow è davvero gratuito da usare?',
+                'faq_a1': 'Sì! PDFrow è completamente gratuito da usare. Tutte le funzionalità principali inclusi conversione, compressione, unione e strumenti di modifica sono disponibili senza costi. Nessuna tariffa nascosta o abbonamento richiesto.',
+                'faq_q2': 'I miei file sono sicuri e privati?',
+                'faq_a2': 'Assolutamente! I tuoi file non lasciano mai il tuo browser. Tutta l\'elaborazione avviene localmente sul tuo dispositivo usando JavaScript lato client. Non memorizziamo, accediamo o trasmettiamo i tuoi documenti da nessuna parte.',
+                'faq_q3': 'Quali formati di file sono supportati?',
+                'faq_a3': 'Supportiamo i formati di documenti e immagini più comuni: PDF, JPG, JPEG e PNG. Ogni strumento è ottimizzato per conversioni di formato specifiche e attività di elaborazione.',
+                'faq_q4': 'C\'è un limite di dimensione del file?',
+                'faq_a4': 'La dimensione massima del file è 10MB per file. Questo limite garantisce prestazioni ottimali e velocità di elaborazione per tutti gli utenti.',
+                'faq_q5': 'Devo installare qualche software?',
+                'faq_a5': 'Nessuna installazione richiesta! PDFrow funziona interamente nel tuo browser web. Visita semplicemente il nostro sito web e inizia a usare gli strumenti immediatamente. Compatibile con Chrome, Firefox, Safari ed Edge.',
+                'faq_q6': 'Posso usare PDFrow su dispositivi mobili?',
+                'faq_a6': 'Sì! PDFrow è completamente responsive e funziona su smartphone, tablet e computer desktop. L\'interfaccia si adatta alla dimensione del tuo schermo per un\'esperienza utente ottimale.',
+                // Footer
+                'language': 'Lingua',
+                'footer_description': 'Piattaforma di elaborazione documenti di nuova generazione. Veloce, sicura e sempre gratuita.',
+                'footer_tools_title': 'Strumenti',
+                'footer_pdf_converter': 'Convertitore PDF',
+                'footer_image_converter': 'Convertitore Immagini',
+                'footer_pdf_compressor': 'Compressore PDF',
+                'footer_pdf_merger': 'Unificatore PDF',
+                'footer_features_title': 'Caratteristiche',
+                'footer_add_watermarks': 'Aggiungi Filigrane',
+                'footer_page_numbers': 'Numeri di Pagina',
+                'footer_batch_processing': 'Elaborazione in Batch',
+                'footer_privacy_first': 'Privacy Prima di Tutto',
+                'footer_support_title': 'Supporto',
+                'footer_faq': 'FAQ',
+                'footer_how_it_works': 'Come Funziona',
+                'footer_contact': 'Contatto',
+                'footer_help_center': 'Centro Assistenza',
+                'footer_copyright': '© 2025 PDFrow. Tutti i diritti riservati. Realizzato con ❤️ per l\'elaborazione dei documenti.',
+                // Contact Form
+                'contact_form_title': 'Come possiamo aiutarti oggi?',
+                'contact_form_subtitle': 'Domande, segnalazioni di bug, richieste di funzionalità o feedback generale',
+                'contact_select_topic': 'Seleziona un argomento',
+                'contact_option_question': 'Fai una domanda',
+                'contact_option_bug': 'Segnala un bug',
+                'contact_option_feature': 'Richiedi una funzionalità',
+                'contact_option_feedback': 'Feedback generale',
+                'contact_option_business': 'Richiesta commerciale',
+                'contact_message_placeholder': 'Raccontaci più dettagli...',
+                'contact_attach_file': 'Allega un file (opzionale)',
+                'contact_email_placeholder': 'Il tuo indirizzo email',
+                'contact_terms_text': 'Ho letto e accettato i',
+                'contact_terms_link': 'Termini e Condizioni',
+                'contact_and': 'e',
+                'contact_privacy_link': 'Informativa sulla Privacy',
+                'contact_submit_btn': 'Invia Messaggio',
+                'contact_confidential_note': 'Tutte le tue informazioni saranno trattate in modo confidenziale'
+            },
+            'tr': {
+                // Navigation
+                'nav_tools': 'Araçlar',
+                'nav_features': 'Özellikler',
+                'nav_how_it_works': 'Nasıl Çalışır',
+                'nav_faq': 'SSS',
+                // Hero Section
+                'hero_badge': 'Yeni Nesil Belge İşleme',
+                'hero_title_1': 'Belgelerinizi Dönüştürün',
+                'hero_title_2': 'Profesyonel Hassasiyet ile',
+                'hero_subtitle': 'Gelişmiş web tabanlı platformumuzla yıldırım hızında belge dönüştürme, sıkıştırma ve düzenleme deneyimi yaşayın. İndirme yok, sınır yok, sadece saf performans.',
+                'btn_start_converting': 'Dönüştürmeye Başla',
+                'stat_files_processed': 'İşlenen Dosyalar',
+                'stat_uptime': 'Çalışma Süresi',
+                'stat_average_speed': 'Ortalama Hız',
+                // Tools Section
+                'tools_title': 'Güçlü Belge Araçları',
+                'tools_subtitle': 'Kapsamlı belge işleme araçları paketimizden seçim yapın',
+                // Tool Cards
+                'tool_jpg_to_pdf_title': 'JPG\'den PDF\'ye',
+                'tool_jpg_to_pdf_desc': 'JPG resimlerini PDF belgelerine dönüştürün',
+                'tool_png_to_jpg_title': 'PNG\'den JPG\'ye',
+                'tool_png_to_jpg_desc': 'PNG resimlerini JPG formatına dönüştürün',
+                'tool_jpg_to_png_title': 'JPG\'den PNG\'ye',
+                'tool_jpg_to_png_desc': 'JPG resimlerini PNG formatına dönüştürün',
+                'tool_pdf_to_jpg_title': 'PDF\'den JPG\'ye',
+                'tool_pdf_to_jpg_desc': 'PDF sayfalarını JPG resimlerine dönüştürün',
+                'tool_compress_pdf_title': 'PDF Sıkıştır',
+                'tool_compress_pdf_desc': 'Daha kolay paylaşım için PDF dosya boyutunu küçültün',
+                'tool_merge_pdf_title': 'PDF Birleştir',
+                'tool_merge_pdf_desc': 'Birden fazla PDF dosyasını tek dosyada birleştirin',
+                'tool_add_page_numbers_title': 'Sayfa Numarası Ekle',
+                'tool_add_page_numbers_desc': 'PDF\'lere özel konumlandırma ve stil ile sayfa numaraları ekleyin',
+                'tool_add_watermark_title': 'Filigran Ekle',
+                'tool_add_watermark_desc': 'PDF\'lere özel stil ile metin veya resim filigranları ekleyin',
+                // Upload Areas
+                'drop_jpg_files': 'JPG dosyalarını buraya bırakın',
+                'drop_png_files': 'PNG dosyalarını buraya bırakın',
+                'drop_pdf_files': 'PDF dosyalarını buraya bırakın',
+                'or_click_browse': 'veya göz atmak için tıklayın',
+                'or_click_browse_multiple': 'veya göz atmak için tıklayın (çoklu dosyalar)',
+                // Convert Buttons
+                'convert_to_pdf': 'PDF\'ye Dönüştür',
+                'convert_to_jpg': 'JPG\'ye Dönüştür',
+                'convert_to_png': 'PNG\'ye Dönüştür',
+                'compress_pdf_btn': 'PDF Sıkıştır',
+                'merge_pdfs_btn': 'PDF\'leri Birleştir',
+                'add_page_numbers_btn': 'Sayfa Numarası Ekle',
+                'add_watermark_btn': 'Filigran Ekle',
+                // Features Section
+                'features_title': 'Neden PDFrow\'u Seçmelisiniz?',
+                'features_subtitle': 'Gelişmiş özelliklerimizle belge işlemenin geleceğini deneyimleyin',
+                'feature_lightning_fast_title': 'Şimşek Hızında',
+                'feature_lightning_fast_desc': 'Optimize edilmiş algoritmalarımız ve gelişmiş istemci tarafı işleme teknolojimizle belgeleri saniyeler içinde işleyin.',
+                'feature_secure_title': '%100 Güvenli',
+                'feature_secure_desc': 'Dosyalarınız hiçbir zaman tarayıcınızdan ayrılmaz. Tüm işlemler maksimum gizlilik ve güvenlik için yerel olarak gerçekleşir.',
+                'feature_no_installation_title': 'Kurulum Yok',
+                'feature_no_installation_desc': 'Doğrudan tarayıcınızda çalışır. Yazılım indirme, güncelleme, karmaşa yok. Sadece anında erişim.',
+                'feature_multi_device_title': 'Çoklu Cihaz',
+                'feature_multi_device_desc': 'Herhangi bir cihazdan erişin - masaüstü, tablet veya mobil. Duyarlı tasarım her yerde mükemmel deneyim sağlar.',
+                'feature_high_quality_title': 'Yüksek Kalite',
+                'feature_high_quality_desc': 'Profesyonel sıkıştırma ve dönüştürme algoritmaları dosya boyutlarını optimize ederken belge kalitesini korur.',
+                'feature_always_free_title': 'Her Zaman Ücretsiz',
+                'feature_always_free_desc': 'Temel işlevsellik tamamen ücretsizdir. Gizli maliyet yok, abonelik yok, dosya işlemede sınırlama yok.',
+                // How It Works Section
+                'how_it_works_title': 'Nasıl Çalışır',
+                'how_it_works_subtitle': 'Üç kolay adımda basit, hızlı ve güvenli belge işleme',
+                'step_upload_title': 'Dosyalarınızı Yükleyin',
+                'step_upload_desc': 'Belgelerinizi sürükleyip bırakın veya göz atmak için tıklayın. PDF, JPG, PNG formatlarını destekler. Maksimum güvenlik için dosyalar tarayıcınızda yerel olarak işlenir.',
+                'step_choose_title': 'Aracınızı Seçin',
+                'step_choose_desc': 'Kapsamlı araç setimizden seçin: dönüştür, sıkıştır, birleştir, filigran veya sayfa numaraları ekle. Özelleştirme için gelişmiş seçenekler mevcuttur.',
+                'step_download_title': 'Sonuçları İndirin',
+                'step_download_desc': 'İşlenmiş dosyalarınızı anında alın. Tek tek veya toplu olarak tüm dosyaları indirin. Gizliliğiniz için dosyalar otomatik olarak temizlenir.',
+                // FAQ Section
+                'faq_title': 'Sıkça Sorulan Sorular',
+                'faq_subtitle': 'PDFrow hakkında bilmeniz gereken her şey',
+                'faq_q1': 'PDFrow gerçekten ücretsiz mi?',
+                'faq_a1': 'Evet! PDFrow tamamen ücretsiz kullanılabilir. Dönüştürme, sıkıştırma, birleştirme ve düzenleme araçları dahil tüm temel işlevler ücretsizdir. Gizli ücret veya abonelik gerekmez.',
+                'faq_q2': 'Dosyalarım güvenli ve özel mi?',
+                'faq_a2': 'Kesinlikle! Dosyalarınız hiçbir zaman tarayıcınızdan ayrılmaz. Tüm işlemler istemci tarafı JavaScript kullanarak cihazınızda yerel olarak gerçekleşir. Belgelerinizi hiçbir yerde saklamaz, erişmez veya iletemeyiz.',
+                'faq_q3': 'Hangi dosya formatları destekleniyor?',
+                'faq_a3': 'En yaygın belge ve resim formatlarını destekliyoruz: PDF, JPG, JPEG ve PNG. Her araç özel format dönüşümleri ve işleme görevleri için optimize edilmiştir.',
+                'faq_q4': 'Dosya boyutu sınırı var mı?',
+                'faq_a4': 'Maksimum dosya boyutu dosya başına 10MB\'dır. Bu sınır tüm kullanıcılar için optimal performans ve işleme hızı sağlar.',
+                'faq_q5': 'Herhangi bir yazılım kurmam gerekiyor mu?',
+                'faq_a5': 'Kurulum gerekmez! PDFrow tamamen web tarayıcınızda çalışır. Sadece web sitemizi ziyaret edin ve araçları hemen kullanmaya başlayın. Chrome, Firefox, Safari ve Edge ile uyumludur.',
+                'faq_q6': 'PDFrow\'u mobil cihazlarda kullanabilir miyim?',
+                'faq_a6': 'Evet! PDFrow tamamen duyarlıdır ve akıllı telefonlar, tabletler ve masaüstü bilgisayarlarda çalışır. Arayüz optimum kullanıcı deneyimi için ekran boyutunuza uyum sağlar.',
+                // Footer
+                'language': 'Dil',
+                'footer_description': 'Yeni nesil belge işleme platformu. Hızlı, güvenli ve her zaman ücretsiz.',
+                'footer_tools_title': 'Araçlar',
+                'footer_pdf_converter': 'PDF Dönüştürücü',
+                'footer_image_converter': 'Resim Dönüştürücü',
+                'footer_pdf_compressor': 'PDF Sıkıştırıcı',
+                'footer_pdf_merger': 'PDF Birleştirici',
+                'footer_features_title': 'Özellikler',
+                'footer_add_watermarks': 'Filigran Ekle',
+                'footer_page_numbers': 'Sayfa Numaraları',
+                'footer_batch_processing': 'Toplu İşleme',
+                'footer_privacy_first': 'Önce Gizlilik',
+                'footer_support_title': 'Destek',
+                'footer_faq': 'SSS',
+                'footer_how_it_works': 'Nasıl Çalışır',
+                'footer_contact': 'İletişim',
+                'footer_help_center': 'Yardım Merkezi',
+                'footer_copyright': '© 2025 PDFrow. Tüm hakları saklıdır. Belge işleme için ❤️ ile yapılmıştır.'
+            },
+            'pt': {
+                // Navigation
+                'nav_tools': 'Ferramentas',
+                'nav_features': 'Recursos',
+                'nav_how_it_works': 'Como Funciona',
+                'nav_faq': 'FAQ',
+                // Hero Section
+                'hero_badge': 'Processamento de Documentos de Nova Geração',
+                'hero_title_1': 'Transforme Seus Documentos com',
+                'hero_title_2': 'Precisão Profissional',
+                'hero_subtitle': 'Experimente conversão, compressão e edição de documentos ultra-rápida com nossa plataforma web avançada. Sem downloads, sem limites, apenas desempenho puro.',
+                'btn_start_converting': 'Começar a Converter',
+                'stat_files_processed': 'Arquivos Processados',
+                'stat_uptime': 'Tempo Ativo',
+                'stat_average_speed': 'Velocidade Média',
+                // Tools Section
+                'tools_title': 'Ferramentas Poderosas para Documentos',
+                'tools_subtitle': 'Escolha do nosso conjunto abrangente de ferramentas de processamento de documentos',
+                // Tool Cards
+                'tool_jpg_to_pdf_title': 'JPG para PDF',
+                'tool_jpg_to_pdf_desc': 'Converter imagens JPG em documentos PDF',
+                'tool_png_to_jpg_title': 'PNG para JPG',
+                'tool_png_to_jpg_desc': 'Converter imagens PNG para formato JPG',
+                'tool_jpg_to_png_title': 'JPG para PNG',
+                'tool_jpg_to_png_desc': 'Converter imagens JPG para formato PNG',
+                'tool_pdf_to_jpg_title': 'PDF para JPG',
+                'tool_pdf_to_jpg_desc': 'Converter páginas PDF em imagens JPG',
+                'tool_compress_pdf_title': 'Comprimir PDF',
+                'tool_compress_pdf_desc': 'Reduzir o tamanho do arquivo PDF para compartilhamento mais fácil',
+                'tool_merge_pdf_title': 'Mesclar PDF',
+                'tool_merge_pdf_desc': 'Combinar múltiplos arquivos PDF em um',
+                'tool_add_page_numbers_title': 'Adicionar Números de Página',
+                'tool_add_page_numbers_desc': 'Adicionar números de página aos PDFs com posicionamento e estilo personalizados',
+                'tool_add_watermark_title': 'Adicionar Marca d\'Água',
+                'tool_add_watermark_desc': 'Adicionar marcas d\'água de texto ou imagem aos PDFs com estilo personalizado',
+                // Upload Areas
+                'drop_jpg_files': 'Solte arquivos JPG aqui',
+                'drop_png_files': 'Solte arquivos PNG aqui',
+                'drop_pdf_files': 'Solte arquivos PDF aqui',
+                'or_click_browse': 'ou clique para navegar',
+                'or_click_browse_multiple': 'ou clique para navegar (múltiplos arquivos)',
+                // Convert Buttons
+                'convert_to_pdf': 'Converter para PDF',
+                'convert_to_jpg': 'Converter para JPG',
+                'convert_to_png': 'Converter para PNG',
+                'compress_pdf_btn': 'Comprimir PDF',
+                'merge_pdfs_btn': 'Mesclar PDFs',
+                'add_page_numbers_btn': 'Adicionar Números de Página',
+                'add_watermark_btn': 'Adicionar Marca d\'Água',
+                // Features Section
+                'features_title': 'Por Que Escolher PDFrow?',
+                'features_subtitle': 'Experimente o futuro do processamento de documentos com nossos recursos avançados',
+                'feature_lightning_fast_title': 'Ultrarrápido',
+                'feature_lightning_fast_desc': 'Processe documentos em segundos com nossos algoritmos otimizados e tecnologia avançada de processamento do lado do cliente.',
+                'feature_secure_title': '100% Seguro',
+                'feature_secure_desc': 'Seus arquivos nunca saem do seu navegador. Todo o processamento acontece localmente para máxima privacidade e segurança.',
+                'feature_no_installation_title': 'Sem Instalação',
+                'feature_no_installation_desc': 'Funciona diretamente no seu navegador. Sem downloads de software, sem atualizações, sem complicações. Apenas acesso instantâneo.',
+                'feature_multi_device_title': 'Multi-Dispositivo',
+                'feature_multi_device_desc': 'Acesse de qualquer dispositivo - desktop, tablet ou mobile. Design responsivo garante experiência perfeita em qualquer lugar.',
+                'feature_high_quality_title': 'Alta Qualidade',
+                'feature_high_quality_desc': 'Algoritmos profissionais de compressão e conversão mantêm a qualidade do documento enquanto otimizam os tamanhos dos arquivos.',
+                'feature_always_free_title': 'Sempre Gratuito',
+                'feature_always_free_desc': 'A funcionalidade principal é completamente gratuita. Sem custos ocultos, sem assinaturas, sem limitações no processamento de arquivos.',
+                // How It Works Section
+                'how_it_works_title': 'Como Funciona',
+                'how_it_works_subtitle': 'Processamento de documentos simples, rápido e seguro em três passos fáceis',
+                'step_upload_title': 'Envie Seus Arquivos',
+                'step_upload_desc': 'Arraste e solte seus documentos ou clique para navegar. Suporta formatos PDF, JPG, PNG. Arquivos são processados localmente no seu navegador para máxima segurança.',
+                'step_choose_title': 'Escolha Sua Ferramenta',
+                'step_choose_desc': 'Selecione do nosso kit de ferramentas abrangente: converter, comprimir, mesclar, adicionar marcas d\'água ou números de página. Opções avançadas disponíveis para personalização.',
+                'step_download_title': 'Baixe os Resultados',
+                'step_download_desc': 'Obtenha seus arquivos processados instantaneamente. Baixe individualmente ou baixe todos os arquivos em lote. Arquivos são automaticamente limpos para sua privacidade.',
+                // FAQ Section
+                'faq_title': 'Perguntas Frequentes',
+                'faq_subtitle': 'Tudo que você precisa saber sobre PDFrow',
+                'faq_q1': 'PDFrow é realmente gratuito para usar?',
+                'faq_a1': 'Sim! PDFrow é completamente gratuito para usar. Toda a funcionalidade principal incluindo conversão, compressão, mesclagem e ferramentas de edição estão disponíveis sem custo. Sem taxas ocultas ou assinatura necessária.',
+                'faq_q2': 'Meus arquivos são seguros e privados?',
+                'faq_a2': 'Absolutamente! Seus arquivos nunca saem do seu navegador. Todo o processamento acontece localmente no seu dispositivo usando JavaScript do lado do cliente. Não armazenamos, acessamos ou transmitimos seus documentos em lugar algum.',
+                'faq_q3': 'Quais formatos de arquivo são suportados?',
+                'faq_a3': 'Suportamos os formatos de documento e imagem mais comuns: PDF, JPG, JPEG e PNG. Cada ferramenta é otimizada para conversões de formato específicas e tarefas de processamento.',
+                'faq_q4': 'Existe um limite de tamanho de arquivo?',
+                'faq_a4': 'O tamanho máximo do arquivo é 10MB por arquivo. Este limite garante desempenho otimizado e velocidade de processamento para todos os usuários.',
+                'faq_q5': 'Preciso instalar algum software?',
+                'faq_a5': 'Nenhuma instalação necessária! PDFrow funciona inteiramente no seu navegador web. Apenas visite nosso site e comece a usar as ferramentas imediatamente. Compatível com Chrome, Firefox, Safari e Edge.',
+                'faq_q6': 'Posso usar PDFrow em dispositivos móveis?',
+                'faq_a6': 'Sim! PDFrow é totalmente responsivo e funciona em smartphones, tablets e computadores desktop. A interface se adapta ao tamanho da sua tela para experiência de usuário otimizada.',
+                // Footer
+                'language': 'Idioma',
+                'footer_description': 'Plataforma de processamento de documentos de nova geração. Rápida, segura e sempre gratuita.',
+                'footer_tools_title': 'Ferramentas',
+                'footer_pdf_converter': 'Conversor PDF',
+                'footer_image_converter': 'Conversor de Imagens',
+                'footer_pdf_compressor': 'Compressor PDF',
+                'footer_pdf_merger': 'Mesclador PDF',
+                'footer_features_title': 'Recursos',
+                'footer_add_watermarks': 'Adicionar Marcas d\'Água',
+                'footer_page_numbers': 'Números de Página',
+                'footer_batch_processing': 'Processamento em Lote',
+                'footer_privacy_first': 'Privacidade em Primeiro Lugar',
+                'footer_support_title': 'Suporte',
+                'footer_faq': 'FAQ',
+                'footer_how_it_works': 'Como Funciona',
+                'footer_contact': 'Contato',
+                'footer_help_center': 'Central de Ajuda',
+                'footer_copyright': '© 2025 PDFrow. Todos os direitos reservados. Feito com ❤️ para processamento de documentos.'
+            },
+            'ru': {
+                // Navigation
+                'nav_tools': 'Инструменты',
+                'nav_features': 'Функции',
+                'nav_how_it_works': 'Как Это Работает',
+                'nav_faq': 'FAQ',
+                // Hero Section
+                'hero_badge': 'Обработка Документов Нового Поколения',
+                'hero_title_1': 'Преобразуйте Ваши Документы с',
+                'hero_title_2': 'Профессиональной Точностью',
+                'hero_subtitle': 'Испытайте молниеносную конвертацию, сжатие и редактирование документов с нашей передовой веб-платформой. Никаких загрузок, никаких ограничений, только чистая производительность.',
+                'btn_start_converting': 'Начать Конвертацию',
+                'stat_files_processed': 'Обработанных Файлов',
+                'stat_uptime': 'Время Работы',
+                'stat_average_speed': 'Средняя Скорость',
+                // Tools Section
+                'tools_title': 'Мощные Инструменты для Документов',
+                'tools_subtitle': 'Выберите из нашего полного набора инструментов для обработки документов',
+                // Tool Cards
+                'tool_jpg_to_pdf_title': 'JPG в PDF',
+                'tool_jpg_to_pdf_desc': 'Конвертация изображений JPG в документы PDF',
+                'tool_png_to_jpg_title': 'PNG в JPG',
+                'tool_png_to_jpg_desc': 'Конвертация изображений PNG в формат JPG',
+                'tool_jpg_to_png_title': 'JPG в PNG',
+                'tool_jpg_to_png_desc': 'Конвертация изображений JPG в формат PNG',
+                'tool_pdf_to_jpg_title': 'PDF в JPG',
+                'tool_pdf_to_jpg_desc': 'Конвертация страниц PDF в изображения JPG',
+                'tool_compress_pdf_title': 'Сжать PDF',
+                'tool_compress_pdf_desc': 'Уменьшение размера файла PDF для удобного обмена',
+                'tool_merge_pdf_title': 'Объединить PDF',
+                'tool_merge_pdf_desc': 'Объединение нескольких файлов PDF в один',
+                'tool_add_page_numbers_title': 'Добавить Номера Страниц',
+                'tool_add_page_numbers_desc': 'Добавление номеров страниц в PDF с настраиваемым позиционированием и стилем',
+                'tool_add_watermark_title': 'Добавить Водяной Знак',
+                'tool_add_watermark_desc': 'Добавление текстовых или графических водяных знаков в PDF с настраиваемым стилем',
+                // Upload Areas
+                'drop_jpg_files': 'Перетащите файлы JPG сюда',
+                'drop_png_files': 'Перетащите файлы PNG сюда',
+                'drop_pdf_files': 'Перетащите файлы PDF сюда',
+                'or_click_browse': 'или нажмите для обзора',
+                'or_click_browse_multiple': 'или нажмите для обзора (несколько файлов)',
+                // Convert Buttons
+                'convert_to_pdf': 'Конвертировать в PDF',
+                'convert_to_jpg': 'Конвертировать в JPG',
+                'convert_to_png': 'Конвертировать в PNG',
+                'compress_pdf_btn': 'Сжать PDF',
+                'merge_pdfs_btn': 'Объединить PDF',
+                'add_page_numbers_btn': 'Добавить Номера Страниц',
+                'add_watermark_btn': 'Добавить Водяной Знак',
+                // Features Section
+                'features_title': 'Почему Выбрать PDFrow?',
+                'features_subtitle': 'Испытайте будущее обработки документов с нашими передовыми функциями',
+                'feature_lightning_fast_title': 'Молниеносная Скорость',
+                'feature_lightning_fast_desc': 'Обрабатывайте документы за секунды с помощью наших оптимизированных алгоритмов и передовой технологии клиентской обработки.',
+                'feature_secure_title': '100% Безопасно',
+                'feature_secure_desc': 'Ваши файлы никогда не покидают ваш браузер. Вся обработка происходит локально для максимальной конфиденциальности и безопасности.',
+                'feature_no_installation_title': 'Без Установки',
+                'feature_no_installation_desc': 'Работает прямо в вашем браузере. Никаких загрузок программного обеспечения, никаких обновлений, никаких хлопот. Только мгновенный доступ.',
+                'feature_multi_device_title': 'Мультиустройство',
+                'feature_multi_device_desc': 'Доступ с любого устройства - настольного, планшета или мобильного. Адаптивный дизайн обеспечивает идеальный опыт везде.',
+                'feature_high_quality_title': 'Высокое Качество',
+                'feature_high_quality_desc': 'Профессиональные алгоритмы сжатия и конвертации сохраняют качество документов при оптимизации размеров файлов.',
+                'feature_always_free_title': 'Всегда Бесплатно',
+                'feature_always_free_desc': 'Основная функциональность полностью бесплатна. Никаких скрытых затрат, никаких подписок, никаких ограничений на обработку файлов.',
+                // How It Works Section
+                'how_it_works_title': 'Как Это Работает',
+                'how_it_works_subtitle': 'Простая, быстрая и безопасная обработка документов в три простых шага',
+                'step_upload_title': 'Загрузите Ваши Файлы',
+                'step_upload_desc': 'Перетащите ваши документы или нажмите для обзора. Поддерживает форматы PDF, JPG, PNG. Файлы обрабатываются локально в вашем браузере для максимальной безопасности.',
+                'step_choose_title': 'Выберите Ваш Инструмент',
+                'step_choose_desc': 'Выберите из нашего полного набора инструментов: конвертация, сжатие, объединение, добавление водяных знаков или номеров страниц. Доступны расширенные опции для настройки.',
+                'step_download_title': 'Скачайте Результаты',
+                'step_download_desc': 'Получите ваши обработанные файлы мгновенно. Скачивайте по отдельности или пакетно все файлы. Файлы автоматически очищаются для вашей конфиденциальности.',
+                // FAQ Section
+                'faq_title': 'Часто Задаваемые Вопросы',
+                'faq_subtitle': 'Все что вам нужно знать о PDFrow',
+                'faq_q1': 'Действительно ли PDFrow бесплатен для использования?',
+                'faq_a1': 'Да! PDFrow полностью бесплатен для использования. Все основные функции включая конвертацию, сжатие, объединение и инструменты редактирования доступны бесплатно. Никаких скрытых платежей или подписки не требуется.',
+                'faq_q2': 'Безопасны ли мои файлы и приватны?',
+                'faq_a2': 'Абсолютно! Ваши файлы никогда не покидают ваш браузер. Вся обработка происходит локально на вашем устройстве с использованием клиентского JavaScript. Мы не храним, не получаем доступ и не передаем ваши документы никуда.',
+                'faq_q3': 'Какие форматы файлов поддерживаются?',
+                'faq_a3': 'Мы поддерживаем наиболее распространенные форматы документов и изображений: PDF, JPG, JPEG и PNG. Каждый инструмент оптимизирован для конкретных конверсий форматов и задач обработки.',
+                'faq_q4': 'Есть ли ограничение размера файла?',
+                'faq_a4': 'Максимальный размер файла составляет 10МБ на файл. Это ограничение обеспечивает оптимальную производительность и скорость обработки для всех пользователей.',
+                'faq_q5': 'Нужно ли устанавливать какое-либо программное обеспечение?',
+                'faq_a5': 'Установка не требуется! PDFrow работает полностью в вашем веб-браузере. Просто посетите наш сайт и начните использовать инструменты немедленно. Совместим с Chrome, Firefox, Safari и Edge.',
+                'faq_q6': 'Могу ли я использовать PDFrow на мобильных устройствах?',
+                'faq_a6': 'Да! PDFrow полностью адаптивен и работает на смартфонах, планшетах и настольных компьютерах. Интерфейс адаптируется к размеру вашего экрана для оптимального пользовательского опыта.',
+                // Footer
+                'language': 'Язык',
+                'footer_description': 'Платформа обработки документов нового поколения. Быстрая, безопасная и всегда бесплатная.',
+                'footer_tools_title': 'Инструменты',
+                'footer_pdf_converter': 'Конвертер PDF',
+                'footer_image_converter': 'Конвертер Изображений',
+                'footer_pdf_compressor': 'Компрессор PDF',
+                'footer_pdf_merger': 'Объединитель PDF',
+                'footer_features_title': 'Функции',
+                'footer_add_watermarks': 'Добавить Водяные Знаки',
+                'footer_page_numbers': 'Номера Страниц',
+                'footer_batch_processing': 'Пакетная Обработка',
+                'footer_privacy_first': 'Конфиденциальность Прежде Всего',
+                'footer_support_title': 'Поддержка',
+                'footer_faq': 'FAQ',
+                'footer_how_it_works': 'Как Это Работает',
+                'footer_contact': 'Контакт',
+                'footer_help_center': 'Центр Помощи',
+                'footer_copyright': '© 2025 PDFrow. Все права защищены. Сделано с ❤️ для обработки документов.'
+            },
+            'zh': {
+                // Navigation
+                'nav_tools': '工具',
+                'nav_features': '功能',
+                'nav_how_it_works': '工作原理',
+                'nav_faq': '常见问题',
+                // Hero Section
+                'hero_badge': '新一代文档处理',
+                'hero_title_1': '用专业精度',
+                'hero_title_2': '转换您的文档',
+                'hero_subtitle': '体验我们先进的基于网络的平台，实现闪电般快速的文档转换、压缩和编辑。无需下载，无限制，只有纯粹的性能。',
+                'btn_start_converting': '开始转换',
+                'stat_files_processed': '已处理文件',
+                'stat_uptime': '运行时间',
+                'stat_average_speed': '平均速度',
+                // Tools Section
+                'tools_title': '强大的文档工具',
+                'tools_subtitle': '从我们全面的文档处理工具套件中选择',
+                // Tool Cards
+                'tool_jpg_to_pdf_title': 'JPG转PDF',
+                'tool_jpg_to_pdf_desc': '将JPG图片转换为PDF文档',
+                'tool_png_to_jpg_title': 'PNG转JPG',
+                'tool_png_to_jpg_desc': '将PNG图片转换为JPG格式',
+                'tool_jpg_to_png_title': 'JPG转PNG',
+                'tool_jpg_to_png_desc': '将JPG图片转换为PNG格式',
+                'tool_pdf_to_jpg_title': 'PDF转JPG',
+                'tool_pdf_to_jpg_desc': '将PDF页面转换为JPG图片',
+                'tool_compress_pdf_title': '压缩PDF',
+                'tool_compress_pdf_desc': '减小PDF文件大小以便于分享',
+                'tool_merge_pdf_title': '合并PDF',
+                'tool_merge_pdf_desc': '将多个PDF文件合并为一个',
+                'tool_add_page_numbers_title': '添加页码',
+                'tool_add_page_numbers_desc': '为PDF添加自定义位置和样式的页码',
+                'tool_add_watermark_title': '添加水印',
+                'tool_add_watermark_desc': '为PDF添加自定义样式的文字或图片水印',
+                // Upload Areas
+                'drop_jpg_files': '将JPG文件拖放到这里',
+                'drop_png_files': '将PNG文件拖放到这里',
+                'drop_pdf_files': '将PDF文件拖放到这里',
+                'or_click_browse': '或点击浏览',
+                'or_click_browse_multiple': '或点击浏览（多个文件）',
+                // Convert Buttons
+                'convert_to_pdf': '转换为PDF',
+                'convert_to_jpg': '转换为JPG',
+                'convert_to_png': '转换为PNG',
+                'compress_pdf_btn': '压缩PDF',
+                'merge_pdfs_btn': '合并PDF',
+                'add_page_numbers_btn': '添加页码',
+                'add_watermark_btn': '添加水印',
+                // Features Section
+                'features_title': '为什么选择PDFrow？',
+                'features_subtitle': '通过我们的先进功能体验文档处理的未来',
+                'feature_lightning_fast_title': '闪电般快速',
+                'feature_lightning_fast_desc': '借助我们优化的算法和先进的客户端处理技术，在几秒钟内处理文档。',
+                'feature_secure_title': '100%安全',
+                'feature_secure_desc': '您的文件永远不会离开您的浏览器。所有处理都在本地进行，确保最大的隐私和安全。',
+                'feature_no_installation_title': '无需安装',
+                'feature_no_installation_desc': '直接在您的浏览器中工作。无需软件下载，无需更新，无麻烦。只需即时访问。',
+                'feature_multi_device_title': '多设备支持',
+                'feature_multi_device_desc': '从任何设备访问 - 桌面、平板或手机。响应式设计确保在任何地方都有完美的体验。',
+                'feature_high_quality_title': '高质量',
+                'feature_high_quality_desc': '专业的压缩和转换算法在优化文件大小的同时保持文档质量。',
+                'feature_always_free_title': '永远免费',
+                'feature_always_free_desc': '核心功能完全免费。无隐藏费用，无订阅，无文件处理限制。',
+                // How It Works Section
+                'how_it_works_title': '工作原理',
+                'how_it_works_subtitle': '简单、快速、安全的文档处理，只需三个简单步骤',
+                'step_upload_title': '上传您的文件',
+                'step_upload_desc': '拖放您的文档或点击浏览。支持PDF、JPG、PNG格式。文件在您的浏览器中本地处理，确保最大安全性。',
+                'step_choose_title': '选择您的工具',
+                'step_choose_desc': '从我们全面的工具包中选择：转换、压缩、合并、添加水印或页码。提供高级选项进行自定义。',
+                'step_download_title': '下载结果',
+                'step_download_desc': '立即获取您处理过的文件。单独下载或批量下载所有文件。文件会自动清理以保护您的隐私。',
+                // FAQ Section
+                'faq_title': '常见问题',
+                'faq_subtitle': '关于PDFrow您需要了解的一切',
+                'faq_q1': 'PDFrow真的免费使用吗？',
+                'faq_a1': '是的！PDFrow完全免费使用。包括转换、压缩、合并和编辑工具在内的所有核心功能都免费提供。没有隐藏费用或订阅要求。',
+                'faq_q2': '我的文件安全和私密吗？',
+                'faq_a2': '绝对安全！您的文件永远不会离开您的浏览器。所有处理都使用客户端JavaScript在您的设备上本地进行。我们不会在任何地方存储、访问或传输您的文档。',
+                'faq_q3': '支持哪些文件格式？',
+                'faq_a3': '我们支持最常见的文档和图像格式：PDF、JPG、JPEG和PNG。每个工具都针对特定的格式转换和处理任务进行了优化。',
+                'faq_q4': '有文件大小限制吗？',
+                'faq_a4': '最大文件大小为每个文件10MB。此限制确保所有用户的最佳性能和处理速度。',
+                'faq_q5': '我需要安装任何软件吗？',
+                'faq_a5': '无需安装！PDFrow完全在您的网络浏览器中工作。只需访问我们的网站并立即开始使用工具。与Chrome、Firefox、Safari和Edge兼容。',
+                'faq_q6': '我可以在移动设备上使用PDFrow吗？',
+                'faq_a6': '可以！PDFrow完全响应式，可在智能手机、平板电脑和桌面计算机上运行。界面适应您的屏幕大小，提供最佳用户体验。',
+                // Footer
+                'language': '语言',
+                'footer_description': '下一代文档处理平台。快速、安全、永远免费。',
+                'footer_tools_title': '工具',
+                'footer_pdf_converter': 'PDF转换器',
+                'footer_image_converter': '图像转换器',
+                'footer_pdf_compressor': 'PDF压缩器',
+                'footer_pdf_merger': 'PDF合并器',
+                'footer_features_title': '功能',
+                'footer_add_watermarks': '添加水印',
+                'footer_page_numbers': '页码',
+                'footer_batch_processing': '批处理',
+                'footer_privacy_first': '隐私优先',
+                'footer_support_title': '支持',
+                'footer_faq': '常见问题',
+                'footer_how_it_works': '工作原理',
+                'footer_contact': '联系',
+                'footer_help_center': '帮助中心',
+                'footer_copyright': '© 2025 PDFrow. 保留所有权利。用❤️为文档处理而制作。'
+            },
+            'ja': {
+                // Navigation
+                'nav_tools': 'ツール',
+                'nav_features': '機能',
+                'nav_how_it_works': '使い方',
+                'nav_faq': 'よくある質問',
+                // Hero Section
+                'hero_badge': '次世代ドキュメント処理',
+                'hero_title_1': 'あなたの文書を変換する',
+                'hero_title_2': 'プロフェッショナルな精度で',
+                'hero_subtitle': '先進的なWebベースプラットフォームで、高速ドキュメント変換、圧縮、編集を体験してください。ダウンロード不要、制限なし、純粋なパフォーマンスのみ。',
+                'btn_start_converting': '変換を開始',
+                'stat_files_processed': '処理済みファイル',
+                'stat_uptime': '稼働時間',
+                'stat_average_speed': '平均速度',
+                // Tools Section
+                'tools_title': '強力なドキュメントツール',
+                'tools_subtitle': '包括的なドキュメント処理ツールスイートから選択',
+                // Tool Cards
+                'tool_jpg_to_pdf_title': 'JPGかPDFへ',
+                'tool_jpg_to_pdf_desc': 'JPG画像をPDFドキュメントに変換',
+                'tool_png_to_jpg_title': 'PNGかJPGへ',
+                'tool_png_to_jpg_desc': 'PNG画像をJPG形式に変換',
+                'tool_jpg_to_png_title': 'JPGかPNGへ',
+                'tool_jpg_to_png_desc': 'JPG画像をPNG形式に変換',
+                'tool_pdf_to_jpg_title': 'PDFかJPGへ',
+                'tool_pdf_to_jpg_desc': 'PDFページをJPG画像に変換',
+                'tool_compress_pdf_title': 'PDF圧縮',
+                'tool_compress_pdf_desc': '簡単な共有のためにPDFファイルサイズを減らす',
+                'tool_merge_pdf_title': 'PDF結合',
+                'tool_merge_pdf_desc': '複数のPDFファイルを一つに結合',
+                'tool_add_page_numbers_title': 'ページ番号追加',
+                'tool_add_page_numbers_desc': 'カスタム位置とスタイルでPDFにページ番号を追加',
+                'tool_add_watermark_title': '透かし追加',
+                'tool_add_watermark_desc': 'カスタムスタイルでPDFにテキストまたは画像の透かしを追加',
+                // Upload Areas
+                'drop_jpg_files': 'JPGファイルをここにドロップ',
+                'drop_png_files': 'PNGファイルをここにドロップ',
+                'drop_pdf_files': 'PDFファイルをここにドロップ',
+                'or_click_browse': 'またはクリックして参照',
+                'or_click_browse_multiple': 'またはクリックして参照（複数ファイル）',
+                // Convert Buttons
+                'convert_to_pdf': 'PDFに変換',
+                'convert_to_jpg': 'JPGに変換',
+                'convert_to_png': 'PNGに変換',
+                'compress_pdf_btn': 'PDF圧縮',
+                'merge_pdfs_btn': 'PDF結合',
+                'add_page_numbers_btn': 'ページ番号追加',
+                'add_watermark_btn': '透かし追加',
+                // Features Section
+                'features_title': 'なぜPDFrowを選ぶのか？',
+                'features_subtitle': '先進的な機能でドキュメント処理の未来を体験',
+                'feature_lightning_fast_title': '雷速',
+                'feature_lightning_fast_desc': '最適化されたアルゴリズムと先進的なクライアントサイド処理技術で、数秒でドキュメントを処理。',
+                'feature_secure_title': '100%セキュア',
+                'feature_secure_desc': 'ファイルは絶対にブラウザを離れません。すべての処理はローカルで行われ、最大のプライバシーとセキュリティを実現。',
+                'feature_no_installation_title': 'インストール不要',
+                'feature_no_installation_desc': 'ブラウザで直接動作。ソフトウェアのダウンロード、アップデート、面倒がありません。即座アクセスできます。',
+                'feature_multi_device_title': 'マルチデバイス',
+                'feature_multi_device_desc': 'どんなデバイスからでも - デスクトップ、タブレット、モバイル。レスポンシブデザインでどこでも完美な体験を保証。',
+                'feature_high_quality_title': '高品質',
+                'feature_high_quality_desc': 'プロフェッショナルな圧縮と変換アルゴリズムがファイルサイズを最適化しながらドキュメントの品質を維持。',
+                'feature_always_free_title': '常に無料',
+                'feature_always_free_desc': 'コア機能は完全に無料。隠れたコスト、サブスクリプション、ファイル処理の制限はありません。',
+                // How It Works Section
+                'how_it_works_title': '使い方',
+                'how_it_works_subtitle': 'シンプル、高速、安全なドキュメント処理を簡単な3ステップで',
+                'step_upload_title': 'ファイルをアップロード',
+                'step_upload_desc': 'ドキュメントをドラッグ＆ドロップしてくださいまたはクリックして参照。PDF、JPG、PNG形式をサポート。ファイルは最大のセキュリティのためにブラウザでローカルに処理されます。',
+                'step_choose_title': 'ツールを選択',
+                'step_choose_desc': '包括的なツールキットから選択：変換、圧縮、結合、透かしやページ番号の追加。カスタマイズ用の高度なオプションも利用可能。',
+                'step_download_title': '結果をダウンロード',
+                'step_download_desc': '処理されたファイルを即座取得。個別ダウンロードまたはすべてのファイルの一括ダウンロード。プライバシーのためにファイルは自動的にクリーンアップされます。',
+                // FAQ Section
+                'faq_title': 'よくある質問',
+                'faq_subtitle': 'PDFrowについて知っておくべきこと',
+                'faq_q1': 'PDFrowは本当に無料で使えますか？',
+                'faq_a1': 'はい！PDFrowは完全に無料で使えます。変換、圧縮、結合、編集ツールを含むすべてのコア機能が無料で利用できます。隠れた料金やサブスクリプションは必要ありません。',
+                'faq_q2': 'ファイルは安全でプライベートですか？',
+                'faq_a2': '絶対に！ファイルは絶対にブラウザを離れません。すべての処理はクライアントサイドJavaScriptを使用してデバイス上でローカルに行われます。私たちはどこにもドキュメントを保存、アクセス、送信しません。',
+                'faq_q3': 'どのファイル形式がサポートされていますか？',
+                'faq_a3': '最も一般的なドキュメントと画像形式をサポートしています：PDF、JPG、JPEG、PNG。各ツールは特定の形式変換と処理タスクに最適化されています。',
+                'faq_q4': 'ファイルサイズの制限はありますか？',
+                'faq_a4': '最大ファイルサイズはファイルあたり10MBです。この制限により、すべてのユーザーに最適なパフォーマンスと処理速度が保証されます。',
+                'faq_q5': 'ソフトウェアのインストールが必要ですか？',
+                'faq_a5': 'インストールは不要です！PDFrowはウェブブラウザで完全に動作します。単に私たちのウェブサイトを訪れて、すぐにツールの使用を開始してください。Chrome、Firefox、Safari、Edgeと互換性があります。',
+                'faq_q6': 'モバイルデバイスでPDFrowを使えますか？',
+                'faq_a6': 'はい！PDFrowは完全にレスポンシブで、スマートフォン、タブレット、デスクトップコンピュータで動作します。インターフェイスはスクリーンサイズに適応し、最適なユーザーエクスペリエンスを提供します。',
+                // Footer
+                'language': '言語',
+                'footer_description': '次世代ドキュメント処理プラットフォーム。高速、安全、常に無料。',
+                'footer_tools_title': 'ツール',
+                'footer_pdf_converter': 'PDFコンバータ',
+                'footer_image_converter': '画像コンバータ',
+                'footer_pdf_compressor': 'PDFコンプレッサ',
+                'footer_pdf_merger': 'PDFマージャ',
+                'footer_features_title': '機能',
+                'footer_add_watermarks': '透かし追加',
+                'footer_page_numbers': 'ページ番号',
+                'footer_batch_processing': 'バッチ処理',
+                'footer_privacy_first': 'プライバシー第一',
+                'footer_support_title': 'サポート',
+                'footer_faq': 'よくある質問',
+                'footer_how_it_works': '使い方',
+                'footer_contact': 'お問い合わせ',
+                'footer_help_center': 'ヘルプセンター',
+                'footer_copyright': '© 2025 PDFrow. すべての権利が保留されています。ドキュメント処理のために❤️で作られました。'
+            },
+            'ar': {
+                // Navigation
+                'nav_tools': 'الأدوات',
+                'nav_features': 'الميزات',
+                'nav_how_it_works': 'كيف يعمل',
+                'nav_faq': 'الأسئلة الشائعة',
+                // Hero Section
+                'hero_badge': 'معالجة المستندات من الجيل التالي',
+                'hero_title_1': 'حوّل مستنداتك مع',
+                'hero_title_2': 'دقة احترافية',
+                'hero_subtitle': 'اختبر تحويل وضغط وتحرير المستندات بسرعة البرق مع منصتنا المتقدمة المستندة إلى الويب. لا توجد تنزيلات، لا حدود، أداء خالص فقط.',
+                'btn_start_converting': 'ابدأ التحويل',
+                'stat_files_processed': 'الملفات المعالجة',
+                'stat_uptime': 'وقت التشغيل',
+                'stat_average_speed': 'السرعة المتوسطة',
+                // Footer
+                'language': 'اللغة'
+            },
+            'hi': {
+                // Navigation
+                'nav_tools': 'उपकरण',
+                'nav_features': 'विशेषताएं',
+                'nav_how_it_works': 'कैसे काम करता है',
+                'nav_faq': 'सामान्य प्रश्न',
+                // Hero Section
+                'hero_badge': 'अगली पीढ़ी का दस्तावेज़ प्रसंस्करण',
+                'hero_title_1': 'अपने दस्तावेज़ों को बदलें',
+                'hero_title_2': 'पेशेवर सटीकता के साथ',
+                'hero_subtitle': 'हमारे उन्नत वेब-आधारित प्लेटफॉर्म के साथ बिजली की तेज़ दस्तावेज़ रूपांतरण, संपीड़न और संपादन का अनुभव करें। कोई डाउनलोड नहीं, कोई सीमा नहीं, केवल शुद्ध प्रदर्शन।',
+                'btn_start_converting': 'रूपांतरण शुरू करें',
+                'stat_files_processed': 'प्रसंस्कृत फ़ाइलें',
+                'stat_uptime': 'अपटाइम',
+                'stat_average_speed': 'औसत गति',
+                // Tools Section
+                'tools_title': 'शक्तिशाली दस्तावेज़ उपकरण',
+                'tools_subtitle': 'हमारे व्यापक दस्तावेज़ प्रसंस्करण उपकरणों के सूट से चुनें',
+                // Tool Cards
+                'tool_jpg_to_pdf_title': 'JPG से PDF',
+                'tool_jpg_to_pdf_desc': 'JPG छवियों को PDF दस्तावेज़ों में बदलें',
+                'tool_png_to_jpg_title': 'PNG से JPG',
+                'tool_png_to_jpg_desc': 'PNG छवियों को JPG प्रारूप में बदलें',
+                'tool_jpg_to_png_title': 'JPG से PNG',
+                'tool_jpg_to_png_desc': 'JPG छवियों को PNG प्रारूप में बदलें',
+                'tool_pdf_to_jpg_title': 'PDF से JPG',
+                'tool_pdf_to_jpg_desc': 'PDF पृष्ठों को JPG छवियों में बदलें',
+                'tool_compress_pdf_title': 'PDF संपीड़न',
+                'tool_compress_pdf_desc': 'आसान साझाकरण के लिए PDF फ़ाइल का आकार कम करें',
+                'tool_merge_pdf_title': 'PDF मर्ज',
+                'tool_merge_pdf_desc': 'कई PDF फ़ाइलों को एक में मिलाएं',
+                'tool_add_page_numbers_title': 'पृष्ठ संख्या जोड़ें',
+                'tool_add_page_numbers_desc': 'कस्टम स्थिति और स्टाइलिंग के साथ PDF में पृष्ठ संख्या जोड़ें',
+                'tool_add_watermark_title': 'वॉटरमार्क जोड़ें',
+                'tool_add_watermark_desc': 'कस्टम स्टाइलिंग के साथ PDF में टेक्स्ट या इमेज वॉटरमार्क जोड़ें',
+                // Upload Areas
+                'drop_jpg_files': 'JPG फ़ाइलें यहाँ छोड़ें',
+                'drop_png_files': 'PNG फ़ाइलें यहाँ छोड़ें',
+                'drop_pdf_files': 'PDF फ़ाइलें यहाँ छोड़ें',
+                'or_click_browse': 'या ब्राउज़ करने के लिए क्लिक करें',
+                'or_click_browse_multiple': 'या ब्राउज़ करने के लिए क्लिक करें (कई फ़ाइलें)',
+                // Convert Buttons
+                'convert_to_pdf': 'PDF में बदलें',
+                'convert_to_jpg': 'JPG में बदलें',
+                'convert_to_png': 'PNG में बदलें',
+                'compress_pdf_btn': 'PDF संपीड़न',
+                'merge_pdfs_btn': 'PDF मर्ज',
+                'add_page_numbers_btn': 'पृष्ठ संख्या जोड़ें',
+                'add_watermark_btn': 'वॉटरमार्क जोड़ें',
+                // Features Section
+                'features_title': 'PDFrow क्यों चुनें?',
+                'features_subtitle': 'हमारी उन्नत सुविधाओं के साथ दस्तावेज़ प्रसंस्करण के भविष्य का अनुभव करें',
+                'feature_lightning_fast_title': 'बिजली की तेज़',
+                'feature_lightning_fast_desc': 'हमारे अनुकूलित एल्गोरिदम और उन्नत क्लाइंट-साइड प्रसंस्करण तकनीक के साथ सेकंडों में दस्तावेज़ प्रसंस्करण।',
+                'feature_secure_title': '100% सुरक्षित',
+                'feature_secure_desc': 'आपकी फ़ाइलें कभी आपके ब्राउज़र को नहीं छोड़तीं। अधिकतम गोपनीयता और सुरक्षा के लिए सभी प्रसंस्करण स्थानीय रूप से होता है।',
+                'feature_no_installation_title': 'कोई इंस्टॉलेशन नहीं',
+                'feature_no_installation_desc': 'सीधे आपके ब्राउज़र में काम करता है। कोई सॉफ़्टवेयर डाउनलोड नहीं, कोई अपडेट नहीं, कोई परेशानी नहीं। बस तत्काल पहुंच।',
+                'feature_multi_device_title': 'मल्टी-डिवाइस',
+                'feature_multi_device_desc': 'किसी भी डिवाइस से एक्सेस करें - डेस्कटॉप, टैबलेट या मोबाइल। रिस्पॉन्सिव डिज़ाइन हर जगह पूर्ण अनुभव सुनिश्चित करता है।',
+                'feature_high_quality_title': 'उच्च गुणवत्ता',
+                'feature_high_quality_desc': 'पेशेवर संपीड़न और रूपांतरण एल्गोरिदम फ़ाइल आकार को अनुकूलित करते समय दस्तावेज़ गुणवत्ता बनाए रखते हैं।',
+                'feature_always_free_title': 'हमेशा मुफ़्त',
+                'feature_always_free_desc': 'मुख्य कार्यक्षमता पूरी तरह से मुफ़्त है। कोई छुपी लागत नहीं, कोई सदस्यता नहीं, फ़ाइल प्रसंस्करण पर कोई सीमा नहीं।',
+                // How It Works Section
+                'how_it_works_title': 'यह कैसे काम करता है',
+                'how_it_works_subtitle': 'तीन आसान चरणों में सरल, तेज़ और सुरक्षित दस्तावेज़ प्रसंस्करण',
+                'step_upload_title': 'अपनी फ़ाइलें अपलोड करें',
+                'step_upload_desc': 'अपने दस्तावेज़ों को ड्रैग और ड्रॉप करें या ब्राउज़ करने के लिए क्लिक करें। PDF, JPG, PNG प्रारूपों का समर्थन करता है। अधिकतम सुरक्षा के लिए फ़ाइलें आपके ब्राउज़र में स्थानीय रूप से प्रसंस्कृत होती हैं।',
+                'step_choose_title': 'अपना उपकरण चुनें',
+                'step_choose_desc': 'हमारे व्यापक टूलकिट से चुनें: कन्वर्ट, कंप्रेस, मर्ज, वॉटरमार्क या पेज नंबर जोड़ें। कस्टमाइज़ेशन के लिए उन्नत विकल्प उपलब्ध हैं।',
+                'step_download_title': 'परिणाम डाउनलोड करें',
+                'step_download_desc': 'अपनी प्रसंस्कृत फ़ाइलें तुरंत प्राप्त करें। व्यक्तिगत रूप से या सभी फ़ाइलों को बैच डाउनलोड करें। आपकी गोपनीयता के लिए फ़ाइलें स्वचालित रूप से साफ़ हो जाती हैं।',
+                // FAQ Section
+                'faq_title': 'अक्सर पूछे जाने वाले प्रश्न',
+                'faq_subtitle': 'PDFrow के बारे में जानने योग्य सब कुछ',
+                'faq_q1': 'क्या PDFrow वास्तव में उपयोग करने के लिए मुफ़्त है?',
+                'faq_a1': 'हाँ! PDFrow उपयोग करने के लिए पूरी तरह से मुफ़्त है। रूपांतरण, संपीड़न, मर्जिंग और संपादन उपकरण सहित सभी मुख्य कार्यक्षमता बिना किसी लागत के उपलब्ध है। कोई छुपी फ़ीस या सदस्यता आवश्यक नहीं।',
+                'faq_q2': 'क्या मेरी फ़ाइलें सुरक्षित और निजी हैं?',
+                'faq_a2': 'बिल्कुल! आपकी फ़ाइलें कभी आपके ब्राउज़र को नहीं छोड़तीं। सभी प्रसंस्करण क्लाइंट-साइड JavaScript का उपयोग करके आपके डिवाइस पर स्थानीय रूप से होता है। हम आपके दस्तावेज़ों को कहीं भी स्टोर, एक्सेस या ट्रांसमिट नहीं करते।',
+                'faq_q3': 'कौन से फ़ाइल प्रारूप समर्थित हैं?',
+                'faq_a3': 'हम सबसे सामान्य दस्तावेज़ और छवि प्रारूपों का समर्थन करते हैं: PDF, JPG, JPEG, और PNG। प्रत्येक उपकरण विशिष्ट प्रारूप रूपांतरण और प्रसंस्करण कार्यों के लिए अनुकूलित है।',
+                'faq_q4': 'क्या फ़ाइल आकार की कोई सीमा है?',
+                'faq_a4': 'अधिकतम फ़ाइल आकार प्रति फ़ाइल 10MB है। यह सीमा सभी उपयोगकर्ताओं के लिए अनुकूल प्रदर्शन और प्रसंस्करण गति सुनिश्चित करती है।',
+                'faq_q5': 'क्या मुझे कोई सॉफ़्टवेयर इंस्टॉल करना होगा?',
+                'faq_a5': 'कोई इंस्टॉलेशन आवश्यक नहीं! PDFrow पूरी तरह से आपके वेब ब्राउज़र में काम करता है। बस हमारी वेबसाइट पर जाएं और तुरंत उपकरणों का उपयोग शुरू करें। Chrome, Firefox, Safari, और Edge के साथ संगत।',
+                'faq_q6': 'क्या मैं मोबाइल डिवाइस पर PDFrow का उपयोग कर सकता हूँ?',
+                'faq_a6': 'हाँ! PDFrow पूरी तरह से रिस्पॉन्सिव है और स्मार्टफ़ोन, टैबलेट और डेस्कटॉप कंप्यूटर पर काम करता है। इंटरफ़ेस इष्टतम उपयोगकर्ता अनुभव के लिए आपकी स्क्रीन के आकार के अनुकूल हो जाता है।',
+                // Footer
+                'language': 'भाषा',
+                'footer_description': 'अगली पीढ़ी का दस्तावेज़ प्रसंस्करण प्लेटफॉर्म। तेज़, सुरक्षित और हमेशा मुफ़्त।',
+                'footer_tools_title': 'उपकरण',
+                'footer_pdf_converter': 'PDF कन्वर्टर',
+                'footer_image_converter': 'इमेज कन्वर्टर',
+                'footer_pdf_compressor': 'PDF कंप्रेसर',
+                'footer_pdf_merger': 'PDF मर्जर',
+                'footer_features_title': 'विशेषताएं',
+                'footer_add_watermarks': 'वॉटरमार्क जोड़ें',
+                'footer_page_numbers': 'पृष्ठ संख्या',
+                'footer_batch_processing': 'बैच प्रसंस्करण',
+                'footer_privacy_first': 'गोपनीयता पहले',
+                'footer_support_title': 'सहायता',
+                'footer_faq': 'FAQ',
+                'footer_how_it_works': 'यह कैसे काम करता है',
+                'footer_contact': 'संपर्क',
+                'footer_help_center': 'सहायता केंद्र',
+                'footer_copyright': '© 2025 PDFrow। सभी अधिकार सुरक्षित। दस्तावेज़ प्रसंस्करण के लिए ❤️ से बनाया गया।'
+            }
+        };
+        
+        return translations[langCode] || translations['en'];
+    }
+
+    showToolOptions(toolType) {
+        const tool = this.tools.get(toolType);
+        
+        if (toolType === 'add-page-numbers') {
+            const options = tool.card.querySelector('.numbering-options');
+            if (options) {
+                options.style.display = 'block';
+            }
+        } else if (toolType === 'add-watermark') {
+            const options = tool.card.querySelector('.watermark-options');
+            if (options) {
+                options.style.display = 'block';
+            }
+        }
+    }
+
+    hideToolOptions(toolType) {
+        const tool = this.tools.get(toolType);
+        
+        if (toolType === 'add-page-numbers') {
+            const options = tool.card.querySelector('.numbering-options');
+            const preview = tool.card.querySelector('.preview-section');
+            if (options) {
+                options.style.display = 'none';
+            }
+            if (preview) {
+                preview.style.display = 'none';
+            }
+        } else if (toolType === 'add-watermark') {
+            const options = tool.card.querySelector('.watermark-options');
+            const preview = tool.card.querySelector('.watermark-preview-section');
+            if (options) {
+                options.style.display = 'none';
+            }
+            if (preview) {
+                preview.style.display = 'none';
+            }
+        }
+    }
+
+    showSuccessBanner() {
+        // Remove any existing success banner first
+        const existingBanner = document.querySelector('.success-banner');
+        if (existingBanner) {
+            existingBanner.remove();
+        }
+
+        // Temporarily hide floating support during success banner
+        if (this.floatingSupport && this.floatingSupport.container) {
+            this.floatingSupport.container.style.transform = 'translateY(100px)';
+            this.floatingSupport.container.style.opacity = '0';
+            this.floatingSupport.container.style.pointerEvents = 'none';
+        }
+
+        // Create success banner element
+        const banner = document.createElement('div');
+        banner.className = 'success-banner';
+        banner.innerHTML = `
+            <div class="success-banner-icon">🎉</div>
+            <div class="success-banner-content">
+                <div class="success-banner-title">Success!</div>
+                <div class="success-banner-message">Want to support PDFrow?</div>
+            </div>
+            <div class="success-banner-actions">
+                <a href="#" class="success-banner-link" id="donateBannerLink">
+                    ☕ Donate
+                </a>
+            </div>
+            <button class="success-banner-close" aria-label="Close">&times;</button>
+        `;
+
+        // Add banner to the page
+        document.body.appendChild(banner);
+
+        // Add event listeners
+        const closeBtn = banner.querySelector('.success-banner-close');
+        const donateLink = banner.querySelector('#donateBannerLink');
+
+        closeBtn.addEventListener('click', () => {
+            this.hideSuccessBanner(banner);
+        });
+
+        donateLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Open support modal if it exists, otherwise show default support link
+            const supportBtn = document.getElementById('supportBtn');
+            if (supportBtn) {
+                supportBtn.click();
+            }
+            this.hideSuccessBanner(banner);
+        });
+
+        // Auto-hide banner after 8 seconds
+        setTimeout(() => {
+            if (document.body.contains(banner)) {
+                this.hideSuccessBanner(banner);
+            }
+        }, 8000);
+
+        // Hide banner when clicking outside
+        setTimeout(() => {
+            document.addEventListener('click', (e) => {
+                if (!banner.contains(e.target) && document.body.contains(banner)) {
+                    this.hideSuccessBanner(banner);
+                }
+            }, { once: true });
+        }, 1000);
+    }
+
+    hideSuccessBanner(banner) {
+        if (!banner || !document.body.contains(banner)) return;
+        
+        banner.classList.add('hide');
+        setTimeout(() => {
+            if (document.body.contains(banner)) {
+                banner.remove();
+            }
+            
+            // Show floating support button again
+            if (this.floatingSupport && this.floatingSupport.container) {
+                setTimeout(() => {
+                    this.floatingSupport.container.style.transform = 'translateY(0)';
+                    this.floatingSupport.container.style.opacity = '1';
+                    this.floatingSupport.container.style.pointerEvents = 'all';
+                }, 200);
+            }
+        }, 400); // Match the animation duration
+    }
+
+    removeFileAfterDownload(toolType, index) {
+        const tool = this.tools.get(toolType);
+        
+        // Remove the downloaded file from converted files
+        tool.convertedFiles.splice(index, 1);
+        
+        // Re-render results
+        this.renderResults(toolType, tool.convertedFiles);
+        
+        // If no more converted files, clear results but keep original files for split-pdf tool
+        if (tool.convertedFiles.length === 0) {
+            if (toolType === 'split-pdf') {
+                // For split PDF, only clear results but keep original files and preview
+                tool.results.innerHTML = '';
+            } else {
+                // For other tools, clear everything
+                this.clearAllFiles(toolType);
+            }
+        }
+    }
+
+    clearAllFiles(toolType) {
+        const tool = this.tools.get(toolType);
+        
+        // Clear all files
+        tool.files = [];
+        tool.convertedFiles = [];
+        
+        // Reset file input
+        tool.fileInput.value = '';
+        
+        // Clear file list display
+        tool.filesList.innerHTML = '';
+        
+        // Clear results
+        tool.results.innerHTML = '';
+        
+        // Reset convert button
+        this.updateConvertButton(toolType);
+        
+        // Hide options for advanced tools
+        if (toolType === 'add-page-numbers' || toolType === 'add-watermark') {
+            this.hideToolOptions(toolType);
+        }
+        
+        // Reset file input
+        const fileInput = tool.card.querySelector('.file-input');
+        if (fileInput) {
+            fileInput.value = '';
+        }
+    }
+
+    // Add download all functionality for batch processing
+    downloadAllFiles(toolType) {
+        const tool = this.tools.get(toolType);
+        
+        if (tool.convertedFiles.length === 0) return;
+        
+        // Download all files
+        tool.convertedFiles.forEach((file, index) => {
+            setTimeout(() => {
+                const url = URL.createObjectURL(file.blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, index * 100); // Small delay between downloads
+        });
+        
+        // Clear all files after a delay to allow downloads to start
+        setTimeout(() => {
+            this.clearAllFiles(toolType);
+        }, tool.convertedFiles.length * 100 + 500);
+    }
+
+    initializeContactForm() {
+        const contactModal = document.getElementById('contactModal');
+        const contactOverlay = document.getElementById('contactOverlay');
+        const contactCloseBtn = document.getElementById('contactCloseBtn');
+        const contactForm = document.getElementById('contact-form');
+        
+        // Open contact form
+        this.openContactForm = () => {
+            if (contactModal) {
+                contactModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+        
+        // Close contact form
+        this.closeContactForm = () => {
+            contactModal.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+        
+        // Event listeners
+        contactCloseBtn.addEventListener('click', this.closeContactForm);
+        contactOverlay.addEventListener('click', this.closeContactForm);
+        
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && contactModal.classList.contains('active')) {
+                this.closeContactForm();
+            }
+        });
+        
+        // Basic form validation before submission
+        contactForm.addEventListener('submit', (e) => {
+            if (!this.validateContactForm()) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Show loading state
+            const submitBtn = document.querySelector('.contact-submit-btn');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                
+                // Re-enable button after a delay (in case user stays on page)
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                    // Reset hCaptcha if form submission fails and user stays on page
+                    if (window.HCaptchaUtils && window.HCaptchaUtils.isReady()) {
+                        window.HCaptchaUtils.reset();
+                    } else if (typeof hcaptcha !== 'undefined') {
+                        hcaptcha.reset();
+                    }
+                }, 3000);
+            }
+            
+            // Let FormSubmit handle the actual submission
+            // Form will redirect to thank-you.html on success
+        });
+        
+        // Update footer contact link
+        const contactLinks = document.querySelectorAll('a[href="#contact"], a[data-translate="footer_contact"], #footerContactLink');
+        contactLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.openContactForm();
+            });
+        });
+        
+        // Additional specific handler for footer contact link
+        const footerContactLink = document.getElementById('footerContactLink');
+        if (footerContactLink) {
+            footerContactLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.openContactForm();
+            });
+        }
+    }
+    
+    validateContactForm() {
+        const name = document.getElementById('contactName').value;
+        const email = document.getElementById('contactEmail').value;
+        const contactType = document.getElementById('contactType').value;
+        const message = document.getElementById('contactMessage').value;
+        const termsAccepted = document.getElementById('contactTerms').checked;
+        const honeypot = document.querySelector('input[name="_honey"]').value;
+        
+        // Honeypot spam protection
+        if (honeypot) {
+            this.showContactMessage('Spam detected. Please try again.', 'error');
+            return false;
+        }
+        
+        // Basic validation
+        if (!name.trim() || !email.trim() || !contactType || !message.trim() || !termsAccepted) {
+            this.showContactMessage('Please fill in all required fields and accept the terms.', 'error');
+            return false;
+        }
+        
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            this.showContactMessage('Please enter a valid email address.', 'error');
+            return false;
+        }
+        
+        // hCaptcha validation
+        if (window.HCaptchaUtils && window.HCaptchaUtils.isReady()) {
+            const validation = window.HCaptchaUtils.validate();
+            if (!validation.valid) {
+                this.showContactMessage(validation.message, 'error');
+                return false;
+            }
+        } else if (typeof hcaptcha !== 'undefined') {
+            // Fallback to direct hCaptcha API
+            const hcaptchaResponse = hcaptcha.getResponse();
+            if (!hcaptchaResponse) {
+                this.showContactMessage('Please complete the captcha verification.', 'error');
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    
+    showContactMessage(message, type) {
+        // Create message element
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `contact-message ${type}`;
+        messageDiv.textContent = message;
+        
+        // Style the message
+        messageDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 20000;
+            animation: slideInRight 0.3s ease;
+            max-width: 300px;
+        `;
+        
+        if (type === 'success') {
+            messageDiv.style.background = '#4CAF50';
+        } else {
+            messageDiv.style.background = '#F44336';
+        }
+        
+        // Add to document
+        document.body.appendChild(messageDiv);
+        
+        // Remove after 4 seconds
+        setTimeout(() => {
+            messageDiv.style.animation = 'slideOutRight 0.3s ease';
+            setTimeout(() => {
+                document.body.removeChild(messageDiv);
+            }, 300);
+        }, 4000);
+    }
+
+    initializeFloatingSupport() {
+        this.floatingSupport = {
+            container: document.getElementById('floatingSupport'),
+            heartBtn: document.getElementById('floatingHeartBtn'),
+            sidebar: document.getElementById('floatingSidebar'),
+            donateBtn: document.getElementById('floatingDonateBtn'),
+            closeBtn: document.getElementById('floatingSidebarClose'),
+            isExpanded: false,
+            autoShowTimer: null,
+            attentionTimer: null
+        };
+
+        if (!this.floatingSupport.container) return;
+
+        this.setupFloatingSupportEvents();
+        this.scheduleAutoShow();
+        this.schedulePeriodicAttention();
+    }
+
+    setupFloatingSupportEvents() {
+        const { heartBtn, sidebar, donateBtn, closeBtn } = this.floatingSupport;
+
+        // Heart button click - toggle sidebar
+        heartBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.toggleFloatingSidebar();
+        });
+
+        // Donate button click - open support modal
+        donateBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.openSupportFromFloating();
+        });
+
+        // Close button click - collapse sidebar
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.collapseFloatingSidebar();
+        });
+
+        // Click outside to close
+        document.addEventListener('click', (e) => {
+            if (this.floatingSupport.isExpanded && 
+                !this.floatingSupport.container.contains(e.target)) {
+                this.collapseFloatingSidebar();
+            }
+        });
+
+        // Hover effects
+        heartBtn.addEventListener('mouseenter', () => {
+            if (!this.floatingSupport.isExpanded) {
+                this.expandFloatingSidebar();
+            }
+        });
+
+        // Auto-collapse after hover leave (with delay)
+        this.floatingSupport.container.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+                if (!this.floatingSupport.container.matches(':hover')) {
+                    this.collapseFloatingSidebar();
+                }
+            }, 2000); // 2 second delay
+        });
+    }
+
+    toggleFloatingSidebar() {
+        if (this.floatingSupport.isExpanded) {
+            this.collapseFloatingSidebar();
+        } else {
+            this.expandFloatingSidebar();
+        }
+    }
+
+    expandFloatingSidebar() {
+        const { heartBtn, sidebar } = this.floatingSupport;
+        
+        heartBtn.classList.add('expanded');
+        sidebar.classList.add('expanded');
+        this.floatingSupport.isExpanded = true;
+
+        // Clear any attention animations
+        heartBtn.classList.remove('attention');
+    }
+
+    collapseFloatingSidebar() {
+        const { heartBtn, sidebar } = this.floatingSupport;
+        
+        heartBtn.classList.remove('expanded');
+        sidebar.classList.remove('expanded');
+        this.floatingSupport.isExpanded = false;
+    }
+
+    openSupportFromFloating() {
+        // Open the existing support modal
+        const supportBtn = document.getElementById('supportBtn');
+        if (supportBtn) {
+            supportBtn.click();
+        }
+        
+        // Collapse the floating sidebar
+        this.collapseFloatingSidebar();
+    }
+
+    scheduleAutoShow() {
+        // Show floating button after user has been on the page for 30 seconds
+        this.floatingSupport.autoShowTimer = setTimeout(() => {
+            this.floatingSupport.container.classList.add('auto-show');
+        }, 30000);
+    }
+
+    schedulePeriodicAttention() {
+        // Add attention animation every 2 minutes
+        const addAttention = () => {
+            if (!this.floatingSupport.isExpanded) {
+                this.floatingSupport.heartBtn.classList.add('attention');
+                
+                // Remove attention class after animation
+                setTimeout(() => {
+                    this.floatingSupport.heartBtn.classList.remove('attention');
+                }, 2400); // 0.8s * 3 iterations
+            }
+        };
+
+        // First attention after 2 minutes
+        setTimeout(addAttention, 120000);
+        
+        // Then every 5 minutes
+        this.floatingSupport.attentionTimer = setInterval(addAttention, 300000);
+    }
+    
+    initializePageModals() {
+        // Terms & Conditions and Privacy Policy links now redirect to separate pages
+    }
+    
+    initializeBlog() {
+        // Blog initialization is handled by blog-init.js
+        console.log('Blog initialization delegated to blog-init.js');
+    }
+    
+    checkBlogToolSelection() {
+        // Check if user came from blog post wanting to use specific tool
+        const selectedTool = localStorage.getItem('selectedTool');
+        if (selectedTool) {
+            console.log('User selected tool from blog:', selectedTool);
+            
+            // Wait for page to fully load, then activate the tool
+            setTimeout(() => {
+                const toolCard = document.querySelector(`[data-tool="${selectedTool}"]`);
+                if (toolCard) {
+                    console.log('Activating tool:', selectedTool);
+                    toolCard.click();
+                    
+                    // Scroll to tools section
+                    document.getElementById('tools')?.scrollIntoView({ 
+                        behavior: 'smooth' 
+                    });
+                    
+                    // Clear the selection
+                    localStorage.removeItem('selectedTool');
+                } else {
+                    console.log('Tool not found:', selectedTool);
+                }
+            }, 1000);
+        }
+    }
+
+    // ========================================
+    // SPLIT PDF FUNCTIONALITY
+    // ========================================
+
+    /**
+     * Initialize PDF preview for split PDF tool
+     * @param {string} toolType - The tool type identifier
+     */
+    async initializeSplitPDFPreview(toolType) {
+        const tool = this.tools.get(toolType);
+        if (!tool || tool.files.length === 0) return;
+
+        try {
+            // Show loading state
+            this.setButtonLoading(tool.selectAllBtn, true);
+            tool.previewSection.style.display = 'block';
+            tool.splitOptions.style.display = 'block';
+            
+            // Hide the convert button since preview is now active
+            tool.convertBtn.style.display = 'none';
+            
+            // Load PDF.js library
+            await this.loadLibrary('pdfjsLib', 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+            
+            // Initialize PDF.js worker
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            
+            const file = tool.files[0];
+            const arrayBuffer = await file.arrayBuffer();
+            
+            // Load PDF document
+            const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+            tool.currentPDF = pdf;
+            tool.pdfPages = [];
+            
+            // Clear existing thumbnails
+            tool.thumbnailsContainer.innerHTML = '';
+            tool.selectedPages.clear();
+            
+            // Generate thumbnails for all pages
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const page = await pdf.getPage(pageNum);
+                const thumbnail = await this.createPageThumbnail(page, pageNum);
+                tool.pdfPages.push({ page, pageNum });
+                tool.thumbnailsContainer.appendChild(thumbnail);
+            }
+            
+            // Update UI
+            this.updateSelectionInfo(toolType);
+            this.updateRangeInputs(toolType);
+            
+            // Reset loading state
+            this.setButtonLoading(tool.selectAllBtn, false);
+            
+        } catch (error) {
+            console.error('Error initializing PDF preview:', error);
+            this.showError(tool.results, `Failed to load PDF preview: ${error.message}`);
+            this.setButtonLoading(tool.selectAllBtn, false);
+        }
+    }
+
+    /**
+     * Create a thumbnail for a PDF page
+     * @param {Object} page - PDF.js page object
+     * @param {number} pageNum - Page number
+     * @returns {HTMLElement} - Thumbnail element
+     */
+    async createPageThumbnail(page, pageNum) {
+        const scale = 0.5; // Scale for thumbnail
+        const viewport = page.getViewport({ scale });
+        
+        // Create canvas
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        
+        // Render page
+        await page.render({
+            canvasContext: context,
+            viewport: viewport
+        }).promise;
+        
+        // Create thumbnail container
+        const thumbnail = document.createElement('div');
+        thumbnail.className = 'page-thumbnail';
+        thumbnail.dataset.pageNum = pageNum;
+        
+        // Create checkbox
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'page-checkbox';
+        checkbox.addEventListener('change', () => this.handlePageSelection(pageNum));
+        
+        // Create page number label
+        const pageLabel = document.createElement('div');
+        pageLabel.className = 'page-number';
+        pageLabel.textContent = pageNum;
+        
+        // Assemble thumbnail
+        thumbnail.appendChild(canvas);
+        thumbnail.appendChild(checkbox);
+        thumbnail.appendChild(pageLabel);
+        
+        // Add click handlers
+        thumbnail.addEventListener('click', (e) => {
+            if (e.target !== checkbox) {
+                checkbox.checked = !checkbox.checked;
+                this.handlePageSelection(pageNum);
+            }
+        });
+        
+        // Add drag selection support
+        thumbnail.addEventListener('mousedown', () => this.startDragSelection(pageNum));
+        thumbnail.addEventListener('mouseenter', () => this.handleDragSelection(pageNum));
+        thumbnail.addEventListener('mouseup', () => this.endDragSelection());
+        
+        return thumbnail;
+    }
+
+    /**
+     * Handle page selection/deselection
+     * @param {number} pageNum - Page number
+     */
+    handlePageSelection(pageNum) {
+        const tool = this.tools.get('split-pdf');
+        const checkbox = tool.thumbnailsContainer.querySelector(`[data-page-num="${pageNum}"] .page-checkbox`);
+        const thumbnail = tool.thumbnailsContainer.querySelector(`[data-page-num="${pageNum}"]`);
+        
+        if (checkbox.checked) {
+            tool.selectedPages.add(pageNum);
+            thumbnail.classList.add('selected');
+        } else {
+            tool.selectedPages.delete(pageNum);
+            thumbnail.classList.remove('selected');
+        }
+        
+        this.updateSelectionInfo('split-pdf');
+        this.updatePageInput('split-pdf');
+    }
+
+    /**
+     * Start drag selection
+     * @param {number} pageNum - Starting page number
+     */
+    startDragSelection(pageNum) {
+        const tool = this.tools.get('split-pdf');
+        tool.isDragging = true;
+        tool.dragStartIndex = pageNum;
+    }
+
+    /**
+     * Handle drag selection
+     * @param {number} pageNum - Current page number
+     */
+    handleDragSelection(pageNum) {
+        const tool = this.tools.get('split-pdf');
+        if (!tool.isDragging) return;
+        
+        const start = Math.min(tool.dragStartIndex, pageNum);
+        const end = Math.max(tool.dragStartIndex, pageNum);
+        
+        // Select range of pages
+        for (let i = start; i <= end; i++) {
+            const checkbox = tool.thumbnailsContainer.querySelector(`[data-page-num="${i}"] .page-checkbox`);
+            const thumbnail = tool.thumbnailsContainer.querySelector(`[data-page-num="${i}"]`);
+            if (checkbox && !checkbox.checked) {
+                checkbox.checked = true;
+                tool.selectedPages.add(i);
+                thumbnail.classList.add('selected');
+            }
+        }
+        
+        this.updateSelectionInfo('split-pdf');
+        this.updatePageInput('split-pdf');
+    }
+
+    /**
+     * End drag selection
+     */
+    endDragSelection() {
+        const tool = this.tools.get('split-pdf');
+        tool.isDragging = false;
+        tool.dragStartIndex = null;
+    }
+
+    /**
+     * Select all pages
+     * @param {string} toolType - The tool type identifier
+     */
+    selectAllPages(toolType) {
+        const tool = this.tools.get(toolType);
+        
+        tool.thumbnailsContainer.querySelectorAll('.page-checkbox').forEach((checkbox, index) => {
+            checkbox.checked = true;
+            tool.selectedPages.add(index + 1);
+            checkbox.closest('.page-thumbnail').classList.add('selected');
+        });
+        
+        this.updateSelectionInfo(toolType);
+        this.updatePageInput(toolType);
+    }
+
+    /**
+     * Clear page selection
+     * @param {string} toolType - The tool type identifier
+     */
+    clearPageSelection(toolType) {
+        const tool = this.tools.get(toolType);
+        
+        tool.thumbnailsContainer.querySelectorAll('.page-checkbox').forEach(checkbox => {
+            checkbox.checked = false;
+            checkbox.closest('.page-thumbnail').classList.remove('selected');
+        });
+        
+        tool.selectedPages.clear();
+        this.updateSelectionInfo(toolType);
+        this.updatePageInput(toolType);
+    }
+
+    /**
+     * Update selection info display
+     * @param {string} toolType - The tool type identifier
+     */
+    updateSelectionInfo(toolType) {
+        const tool = this.tools.get(toolType);
+        const count = tool.selectedPages.size;
+        tool.selectionInfo.textContent = `${count} page${count !== 1 ? 's' : ''} selected`;
+    }
+
+    /**
+     * Update page input field with selected pages
+     * @param {string} toolType - The tool type identifier
+     */
+    updatePageInput(toolType) {
+        const tool = this.tools.get(toolType);
+        const selectedArray = Array.from(tool.selectedPages).sort((a, b) => a - b);
+        
+        // Format as ranges where possible (e.g., "1,3,5-7,9")
+        const ranges = [];
+        let start = selectedArray[0];
+        let end = start;
+        
+        for (let i = 1; i <= selectedArray.length; i++) {
+            if (i < selectedArray.length && selectedArray[i] === end + 1) {
+                end = selectedArray[i];
+            } else {
+                if (start === end) {
+                    ranges.push(start.toString());
+                } else if (end === start + 1) {
+                    ranges.push(`${start},${end}`);
+                } else {
+                    ranges.push(`${start}-${end}`);
+                }
+                start = selectedArray[i];
+                end = start;
+            }
+        }
+        
+        tool.pageInput.value = ranges.join(',');
+    }
+
+    /**
+     * Update page selection from input field
+     * @param {string} toolType - The tool type identifier
+     */
+    updatePageSelectionFromInput(toolType) {
+        const tool = this.tools.get(toolType);
+        const input = tool.pageInput.value.trim();
+        
+        if (!input) {
+            this.clearPageSelection(toolType);
+            return;
+        }
+        
+        try {
+            const pageNumbers = this.parsePageNumbers(input, tool.currentPDF.numPages);
+            
+            // Clear current selection
+            this.clearPageSelection(toolType);
+            
+            // Select parsed pages
+            pageNumbers.forEach(pageNum => {
+                const checkbox = tool.thumbnailsContainer.querySelector(`[data-page-num="${pageNum}"] .page-checkbox`);
+                const thumbnail = tool.thumbnailsContainer.querySelector(`[data-page-num="${pageNum}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                    tool.selectedPages.add(pageNum);
+                    thumbnail.classList.add('selected');
+                }
+            });
+            
+            this.updateSelectionInfo(toolType);
+            
+        } catch (error) {
+            console.error('Invalid page range:', error);
+            // Show error briefly
+            tool.pageInput.style.borderColor = '#f44336';
+            setTimeout(() => {
+                tool.pageInput.style.borderColor = '';
+            }, 2000);
+        }
+    }
+
+    /**
+     * Parse page numbers from string (e.g., "1,3,5-7,9")
+     * @param {string} input - Input string
+     * @param {number} maxPages - Maximum number of pages
+     * @returns {number[]} - Array of page numbers
+     */
+    parsePageNumbers(input, maxPages) {
+        const pages = new Set();
+        const parts = input.split(',').map(part => part.trim());
+        
+        parts.forEach(part => {
+            if (part.includes('-')) {
+                const [start, end] = part.split('-').map(num => parseInt(num.trim()));
+                if (isNaN(start) || isNaN(end) || start < 1 || end > maxPages || start > end) {
+                    throw new Error(`Invalid range: ${part}`);
+                }
+                for (let i = start; i <= end; i++) {
+                    pages.add(i);
+                }
+            } else {
+                const pageNum = parseInt(part);
+                if (isNaN(pageNum) || pageNum < 1 || pageNum > maxPages) {
+                    throw new Error(`Invalid page number: ${part}`);
+                }
+                pages.add(pageNum);
+            }
+        });
+        
+        return Array.from(pages).sort((a, b) => a - b);
+    }
+
+    /**
+     * Switch split mode tab
+     * @param {string} toolType - The tool type identifier
+     * @param {string} mode - The mode to switch to
+     */
+    switchSplitMode(toolType, mode) {
+        const tool = this.tools.get(toolType);
+        
+        // Update tabs
+        tool.splitTabs.forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.mode === mode);
+        });
+        
+        // Update mode panels
+        tool.splitModes.forEach(modePanel => {
+            modePanel.classList.toggle('active', modePanel.classList.contains(`${mode}-mode`));
+        });
+    }
+
+    /**
+     * Update range inputs
+     * @param {string} toolType - The tool type identifier
+     */
+    updateRangeInputs(toolType) {
+        const tool = this.tools.get(toolType);
+        if (tool.currentPDF) {
+            tool.rangeStart.max = tool.currentPDF.numPages;
+            tool.rangeEnd.max = tool.currentPDF.numPages;
+            tool.rangeEnd.placeholder = tool.currentPDF.numPages;
+        }
+    }
+
+    /**
+     * Update range preview
+     * @param {string} toolType - The tool type identifier
+     */
+    updateRangePreview(toolType) {
+        const tool = this.tools.get(toolType);
+        const start = parseInt(tool.rangeStart.value);
+        const end = parseInt(tool.rangeEnd.value);
+        
+        if (start && end && start <= end) {
+            // Clear current selection
+            this.clearPageSelection(toolType);
+            
+            // Select range
+            for (let i = start; i <= end; i++) {
+                const checkbox = tool.thumbnailsContainer.querySelector(`[data-page-num="${i}"] .page-checkbox`);
+                const thumbnail = tool.thumbnailsContainer.querySelector(`[data-page-num="${i}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                    tool.selectedPages.add(i);
+                    thumbnail.classList.add('selected');
+                }
+            }
+            
+            this.updateSelectionInfo(toolType);
+            this.updatePageInput(toolType);
+        }
+    }
+
+    /**
+     * Handle split action
+     * @param {string} toolType - The tool type identifier
+     * @param {string} action - The action to perform
+     */
+    async handleSplitAction(toolType, action) {
+        const tool = this.tools.get(toolType);
+        
+        if (!tool.currentPDF) {
+            this.showError(tool.results, 'Please upload a PDF file first.');
+            return;
+        }
+        
+        switch (action) {
+            case 'extract':
+                await this.extractSelectedPages(toolType);
+                break;
+            case 'range':
+                await this.extractPageRange(toolType);
+                break;
+            default:
+                console.error('Unknown split action:', action);
+                this.showError(tool.results, `Unknown action: ${action}`);
+        }
+    }
+
+    /**
+     * Extract selected pages
+     * @param {string} toolType - The tool type identifier
+     */
+    async extractSelectedPages(toolType) {
+        const tool = this.tools.get(toolType);
+        
+        // Check if files are loaded
+        if (!tool.files || tool.files.length === 0) {
+            this.showError(tool.results, 'No PDF file uploaded. Please upload a PDF file first.');
+            return;
+        }
+        
+        // Check if PDF is loaded
+        if (!tool.currentPDF) {
+            this.showError(tool.results, 'PDF not loaded. Please click "Preview & Split PDF" first.');
+            return;
+        }
+        
+        if (tool.selectedPages.size === 0) {
+            this.showError(tool.results, 'Please select at least one page to extract.');
+            return;
+        }
+        
+        // Show loading state
+        const actionBtn = tool.card.querySelector('[data-action="extract"]');
+        this.setButtonLoading(actionBtn, true);
+        
+        try {
+            // Load PDF-lib
+            await this.loadLibrary('PDFLib', 'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js');
+            
+            const selectedArray = Array.from(tool.selectedPages).sort((a, b) => a - b);
+            const originalFile = tool.files[0];
+            
+            if (!originalFile) {
+                throw new Error('No PDF file found in tool.files[0]');
+            }
+            
+            console.log('Original file found:', originalFile.name, 'Size:', originalFile.size);
+            const arrayBuffer = await originalFile.arrayBuffer();
+            
+            // Load original PDF
+            const originalPdf = await PDFLib.PDFDocument.load(arrayBuffer);
+            
+            // Create new PDF with selected pages
+            const newPdf = await PDFLib.PDFDocument.create();
+            const pageIndices = selectedArray.map(pageNum => pageNum - 1); // Convert to 0-based
+            const copiedPages = await newPdf.copyPages(originalPdf, pageIndices);
+            
+            copiedPages.forEach(page => newPdf.addPage(page));
+            
+            // Generate PDF bytes
+            const pdfBytes = await newPdf.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            
+            // Generate filename
+            const baseName = this.changeFileExtension(originalFile.name, '');
+            const fileName = `${baseName}_pages_${selectedArray.join('-')}.pdf`;
+            
+            // Create result
+            const result = {
+                name: fileName,
+                blob: blob,
+                type: 'application/pdf',
+                extractInfo: `Extracted ${selectedArray.length} page${selectedArray.length !== 1 ? 's' : ''}`
+            };
+            
+            console.log('Split PDF: Created result file:', result.name, 'Size:', result.blob.size);
+            this.renderResults(toolType, [result]);
+            
+        } finally {
+            this.setButtonLoading(actionBtn, false);
+        }
+    }
+
+    /**
+     * Extract page range
+     * @param {string} toolType - The tool type identifier
+     */
+    async extractPageRange(toolType) {
+        const tool = this.tools.get(toolType);
+        
+        // Check if files are loaded
+        if (!tool.files || tool.files.length === 0) {
+            this.showError(tool.results, 'No PDF file uploaded. Please upload a PDF file first.');
+            return;
+        }
+        
+        // Check if PDF is loaded
+        if (!tool.currentPDF) {
+            this.showError(tool.results, 'PDF not loaded. Please click "Preview & Split PDF" first.');
+            return;
+        }
+        
+        const start = parseInt(tool.rangeStart.value);
+        const end = parseInt(tool.rangeEnd.value);
+        
+        console.log('Split Range - Start:', start, 'End:', end, 'Total pages:', tool.currentPDF?.numPages);
+        
+        if (!start || !end || isNaN(start) || isNaN(end) || start > end || start < 1 || end > tool.currentPDF.numPages) {
+            const errorMsg = `Invalid page range: ${start}-${end}. PDF has ${tool.currentPDF?.numPages} pages.`;
+            console.error(errorMsg);
+            this.showError(tool.results, errorMsg);
+            return;
+        }
+        
+        // Show loading state
+        const actionBtn = tool.card.querySelector('[data-action="range"]');
+        this.setButtonLoading(actionBtn, true);
+        
+        try {
+            console.log('Loading PDF-lib library...');
+            // Load PDF-lib
+            await this.loadLibrary('PDFLib', 'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js');
+            
+            // Verify PDFLib is available
+            if (typeof PDFLib === 'undefined') {
+                throw new Error('PDF-lib library failed to load');
+            }
+            console.log('PDF-lib is available');
+            
+            console.log('Loading original PDF...');
+            const originalFile = tool.files[0];
+            
+            if (!originalFile) {
+                throw new Error('No PDF file found in tool.files[0]');
+            }
+            
+            console.log('Original file found:', originalFile.name, 'Size:', originalFile.size);
+            const arrayBuffer = await originalFile.arrayBuffer();
+            
+            // Load original PDF
+            const originalPdf = await PDFLib.PDFDocument.load(arrayBuffer);
+            console.log('Original PDF loaded, page count:', originalPdf.getPageCount());
+            
+            // Create new PDF with page range
+            const newPdf = await PDFLib.PDFDocument.create();
+            const pageIndices = [];
+            for (let i = start - 1; i < end; i++) {
+                pageIndices.push(i);
+            }
+            console.log('Page indices to copy:', pageIndices);
+            
+            const copiedPages = await newPdf.copyPages(originalPdf, pageIndices);
+            console.log('Pages copied:', copiedPages.length);
+            copiedPages.forEach(page => newPdf.addPage(page));
+            
+            // Generate PDF bytes
+            console.log('Generating PDF bytes...');
+            const pdfBytes = await newPdf.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            console.log('PDF generated, size:', blob.size);
+            
+            // Generate filename
+            const baseName = this.changeFileExtension(originalFile.name, '');
+            const fileName = `${baseName}_pages_${start}-${end}.pdf`;
+            
+            // Create result
+            const result = {
+                name: fileName,
+                blob: blob,
+                type: 'application/pdf',
+                extractInfo: `Extracted pages ${start}-${end}`
+            };
+            
+            console.log('Split Range: Created result file:', result.name, 'Size:', result.blob.size);
+            this.renderResults(toolType, [result]);
+            
+        } catch (error) {
+            console.error('Split Range Error:', error);
+            this.showError(tool.results, `Split range failed: ${error.message}`);
+        } finally {
+            this.setButtonLoading(actionBtn, false);
+        }
+    }
+
+
+    /**
+     * Hide split PDF preview
+     * @param {string} toolType - The tool type identifier
+     */
+    hideSplitPDFPreview(toolType) {
+        const tool = this.tools.get(toolType);
+        tool.previewSection.style.display = 'none';
+        tool.splitOptions.style.display = 'none';
+        tool.thumbnailsContainer.innerHTML = '';
+        tool.selectedPages.clear();
+        tool.currentPDF = null;
+        tool.pdfPages = [];
+        
+        // Show the convert button again for next upload
+        tool.convertBtn.style.display = 'block';
+    }
+}
+
+const converter = new PDFrowConverter();

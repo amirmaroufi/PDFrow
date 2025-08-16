@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Blog Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #0a0b0f; color: #fff; }
+        .blog-card { background: #4ECDC4; color: #000; padding: 20px; margin: 20px 0; border-radius: 10px; }
+        .blog-card h3 { margin: 0 0 10px 0; }
+        .blog-card p { margin: 10px 0; font-size: 14px; }
+        .blog-meta { font-size: 12px; opacity: 0.7; }
+    </style>
+</head>
+<body>
+    <h1>Simple Blog Test</h1>
+    <div id="test-output"></div>
+
+    <script>
+        // Inline blog data for testing
+        const testBlogData = {
+            1: {
+                id: 1,
+                title: "How to delete a page in Word (without the formatting headache)",
+                excerpt: "Struggling with extra pages in Word? Here's how to remove them easily—plus a faster way using iLovePDF tools",
+                date: "Jun 27, 2025",
+                readTime: "5 min read",
+                category: "Word Processing",
+                color: "#E8E5FF"
+            },
+            5: {
+                id: 5,
+                title: "Compress PDF Files Online – Fast, Free & Easy with PDFrow",
+                excerpt: "Large PDF files can be frustrating. Learn how PDFrow solves this instantly, allowing you to compress PDF files online in seconds while keeping quality intact.",
+                date: "Aug 10, 2025",
+                readTime: "6 min read",
+                category: "PDF Tools",
+                color: "#4ECDC4"
+            }
+        };
+
+        function testGetAllPosts() {
+            return Object.values(testBlogData).sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+
+        // Test the blog rendering
+        const posts = testGetAllPosts();
+        const output = document.getElementById('test-output');
+        
+        output.innerHTML = `
+            <p>Found ${posts.length} posts:</p>
+            ${posts.map(post => `
+                <div class="blog-card" style="background-color: ${post.color}">
+                    <h3>${post.title}</h3>
+                    <p>${post.excerpt}</p>
+                    <div class="blog-meta">
+                        ${post.category} | ${post.date} | ${post.readTime}
+                    </div>
+                </div>
+            `).join('')}
+        `;
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormSubmit Test - PDFrow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        button {
+            background: #00f5ff;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #00d4e6;
+        }
+        .honeypot {
+            display: none !important;
+            opacity: 0;
+            position: absolute;
+            left: -9999px;
+        }
+        .hcaptcha-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+    </style>
+    
+    <!-- hCaptcha -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+</head>
+<body>
+    <div class="form-container">
+        <h1>🧪 PDFrow Contact Form Test</h1>
+        <p>This is a test form using FormSubmit.co to verify the contact form functionality works correctly.</p>
+        
+        <form action="https://formsubmit.co/contact@pdfrow.com" method="POST">
+            <!-- FormSubmit Configuration -->
+            <input type="hidden" name="_subject" value="Test Contact Form Submission - PDFrow">
+            <input type="hidden" name="_next" value="https://pdfrow.com/thank-you.html">
+            <input type="hidden" name="_captcha" value="true">
+            <input type="hidden" name="_template" value="table">
+            
+            <!-- Honeypot for spam protection -->
+            <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off">
+            
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">Subject *</label>
+                <select id="subject" name="subject" required>
+                    <option value="">Select a topic</option>
+                    <option value="question">Ask a question</option>
+                    <option value="bug">Report a bug</option>
+                    <option value="feature">Request a feature</option>
+                    <option value="feedback">General feedback</option>
+                    <option value="test">Test submission</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" placeholder="Please describe your question, issue, or feedback..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" required>
+                    I agree to send this test message to PDFrow
+                </label>
+            </div>
+            
+            <!-- hCaptcha -->
+            <div class="hcaptcha-container">
+                <div class="h-captcha" data-sitekey="0d1af27e-28de-4c60-8bce-5cb49414df58" data-theme="light"></div>
+            </div>
+            
+            <button type="submit">Send Test Message</button>
+        </form>
+        
+        <hr style="margin: 30px 0;">
+        
+        <h3>✅ Test Checklist:</h3>
+        <ul>
+            <li>✅ FormSubmit.co integration configured</li>
+            <li>✅ File attachment functionality removed</li>
+            <li>✅ Web3Forms integration removed</li>
+            <li>✅ Honeypot spam protection included</li>
+            <li>✅ Form validation in place</li>
+            <li>✅ Redirect to thank-you.html configured</li>
+            <li>✅ hCaptcha integration added</li>
+            <li>✅ Captcha validation enabled (_captcha: true)</li>
+        </ul>
+        
+        <p><strong>Expected behavior:</strong></p>
+        <ol>
+            <li>Fill out the form above</li>
+            <li>Complete the hCaptcha verification</li>
+            <li>Click "Send Test Message"</li>
+            <li>Form will submit to FormSubmit.co</li>
+            <li>You should be redirected to the thank-you page</li>
+            <li>An email should arrive at contact@pdfrow.com</li>
+        </ol>
+        
+        <p><strong>⚠️ Note:</strong> This test form uses the production site key placeholder <code>0d1af27e-28de-4c60-8bce-5cb49414df58</code>. Replace this with your actual hCaptcha site key from <a href="https://dashboard.hcaptcha.com" target="_blank" style="color: #00f5ff;">dashboard.hcaptcha.com</a>.</p>
+    </div>
+</body>
+</html>

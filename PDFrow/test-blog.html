@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Test - PDFrow</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <h1 style="color: var(--text-primary); text-align: center; padding: 40px 0;">Blog Test Page</h1>
+        
+        <!-- Blog Section -->
+        <section id="blog" class="blog-section">
+            <div class="blog-container">
+                <div class="section-header">
+                    <h2 class="section-title">Latest from Our Blog</h2>
+                    <p class="section-subtitle">Tips, tutorials, and insights to help you work smarter with documents</p>
+                </div>
+                
+                <div class="blog-grid" id="blogGrid">
+                    <!-- Blog posts will be dynamically inserted here -->
+                </div>
+                
+                <div class="blog-cta">
+                    <button class="btn-primary blog-view-all" onclick="window.location.href='blog-post.html'">
+                        View All Posts
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="blog-data.js"></script>
+    <script src="blog-init.js"></script>
+</body>
+</html>

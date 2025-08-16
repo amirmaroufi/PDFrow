@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Auth Test - PDFrow</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+        .test-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--secondary-bg);
+        }
+        .test-button {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+        .status-indicator {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        .status-success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+        .status-error {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+        .status-pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+        .debug-info {
+            background: var(--primary-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.875rem;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+        }
+        .user-info-display {
+            background: rgba(0, 245, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent-primary);
+        }
+        .auth-buttons-display {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        .auth-buttons-display > * {
+            flex: 1;
+            min-width: 200px;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <div class="test-container">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h1>🔐 Complete Authentication Test</h1>
+                <p>Test all authentication features including password reset and profile management</p>
+            </div>
+
+            <!-- Navigation Auth Buttons -->
+            <div class="test-section">
+                <h3>Navigation Authentication</h3>
+                <div class="nav-actions">
+                    <!-- Auth Buttons (shown when not logged in) -->
+                    <div id="auth-buttons" class="auth-buttons">
+                        <button class="btn-auth btn-login" id="loginBtn">Login</button>
+                        <button class="btn-auth btn-signup" id="signupBtn">Sign Up</button>
+                    </div>
+
+                    <!-- User Menu (shown when logged in) -->
+                    <div id="user-menu" class="user-menu" style="display: none;">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span class="user-email">user@example.com</span>
+                        <div class="user-dropdown">
+                            <button class="dropdown-item" id="profileBtn">Profile</button>
+                            <button class="dropdown-item" id="logoutBtn">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Authentication Status -->
+            <div class="test-section">
+                <h3>Authentication Status</h3>
+                <p><strong>Status:</strong> <span id="authStatus">Checking...</span></p>
+                <div id="userInfoDisplay" class="user-info-display" style="display: none;">
+                    <h4>Current User Information:</h4>
+                    <p><strong>Email:</strong> <span id="displayEmail"></span></p>
+                    <p><strong>Name:</strong> <span id="displayName"></span></p>
+                    <p><strong>Provider:</strong> <span id="displayProvider"></span></p>
+                    <p><strong>Email Verified:</strong> <span id="displayVerified"></span></p>
+                    <p><strong>Join Date:</strong> <span id="displayJoinDate"></span></p>
+                </div>
+            </div>
+
+            <!-- Test Actions -->
+            <div class="test-section">
+                <h3>Test Actions</h3>
+                <div class="auth-buttons-display">
+                    <button class="auth-submit-btn test-button" id="testSignup">Test Signup</button>
+                    <button class="auth-submit-btn test-button" id="testLogin">Test Login</button>
+                    <button class="auth-submit-btn test-button" id="testForgotPassword">Test Forgot Password</button>
+                    <button class="auth-submit-btn test-button" id="testProfile">Test Profile Modal</button>
+                    <button class="auth-submit-btn test-button" id="testChangePassword">Test Change Password</button>
+                    <button class="auth-submit-btn test-button" id="testSignout">Test Sign Out</button>
+                </div>
+            </div>
+
+            <!-- Password Reset Testing -->
+            <div class="test-section">
+                <h3>Password Reset Testing</h3>
+                <p>Test password reset functionality:</p>
+                <div class="auth-buttons-display">
+                    <button class="google-auth-btn test-button" id="simulatePasswordReset">
+                        Simulate Password Reset Link
+                    </button>
+                    <button class="profile-btn secondary test-button" id="clearPasswordReset">
+                        Clear Password Reset
+                    </button>
+                </div>
+                <p><small>This simulates clicking a password reset link from email</small></p>
+            </div>
+
+            <!-- Debug Console -->
+            <div class="test-section">
+                <h3>Debug Console</h3>
+                <div class="debug-info" id="debugLog">Initializing authentication test...</div>
+                <button class="profile-btn secondary" id="clearLog" style="margin-top: 0.5rem;">Clear Log</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="index.html" class="btn-auth btn-login">← Back to Main Site</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase and Auth Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    
+    <script>
+        const debugLog = document.getElementById('debugLog');
+        
+        function log(message) {
+            console.log(message);
+            debugLog.textContent += '\n' + new Date().toLocaleTimeString() + ': ' + message;
+            debugLog.scrollTop = debugLog.scrollHeight;
+        }
+
+        function updateAuthStatus() {
+            const isAuth = window.pdfrowAuth?.isAuthenticated() || false;
+            const user = window.pdfrowAuth?.getUser();
+            const statusEl = document.getElementById('authStatus');
+            const userInfoEl = document.getElementById('userInfoDisplay');
+            
+            if (isAuth && user) {
+                statusEl.innerHTML = '<span class="status-indicator status-success">Signed In</span>';
+                userInfoEl.style.display = 'block';
+                
+                document.getElementById('displayEmail').textContent = user.email || 'N/A';
+                document.getElementById('displayName').textContent = user.user_metadata?.full_name || 'N/A';
+                document.getElementById('displayProvider').textContent = user.app_metadata?.provider || 'email';
+                document.getElementById('displayVerified').textContent = user.email_confirmed_at ? 'Yes' : 'No';
+                document.getElementById('displayJoinDate').textContent = user.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A';
+                
+                log('✅ User authenticated: ' + user.email);
+            } else {
+                statusEl.innerHTML = '<span class="status-indicator status-error">Not Signed In</span>';
+                userInfoEl.style.display = 'none';
+                log('ℹ️ User not authenticated');
+            }
+        }
+
+        // Wait for auth to initialize
+        function waitForAuth() {
+            if (window.pdfrowAuth && window.pdfrowAuth.isInitialized) {
+                log('✅ Auth system initialized');
+                updateAuthStatus();
+                bindTestEvents();
+            } else {
+                log('⏳ Waiting for auth system...');
+                setTimeout(waitForAuth, 500);
+            }
+        }
+
+        function bindTestEvents() {
+            // Test buttons
+            document.getElementById('testSignup').addEventListener('click', () => {
+                log('🔄 Opening signup modal...');
+                window.pdfrowAuth.showSignupModal();
+            });
+
+            document.getElementById('testLogin').addEventListener('click', () => {
+                log('🔄 Opening login modal...');
+                window.pdfrowAuth.showLoginModal();
+            });
+
+            document.getElementById('testForgotPassword').addEventListener('click', () => {
+                log('🔄 Opening forgot password modal...');
+                window.pdfrowAuth.showForgotPasswordModal();
+            });
+
+            document.getElementById('testProfile').addEventListener('click', () => {
+                log('🔄 Opening profile modal...');
+                window.pdfrowAuth.showProfileModal();
+            });
+
+            document.getElementById('testChangePassword').addEventListener('click', () => {
+                log('🔄 Opening change password modal...');
+                window.pdfrowAuth.showChangePasswordModal();
+            });
+
+            document.getElementById('testSignout').addEventListener('click', async () => {
+                log('🔄 Testing sign out...');
+                await window.pdfrowAuth.signOut();
+            });
+
+            // Password reset testing
+            document.getElementById('simulatePasswordReset').addEventListener('click', () => {
+                log('🔄 Simulating password reset link...');
+                // Add recovery token to URL to simulate email link
+                const newUrl = window.location.href.split('#')[0] + '#access_token=fake_token&type=recovery&expires_in=3600';
+                window.history.replaceState({}, '', newUrl);
+                log('🔗 URL updated with recovery token');
+                log('🔄 Triggering password recovery handler...');
+                window.pdfrowAuth.handlePasswordRecovery();
+            });
+
+            document.getElementById('clearPasswordReset').addEventListener('click', () => {
+                log('🔄 Clearing password reset from URL...');
+                const newUrl = window.location.href.split('#')[0];
+                window.history.replaceState({}, '', newUrl);
+                log('✅ URL cleared');
+            });
+
+            document.getElementById('clearLog').addEventListener('click', () => {
+                debugLog.textContent = 'Debug log cleared...';
+            });
+
+            // Listen for auth state changes
+            if (window.supabaseClient) {
+                window.supabaseClient.auth.onAuthStateChange((event, session) => {
+                    log(`🔄 Auth state changed: ${event}`);
+                    setTimeout(updateAuthStatus, 100);
+                });
+            }
+        }
+
+        // Start test
+        document.addEventListener('DOMContentLoaded', () => {
+            log('🚀 Starting complete authentication test...');
+            
+            // Check URL for password reset
+            const urlHash = window.location.hash;
+            if (urlHash.includes('access_token') && urlHash.includes('type=recovery')) {
+                log('🔑 Password reset detected in URL on page load');
+            }
+            
+            waitForAuth();
+        });
+    </script>
+</body>
+</html>
