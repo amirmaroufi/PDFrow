@@ -1,0 +1,81 @@
+<!-- URL Import Feature Template -->
+<!-- Add this in the HEAD section, after other stylesheets -->
+<link rel="stylesheet" href="url-import.css">
+
+<!-- Add this BEFORE the upload-area div in the tool-card -->
+<!-- Upload Method Toggle -->
+<div class="upload-method-toggle">
+    <button class="upload-method-btn active" data-method="local" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        Upload from Computer
+    </button>
+    <button class="upload-method-btn" data-method="url" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+        Import from URL
+    </button>
+</div>
+
+<!-- URL Import Section -->
+<div class="url-import-section" id="url-import-section">
+    <div class="url-input-container">
+        <svg class="url-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+        <input
+            type="url"
+            class="url-input"
+            id="url-input"
+            placeholder="Paste Dropbox or Google Drive link here..."
+            aria-label="Enter file URL from Dropbox or Google Drive"
+        >
+    </div>
+    <button class="url-import-btn" id="url-import-btn" type="button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Import File
+    </button>
+
+    <div class="download-progress" id="download-progress">
+        <div class="progress-info">
+            <span id="download-status">Downloading...</span>
+            <span id="download-size">0 MB / 0 MB</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="download-progress-fill"></div>
+        </div>
+    </div>
+
+    <div class="url-error-message" id="url-error-message"></div>
+    <div class="url-success-message" id="url-success-message"></div>
+
+    <div class="url-hints">
+        <div class="url-hints-title">Supported Services:</div>
+        <ul class="url-hints-list">
+            <li>Dropbox: Share link and paste here</li>
+            <li>Google Drive: Get shareable link (Anyone with the link can view)</li>
+            <li>Direct file URLs (supported format only)</li>
+            <li>Maximum file size: 50MB</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Add this script BEFORE the closing </body> tag, after other scripts -->
+<script src="url-import.js"></script>
+<script>
+    // Initialize URL Import with appropriate file type
+    // Replace 'pdf' with: 'jpg', 'png', 'doc', 'xls', or 'ppt' depending on the tool
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeURLImport('pdf'); // Change this based on the tool
+    });
+</script>

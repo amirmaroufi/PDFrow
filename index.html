@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<!-- Updated: 2025-01-11 - Fixed reset password modal and removed delete account -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free PDF Converter, Compress, Merge & Edit Documents Online - PDFrow</title>
+    <meta name="description" content="Convert, compress, merge PDFs and other document tools online for free. Fast, secure, and no software required. Try PDFrow today!">
+    <meta name="keywords" content="PDF converter, JPG to PDF, PNG to JPG, PDF compress, PDF merge, online PDF tools, free PDF editor, document converter">
+    <meta name="author" content="PDFrow">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Free PDF Converter, Compress, Merge & Edit Documents Online - PDFrow">
+    <meta property="og:description" content="Convert, compress, merge PDFs and other document tools online for free. Fast, secure, and no software required. Try PDFrow today!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pdfrow.com">
+    <meta property="og:image" content="https://pdfrow.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="PDFrow - Free Online PDF Tools">
+    <meta property="og:site_name" content="PDFrow">
+    <meta property="og:locale" content="en_US">
+    
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="application-name" content="PDFrow">
+    <meta name="apple-mobile-web-app-title" content="PDFrow">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://pdfrow.com">
+    
+    <!-- Sitemap -->
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+    
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/png" href="Official Logo PDFrow.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0066ff">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+    
+    <!-- Logo Size Customization -->
+    <style>
+        .logo-image {
+            width: 56px !important;
+            height: 56px !important;
+        }
+
+        .logo-text {
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+        }
+
+        .footer .logo-image {
+            width: 48px !important;
+            height: 48px !important;
+        }
+
+        .footer .logo-text {
+            font-size: 1.3rem !important;
+        }
+
+        .logo {
+            align-items: center !important;
+            gap: 0.75rem !important;
+        }
+
+        .hero-section {
+            margin-top: 4rem !important;
+        }
+
+        /* Standardize tool icon sizes */
+        .tool-collapse-icon img {
+            width: 90px !important;
+            height: 90px !important;
+            object-fit: contain !important;
+        }
+
+        /* Trust Badges Styling */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: default;
+            backdrop-filter: blur(10px);
+        }
+
+        .trust-badge:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 102, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.15);
+        }
+
+        .trust-badge-icon {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .trust-badge-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            white-space: nowrap;
+        }
+
+        /* Light mode support */
+        body:not(.dark-mode):not(.dimmed-mode) .trust-badge {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 102, 255, 0.3);
+        }
+
+        body:not(.dark-mode):not(.dimmed-mode) .trust-badge:hover {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 102, 255, 0.5);
+        }
+
+        body:not(.dark-mode):not(.dimmed-mode) .trust-badge-text {
+            color: rgba(0, 0, 0, 0.85);
+        }
+
+        /* Dimmed mode support */
+        body.dimmed-mode .trust-badge-text {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .trust-badges {
+                gap: 0.75rem;
+            }
+
+            .trust-badge {
+                padding: 0.5rem 1rem;
+            }
+
+            .trust-badge-icon {
+                font-size: 1rem;
+            }
+
+            .trust-badge-text {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .trust-badges {
+                gap: 0.5rem;
+            }
+
+            .trust-badge {
+                padding: 0.45rem 0.9rem;
+                flex: 0 0 calc(50% - 0.25rem);
+                justify-content: center;
+            }
+
+            .trust-badge-icon {
+                font-size: 0.95rem;
+            }
+
+            .trust-badge-text {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+    
+    <!-- React Router Navigation Styles -->
+    <style>
+        .tool-card-nav {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .tool-card-nav:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.1);
+            border-color: var(--primary-color);
+        }
+        
+        .tool-card-nav .tool-collapse-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            width: 100%;
+        }
+        
+        .tool-card-nav .tool-collapse-icon {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+        
+        .tool-card-nav .tool-collapse-text {
+            flex: 1;
+        }
+        
+        .tool-card-nav .tool-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 8px 0;
+        }
+        
+        .tool-card-nav .tool-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* Ensure navigation cards match the grid layout */
+        .tools-grid .tool-card-nav {
+            min-height: 140px;
+        }
+        
+        /* Dark mode support for navigation cards */
+        @media (prefers-color-scheme: dark) {
+            .tool-card-nav {
+                background: var(--card-background-dark, #1a1a1a);
+                border-color: var(--border-color-dark, #333);
+            }
+            
+            .tool-card-nav .tool-title {
+                color: var(--text-primary-dark, #fff);
+            }
+            
+            .tool-card-nav .tool-description {
+                color: var(--text-secondary-dark, #ccc);
+            }
+        }
+        
+        /* Back button styles */
+        .back-btn:hover {
+            background: #00d9e6 !important;
+            transform: translateX(-2px);
+        }
+        
+        .back-btn:active {
+            transform: translateX(-2px) scale(0.98);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- hCaptcha -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <script src="hcaptcha-config.js"></script>
+    
+    
+    <!-- Structured Data for Website -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "PDFrow",
+        "description": "Free PDF Converter, Compress, Merge & Edit Documents Online - PDFrow",
+        "url": "https://pdfrow.com",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://pdfrow.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "PDFrow",
+            "logo": "https://pdfrow.com/Official Logo PDFrow.png"
+        }
+    }
+    </script>
+    
+    <!-- Structured Data for Software Application -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "PDFrow",
+        "applicationCategory": "BusinessApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "operatingSystem": "Web-based",
+        "description": "Convert, compress, merge PDFs and other document tools online for free. Fast, secure, and no software required.",
+        "url": "https://pdfrow.com",
+        "screenshot": "https://pdfrow.com/screenshot.png",
+        "featureList": [
+            "JPG to PDF conversion",
+            "PNG to JPG conversion", 
+            "JPG to PNG conversion",
+            "PDF to JPG conversion",
+            "PDF compression",
+            "PDF merging",
+            "Add page numbers to PDF",
+            "Add watermarks to PDF"
+        ],
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "1247"
+        }
+    }
+    </script>
+    
+    <!-- Structured Data for Tools -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "PDF and Image Conversion Tools",
+        "description": "Complete suite of free online PDF and image processing tools",
+        "itemListElement": [
+            {
+                "@type": "SoftwareApplication",
+                "position": 1,
+                "name": "JPG to PDF Converter",
+                "description": "Convert JPG images to PDF documents online for free",
+                "url": "https://pdfrow.com#jpg-to-pdf",
+                "applicationCategory": "MultimediaApplication",
+                "operatingSystem": "Web-based",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            },
+            {
+                "@type": "SoftwareApplication", 
+                "position": 2,
+                "name": "PNG to JPG Converter",
+                "description": "Convert PNG images to JPG format online",
+                "url": "https://pdfrow.com#png-to-jpg",
+                "applicationCategory": "MultimediaApplication",
+                "operatingSystem": "Web-based",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            },
+            {
+                "@type": "SoftwareApplication",
+                "position": 3, 
+                "name": "JPG to PNG Converter",
+                "description": "Convert JPG images to PNG format online",
+                "url": "https://pdfrow.com#jpg-to-png",
+                "applicationCategory": "MultimediaApplication",
+                "operatingSystem": "Web-based",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            },
+            {
+                "@type": "SoftwareApplication",
+                "position": 4,
+                "name": "PDF to JPG Converter", 
+                "description": "Convert PDF pages to JPG images online",
+                "url": "https://pdfrow.com#pdf-to-jpg",
+                "applicationCategory": "MultimediaApplication",
+                "operatingSystem": "Web-based",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            },
+            {
+                "@type": "SoftwareApplication",
+                "position": 5,
+                "name": "PDF Compressor",
+                "description": "Reduce PDF file size for easier sharing online",
+                "url": "https://pdfrow.com#compress-pdf",
+                "applicationCategory": "MultimediaApplication", 
+                "operatingSystem": "Web-based",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            },
+            {
+                "@type": "SoftwareApplication",
+                "position": 6,
+                "name": "PDF Merger",
+                "description": "Combine multiple PDF files into one document",
+                "url": "https://pdfrow.com#merge-pdf",
+                "applicationCategory": "MultimediaApplication",
+                "operatingSystem": "Web-based", 
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            },
+            {
+                "@type": "SoftwareApplication",
+                "position": 7,
+                "name": "Add Page Numbers to PDF",
+                "description": "Add page numbers to PDFs with custom positioning and styling",
+                "url": "https://pdfrow.com#add-page-numbers",
+                "applicationCategory": "MultimediaApplication",
+                "operatingSystem": "Web-based",
+                "offers": {
+                    "@type": "Offer", 
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            },
+            {
+                "@type": "SoftwareApplication",
+                "position": 8,
+                "name": "Add Watermark to PDF",
+                "description": "Add text or image watermarks to PDFs with custom styling",
+                "url": "https://pdfrow.com#add-watermark",
+                "applicationCategory": "MultimediaApplication",
+                "operatingSystem": "Web-based",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0", 
+                    "priceCurrency": "USD"
+                }
+            }
+        ]
+    }
+    </script>
+    
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "PDFrow",
+        "url": "https://pdfrow.com",
+        "logo": "https://pdfrow.com/Official Logo PDFrow.png",
+        "description": "Free online PDF and image conversion tools. Convert, compress, merge PDFs and images with no software required.",
+        "foundingDate": "2025",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "url": "https://pdfrow.com#contact"
+        },
+        "sameAs": [
+            "https://instagram.com/pdfrow",
+            "mailto:contact@pdfrow.com"
+        ]
+    }
+    </script>
+    
+    <!-- Blog Posts Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "PDFrow Blog",
+        "description": "Tips, tutorials, and insights to help you work smarter with documents",
+        "url": "https://pdfrow.com/blog",
+        "publisher": {
+            "@type": "Organization",
+            "name": "PDFrow",
+            "logo": "https://pdfrow.com/Official Logo PDFrow.png"
+        },
+        "blogPost": [
+            {
+                "@type": "BlogPosting",
+                "headline": "Compress PDF Files Online – Fast, Free & Easy with PDFrow",
+                "description": "Large PDF files can be frustrating. Learn how PDFrow solves this instantly, allowing you to compress PDF files online in seconds while keeping quality intact.",
+                "url": "https://pdfrow.com/blog-post.html?slug=compress-pdf-files-online-fast-free-easy-with-pdfrow&id=1",
+                "datePublished": "2025-08-10",
+                "dateModified": "2025-08-10",
+                "author": {
+                    "@type": "Organization",
+                    "name": "PDFrow"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "PDFrow",
+                    "logo": "https://pdfrow.com/Official Logo PDFrow.png"
+                },
+                "image": "https://pdfrow.com/blog/compress-pdf-featured.png",
+                "keywords": ["PDF compression", "reduce PDF size", "online PDF tools"],
+                "articleSection": "PDF Tools",
+                "wordCount": 800,
+                "timeRequired": "PT6M"
+            },
+            {
+                "@type": "BlogPosting", 
+                "headline": "Convert JPG to PDF Online – Free, Fast & High-Quality with PDFrow",
+                "description": "Images are great for capturing moments, designs, or scanned documents — but they aren't always the easiest format to share or print. Convert JPG images into professional PDFs online, completely free.",
+                "url": "https://pdfrow.com/blog-post.html?slug=convert-jpg-to-pdf-online-free-fast-high-quality-with-pdfrow&id=2",
+                "datePublished": "2025-08-10",
+                "dateModified": "2025-08-10",
+                "author": {
+                    "@type": "Organization",
+                    "name": "PDFrow"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "PDFrow",
+                    "logo": "https://pdfrow.com/Official Logo PDFrow.png"
+                },
+                "image": "https://pdfrow.com/blog/jpg-to-pdf-featured.png",
+                "keywords": ["JPG to PDF", "image conversion", "PDF converter"],
+                "articleSection": "Image Conversion",
+                "wordCount": 750,
+                "timeRequired": "PT5M"
+            },
+            {
+                "@type": "BlogPosting",
+                "headline": "Convert PNG to JPG Online – Free, Fast & High-Quality with PDFrow", 
+                "description": "If you've ever worked with images online, you've probably come across PNG and JPG formats. Learn when and how to convert PNG to JPG for better compatibility and smaller file sizes.",
+                "url": "https://pdfrow.com/blog-post.html?slug=convert-png-to-jpg-online-free-fast-high-quality-with-pdfrow&id=3",
+                "datePublished": "2025-08-11",
+                "dateModified": "2025-08-11",
+                "author": {
+                    "@type": "Organization", 
+                    "name": "PDFrow"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "PDFrow",
+                    "logo": "https://pdfrow.com/Official Logo PDFrow.png"
+                },
+                "image": "https://pdfrow.com/blog/png-to-jpg-featured.png",
+                "keywords": ["PNG to JPG", "image conversion", "file size reduction"],
+                "articleSection": "Image Conversion",
+                "wordCount": 900,
+                "timeRequired": "PT7M"
+            },
+            {
+                "@type": "BlogPosting",
+                "headline": "Convert JPG to PNG Online – Free, High-Quality & Easy with PDFrow",
+                "description": "JPG is the most widely used image format in the world — compact, colorful, and perfect for photographs. But when it comes to editing, preserving fine details, or enabling transparent backgrounds, PNG is often the better choice.",
+                "url": "https://pdfrow.com/blog-post.html?slug=convert-jpg-to-png-online-free-high-quality-easy-with-pdfrow&id=4",
+                "datePublished": "2025-08-11",
+                "dateModified": "2025-08-11",
+                "author": {
+                    "@type": "Organization",
+                    "name": "PDFrow"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "PDFrow",
+                    "logo": "https://pdfrow.com/Official Logo PDFrow.png"
+                },
+                "image": "https://pdfrow.com/blog/jpg-to-png-featured.png",
+                "keywords": ["JPG to PNG", "image conversion", "transparency"],
+                "articleSection": "Image Conversion",
+                "wordCount": 850,
+                "timeRequired": "PT6M"
+            },
+            {
+                "@type": "BlogPosting",
+                "headline": "How to Convert PDF to JPG Online – The Complete Guide",
+                "description": "In today's fast-paced digital world, the ability to convert documents into versatile formats is more important than ever. Learn how to convert PDF to JPG effortlessly with PDFrow's online tool.",
+                "url": "https://pdfrow.com/blog-post.html?slug=how-to-convert-pdf-to-jpg-online-the-complete-guide&id=5",
+                "datePublished": "2025-08-11",
+                "dateModified": "2025-08-11",
+                "author": {
+                    "@type": "Organization",
+                    "name": "PDFrow"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "PDFrow",
+                    "logo": "https://pdfrow.com/Official Logo PDFrow.png"
+                },
+                "image": "https://pdfrow.com/blog/pdf-to-jpg-featured.png",
+                "keywords": ["PDF to JPG", "document conversion", "online tools"],
+                "articleSection": "PDF Tools",
+                "wordCount": 1200,
+                "timeRequired": "PT8M"
+            },
+            {
+                "@type": "BlogPosting",
+                "headline": "The Ultimate Guide to Merging PDFs Online for Free",
+                "description": "In a world where digital documents rule, PDF has become the universal standard for sharing content. Learn how to combine multiple PDFs into one file with PDFrow's free merge tool.",
+                "url": "https://pdfrow.com/blog-post.html?slug=the-ultimate-guide-to-merging-pdfs-online-for-free&id=6",
+                "datePublished": "2025-08-11",
+                "dateModified": "2025-08-11",
+                "author": {
+                    "@type": "Organization",
+                    "name": "PDFrow"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "PDFrow",
+                    "logo": "https://pdfrow.com/Official Logo PDFrow.png"
+                },
+                "image": "https://pdfrow.com/blog/merge-pdf-featured.png",
+                "keywords": ["merge PDF", "combine PDFs", "PDF tools"],
+                "articleSection": "PDF Tools",
+                "wordCount": 1000,
+                "timeRequired": "PT7M"
+            },
+            {
+                "@type": "BlogPosting",
+                "headline": "How to Add Page Numbers to PDFs – A Complete Online Guide",
+                "description": "When working with long documents, page numbers aren't just a nice-to-have — they're essential for organization, navigation, and professionalism. Learn how to add page numbers to PDFs online for free.",
+                "url": "https://pdfrow.com/blog-post.html?slug=how-to-add-page-numbers-to-pdfs-a-complete-online-guide&id=7",
+                "datePublished": "2025-08-11",
+                "dateModified": "2025-08-11",
+                "author": {
+                    "@type": "Organization",
+                    "name": "PDFrow"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "PDFrow",
+                    "logo": "https://pdfrow.com/Official Logo PDFrow.png"
+                },
+                "image": "https://pdfrow.com/blog/page-numbers-featured.png",
+                "keywords": ["PDF page numbers", "document formatting", "PDF editing"],
+                "articleSection": "PDF Tools",
+                "wordCount": 950,
+                "timeRequired": "PT6M"
+            },
+            {
+                "@type": "BlogPosting",
+                "headline": "Adding Watermarks to PDFs – Protect Your Documents Like a Pro",
+                "description": "In the digital age, sharing documents is easier than ever — but so is unauthorized copying, misuse, and distribution. Learn how to protect your work with professional watermarks using PDFrow's online tool.",
+                "url": "https://pdfrow.com/blog-post.html?slug=adding-watermarks-to-pdfs-protect-your-documents-like-a-pro&id=8",
+                "datePublished": "2025-08-11",
+                "dateModified": "2025-08-11",
+                "author": {
+                    "@type": "Organization",
+                    "name": "PDFrow"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "PDFrow",
+                    "logo": "https://pdfrow.com/Official Logo PDFrow.png"
+                },
+                "image": "https://pdfrow.com/blog/watermark-featured.png",
+                "keywords": ["PDF watermark", "document protection", "branding"],
+                "articleSection": "PDF Tools",
+                "wordCount": 1100,
+                "timeRequired": "PT7M"
+            }
+        ]
+    }
+    </script>
+    
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is PDFrow really free to use?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! PDFrow is completely free to use. All core functionality including conversion, compression, merging, and editing tools are available at no cost. No hidden fees or subscription required."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Are my files secure and private?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Absolutely! Your files never leave your browser. All processing happens locally on your device using client-side JavaScript. We don't store, access, or transmit your documents anywhere."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What file formats are supported?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "We support the most common document and image formats: PDF, JPG, JPEG, and PNG. Each tool is optimized for specific format conversions and processing tasks."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is there a file size limit?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Maximum file size is 50MB per file. This limit ensures optimal performance and processing speed for all users."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do I need to install any software?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No installation required! PDFrow works entirely in your web browser. Just visit our website and start using the tools immediately. Compatible with Chrome, Firefox, Safari, and Edge."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I use PDFrow on mobile devices?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! PDFrow is fully responsive and works on smartphones, tablets, and desktop computers. The interface adapts to your screen size for optimal user experience."
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                    </div>
+                    <h1 class="logo-text">PDFrow</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="#tools" class="nav-link" data-translate="nav_tools">Tools</a>
+                    <a href="#features" class="nav-link" data-translate="nav_features">Features</a>
+                    <a href="#how-it-works" class="nav-link" data-translate="nav_how_it_works">How It Works</a>
+                    <a href="#blog" class="nav-link" data-translate="nav_blog">Blog</a>
+                    <a href="#faq" class="nav-link" data-translate="nav_faq">FAQ</a>
+                </div>
+
+                <div class="nav-actions">
+                    <!-- Auth Buttons (shown when not logged in) -->
+                    <div id="auth-buttons" class="auth-buttons">
+                        <button class="btn-auth btn-login" id="loginBtn">Login</button>
+                        <button class="btn-auth btn-signup" id="signupBtn">Sign Up</button>
+                    </div>
+
+                    <!-- User Menu (shown when logged in) -->
+                    <div id="user-menu" class="user-menu" style="display: none;">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span class="user-email">user@example.com</span>
+                        <div class="user-dropdown">
+                            <button class="dropdown-item" id="profileBtn">Profile</button>
+                            <button class="dropdown-item" id="logoutBtn">Logout</button>
+                        </div>
+                    </div>
+                    
+                    <div class="theme-toggle" id="theme-toggle">
+                    <div class="theme-toggle-track">
+                        <div class="theme-toggle-thumb">
+                            <svg class="theme-icon sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Light theme">
+                                <circle cx="12" cy="12" r="5"/>
+                                <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                            </svg>
+                            <svg class="theme-icon dimmed-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Dimmed theme">
+                                <path d="M12 3a6.364 6.364 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                                <path d="M20 3v4m-2-2h4"/>
+                            </svg>
+                            <svg class="theme-icon moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Dark theme">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-background">
+                <div class="hero-particles"></div>
+                <div class="hero-grid"></div>
+            </div>
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-icon" aria-hidden="true">⚡</span>
+                    <span data-translate="hero_badge">Next-Gen Document Processing</span>
+                </div>
+                <h1 class="hero-title">
+                    <span data-translate="hero_title_1">Free Online PDF Tools — Convert, Compress &</span>
+                    <span class="gradient-text" data-translate="hero_title_2">Merge Files Instantly</span>
+                </h1>
+                <p class="hero-subtitle" data-translate="hero_subtitle">
+                    Smart processing: Maximum privacy for PDF tools, powerful server conversion for Office documents. All files protected.
+                </p>
+                <div class="hero-actions">
+                    <a href="#tools" class="btn-primary">
+                        <span data-translate="btn_start_converting">Start Converting</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M5 12h14m-7-7 7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <span class="trust-badge-icon">🔒</span>
+                        <span class="trust-badge-text">SSL Secured</span>
+                    </div>
+                    <div class="trust-badge">
+                        <span class="trust-badge-icon">🚀</span>
+                        <span class="trust-badge-text">No Registration</span>
+                    </div>
+                    <div class="trust-badge">
+                        <span class="trust-badge-icon">🖥️</span>
+                        <span class="trust-badge-text">Client-Side Privacy</span>
+                    </div>
+                    <div class="trust-badge">
+                        <span class="trust-badge-icon">⚡</span>
+                        <span class="trust-badge-text">Fast Processing</span>
+                    </div>
+                </div>
+
+                <!-- Client-side Trust Badge -->
+                <div class="client-side-badge">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span data-translate="client_side_badge">Smart Security - PDF tools process in your browser for maximum privacy. Office conversions use secure, auto-deleting server processing.</span>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">10M+</div>
+                        <div class="stat-label" data-translate="stat_files_processed">Files Processed</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label" data-translate="stat_uptime">Uptime</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">< 2s</div>
+                        <div class="stat-label" data-translate="stat_average_speed">Average Speed</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <main class="main-content">
+            <!-- React Router App Container -->
+            <div id="react-app"></div>
+
+
+            <!-- Why Choose PDFrow Section -->
+            <section id="features" class="features-section">
+                <div class="features-container">
+                    <div class="section-header">
+                        <h2 class="section-title" data-translate="features_title">Why Choose PDFrow?</h2>
+                        <p class="section-subtitle" data-translate="features_subtitle">Experience the future of document processing with our advanced features</p>
+                    </div>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Lightning bolt icon representing speed">
+                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title" data-translate="feature_lightning_fast_title">Lightning Fast</h3>
+                            <p class="feature-description" data-translate="feature_lightning_fast_desc">Process documents in seconds with our optimized algorithms and advanced client-side processing technology.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Shield icon representing security">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title" data-translate="feature_secure_title">100% Secure</h3>
+                            <p class="feature-description" data-translate="feature_secure_desc">PDF tools process locally in your browser. Office conversions use secure servers with automatic file deletion.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Layers icon representing no installation needed">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title" data-translate="feature_no_installation_title">No Installation</h3>
+                            <p class="feature-description" data-translate="feature_no_installation_desc">Works directly in your browser. No software downloads, no updates, no hassle. Just instant access.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Multiple users icon representing multi-device support">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title" data-translate="feature_multi_device_title">Multi-Device</h3>
+                            <p class="feature-description" data-translate="feature_multi_device_desc">Access from any device - desktop, tablet, or mobile. Responsive design ensures perfect experience everywhere.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Camera icon representing high quality processing">
+                                    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                                    <circle cx="12" cy="13" r="3"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title" data-translate="feature_high_quality_title">High Quality</h3>
+                            <p class="feature-description" data-translate="feature_high_quality_desc">Professional compression and conversion algorithms maintain document quality while optimizing file sizes.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Hexagon icon representing always free service">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title" data-translate="feature_always_free_title">Always Free</h3>
+                            <p class="feature-description" data-translate="feature_always_free_desc">Core functionality is completely free. No hidden costs, no subscriptions, no limitations on file processing.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How It Works Section -->
+            <section id="how-it-works" class="how-it-works-section">
+                <div class="how-it-works-container">
+                    <div class="section-header">
+                        <h2 class="section-title" data-translate="how_it_works_title">How It Works</h2>
+                        <p class="section-subtitle" data-translate="how_it_works_subtitle">Simple, fast, and secure document processing in three easy steps</p>
+                    </div>
+                    
+                    <div class="steps-container">
+                        <div class="step">
+                            <div class="step-number">
+                                <span>01</span>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-content">
+                                <div class="step-icon">
+                                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Document upload icon">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14,2 14,8 20,8"/>
+                                        <line x1="16" y1="13" x2="8" y2="13"/>
+                                        <line x1="16" y1="17" x2="8" y2="17"/>
+                                        <polyline points="10,9 9,9 8,9"/>
+                                    </svg>
+                                </div>
+                                <h3 class="step-title" data-translate="step_upload_title">Upload Your Files</h3>
+                                <p class="step-description" data-translate="step_upload_desc">
+                                    Drag and drop your documents or click to browse. Supports PDF, JPG, PNG formats.
+                                    Files are processed using our hybrid approach - locally in your browser for PDF tools, securely on our servers for Office conversions.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">
+                                <span>02</span>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-content">
+                                <div class="step-icon">
+                                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Tool selection icon">
+                                        <path d="M12 3a6.364 6.364 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                                        <path d="M20 3v4"/>
+                                        <path d="M22 5h-4"/>
+                                        <path d="M4 17v2a2 2 0 0 0 2 2h2"/>
+                                    </svg>
+                                </div>
+                                <h3 class="step-title" data-translate="step_choose_title">Choose Your Tool</h3>
+                                <p class="step-description" data-translate="step_choose_desc">
+                                    Select from our comprehensive toolkit: convert, compress, merge, add watermarks, 
+                                    or page numbers. Advanced options available for customization.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">
+                                <span>03</span>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-content">
+                                <div class="step-icon">
+                                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Download results icon">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                        <polyline points="7,10 12,15 17,10"/>
+                                        <line x1="12" y1="15" x2="12" y2="3"/>
+                                    </svg>
+                                </div>
+                                <h3 class="step-title" data-translate="step_download_title">Download Results</h3>
+                                <p class="step-description" data-translate="step_download_desc">
+                                    Get your processed files instantly. Download individually or batch download all files. 
+                                    Files are automatically cleaned up for your privacy.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- FAQ Section -->
+            <section id="faq" class="faq-section">
+                <div class="faq-container">
+                    <div class="section-header">
+                        <h2 class="section-title" data-translate="faq_title">Frequently Asked Questions</h2>
+                        <p class="section-subtitle" data-translate="faq_subtitle">Everything you need to know about PDFrow</p>
+                    </div>
+                    
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3 data-translate="faq_q1">Is PDFrow really free to use?</h3>
+                                <div class="faq-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Expand FAQ item">
+                                        <polyline points="6,9 12,15 18,9"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-translate="faq_a1">Yes! PDFrow is completely free to use. All core functionality including conversion, compression, merging, and editing tools are available at no cost. No hidden fees or subscription required.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3 data-translate="faq_q2">Where are my files processed?</h3>
+                                <div class="faq-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Expand FAQ item">
+                                        <polyline points="6,9 12,15 18,9"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-translate="faq_a2">We use a hybrid approach for your security and convenience:</p>
+                                <p data-translate="faq_a2_pdf"><strong>PDF tools</strong> (compress, merge, edit, etc.): Processed 100% in your browser - files never leave your device</p>
+                                <p data-translate="faq_a2_office"><strong>Office conversions</strong> (Word, Excel, PowerPoint): Processed on our secure servers with automatic file deletion after 1 hour</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3 data-translate="faq_q3">What file formats are supported?</h3>
+                                <div class="faq-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Expand FAQ item">
+                                        <polyline points="6,9 12,15 18,9"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-translate="faq_a3">We support the most common document and image formats: PDF, JPG, JPEG, and PNG. Each tool is optimized for specific format conversions and processing tasks.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3 data-translate="faq_q4">Is there a file size limit?</h3>
+                                <div class="faq-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Expand FAQ item">
+                                        <polyline points="6,9 12,15 18,9"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-translate="faq_a4">Maximum file size is 50MB per file. This limit ensures optimal performance and processing speed for all users.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3 data-translate="faq_q5">Do I need to install any software?</h3>
+                                <div class="faq-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Expand FAQ item">
+                                        <polyline points="6,9 12,15 18,9"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-translate="faq_a5">No installation required! PDFrow works entirely in your web browser. Just visit our website and start using the tools immediately. Compatible with Chrome, Firefox, Safari, and Edge.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3 data-translate="faq_q6">Can I use PDFrow on mobile devices?</h3>
+                                <div class="faq-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Expand FAQ item">
+                                        <polyline points="6,9 12,15 18,9"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-translate="faq_a6">Yes! PDFrow is fully responsive and works on smartphones, tablets, and desktop computers. The interface adapts to your screen size for optimal user experience.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3 data-translate="faq_q7">Are my Office documents safe during conversion?</h3>
+                                <div class="faq-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Expand FAQ item">
+                                        <polyline points="6,9 12,15 18,9"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-translate="faq_a7">Yes! Office conversions use our secure cloud servers with:</p>
+                                <ul>
+                                    <li data-translate="faq_a7_ssl">SSL encryption during transfer</li>
+                                    <li data-translate="faq_a7_deletion">Automatic file deletion within 1 hour</li>
+                                    <li data-translate="faq_a7_access">No human access to your files</li>
+                                    <li data-translate="faq_a7_isolation">Isolated processing environments</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Blog Section -->
+        <section id="blog" class="blog-section">
+            <div class="blog-container">
+                <div class="section-header">
+                    <h2 class="section-title" data-translate="blog_title">Latest from Our Blog</h2>
+                    <p class="section-subtitle" data-translate="blog_subtitle">Tips, tutorials, and insights to help you work smarter with documents</p>
+                </div>
+                
+                <div class="blog-grid" id="blogGrid">
+                    <!-- Static blog posts for SEO (will be replaced by JS) -->
+                    <noscript>
+                        <article class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
+                            <div class="blog-card-image">
+                                <img src="/api/placeholder/400/250" alt="Compress PDF Files Online" itemprop="image">
+                                <div class="blog-card-category" style="background-color: #4ECDC4;" itemprop="about">PDF Tools</div>
+                            </div>
+                            <div class="blog-card-content">
+                                <h2 class="blog-card-title" itemprop="headline">
+                                    <a href="blog-post.html?slug=compress-pdf-files-online-fast-free-easy-with-pdfrow&id=1" itemprop="url">Compress PDF Files Online – Fast, Free & Easy with PDFrow</a>
+                                </h2>
+                                <p class="blog-card-excerpt" itemprop="description">Large PDF files can be frustrating. Learn how PDFrow solves this instantly, allowing you to compress PDF files online in seconds while keeping quality intact.</p>
+                                <div class="blog-card-meta">
+                                    <time class="blog-card-date" datetime="2025-08-10" itemprop="datePublished">Aug 10, 2025</time>
+                                    <span class="blog-card-read-time">6 min read</span>
+                                </div>
+                                <meta itemprop="author" content="PDFrow">
+                                <meta itemprop="publisher" content="PDFrow">
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
+                            <div class="blog-card-image">
+                                <img src="/api/placeholder/400/250" alt="Convert JPG to PDF Online" itemprop="image">
+                                <div class="blog-card-category" style="background-color: #FF6B6B;" itemprop="about">Image Conversion</div>
+                            </div>
+                            <div class="blog-card-content">
+                                <h2 class="blog-card-title" itemprop="headline">
+                                    <a href="blog-post.html?slug=convert-jpg-to-pdf-online-free-fast-high-quality-with-pdfrow&id=2" itemprop="url">Convert JPG to PDF Online – Free, Fast & High-Quality with PDFrow</a>
+                                </h2>
+                                <p class="blog-card-excerpt" itemprop="description">Images are great for capturing moments, designs, or scanned documents — but they aren't always the easiest format to share or print. Convert JPG images into professional PDFs online, completely free.</p>
+                                <div class="blog-card-meta">
+                                    <time class="blog-card-date" datetime="2025-08-10" itemprop="datePublished">Aug 10, 2025</time>
+                                    <span class="blog-card-read-time">5 min read</span>
+                                </div>
+                                <meta itemprop="author" content="PDFrow">
+                                <meta itemprop="publisher" content="PDFrow">
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
+                            <div class="blog-card-image">
+                                <img src="/api/placeholder/400/250" alt="Convert PNG to JPG Online" itemprop="image">
+                                <div class="blog-card-category" style="background-color: #9C88FF;" itemprop="about">Image Conversion</div>
+                            </div>
+                            <div class="blog-card-content">
+                                <h2 class="blog-card-title" itemprop="headline">
+                                    <a href="blog-post.html?slug=convert-png-to-jpg-online-free-fast-high-quality-with-pdfrow&id=3" itemprop="url">Convert PNG to JPG Online – Free, Fast & High-Quality with PDFrow</a>
+                                </h2>
+                                <p class="blog-card-excerpt" itemprop="description">If you've ever worked with images online, you've probably come across PNG and JPG formats. Learn when and how to convert PNG to JPG for better compatibility and smaller file sizes.</p>
+                                <div class="blog-card-meta">
+                                    <time class="blog-card-date" datetime="2025-08-11" itemprop="datePublished">Aug 11, 2025</time>
+                                    <span class="blog-card-read-time">7 min read</span>
+                                </div>
+                                <meta itemprop="author" content="PDFrow">
+                                <meta itemprop="publisher" content="PDFrow">
+                            </div>
+                        </article>
+                    </noscript>
+                    
+                    <!-- Dynamic blog posts will be inserted here by JavaScript -->
+                </div>
+                
+                <div class="blog-cta">
+                    <a href="all-posts.html" class="btn-primary blog-view-all">
+                        View All Posts
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <div class="logo-icon">
+                                <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                            </div>
+                            <h3 class="logo-text">PDFrow</h3>
+                        </div>
+                        <p class="footer-description" data-translate="footer_description">
+                            Next-generation document processing platform. Fast, secure, and always free.
+                        </p>
+                        <div class="footer-social">
+                            <a href="https://www.instagram.com/pdfrow?igsh=MXMxYjkxdWVkMjE3dQ%3D%3D&utm_source=qr" class="social-link" aria-label="Follow us on Instagram">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                                </svg>
+                            </a>
+                            <a href="mailto:contact@pdfrow.com" class="social-link" aria-label="Contact us via email">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4 data-translate="footer_tools_title">Tools</h4>
+                            <ul>
+                                <li><a href="compress-pdf.html" data-translate="footer_pdf_compressor">Compress PDF</a></li>
+                                <li><a href="merge-pdf.html" data-translate="footer_pdf_merger">Merge PDF</a></li>
+                                <li><a href="split-pdf.html">Split PDF</a></li>
+                                <li><a href="crop-pdf.html">Crop PDF</a></li>
+                                <li><a href="rotate-pdf.html">Rotate PDF</a></li>
+                                <li><a href="organize-pdf.html">Organize PDF</a></li>
+                                <li><a href="jpg-to-pdf.html">JPG to PDF</a></li>
+                            </ul>
+                        </div>
+                        
+                        
+                        <div class="footer-column">
+                            <h4 data-translate="footer_support_title">Support</h4>
+                            <ul>
+                                <li><a href="#faq" data-translate="footer_faq">FAQ</a></li>
+                                <li><a href="#how-it-works" data-translate="footer_how_it_works">How It Works</a></li>
+                                <li><a href="#contact" id="footerContactLink" data-translate="footer_contact">Contact</a></li>
+                                <li><a href="terms-conditions.html" data-translate="footer_terms">Terms & Conditions</a></li>
+                                <li><a href="privacy-policy.html" data-translate="footer_privacy">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-column">
+                            <h4 data-translate="language">Language</h4>
+                            <div class="language-dropdown">
+                                <button class="language-btn" id="languageBtn">
+                                    <span class="flag" id="currentFlag">🇺🇸</span>
+                                    <span id="currentLang">English</span>
+                                    <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                        <polyline points="6,9 12,15 18,9"/>
+                                    </svg>
+                                </button>
+                                <div class="language-menu" id="languageMenu">
+                                    <div class="language-item" data-lang="en" data-flag="🇺🇸">
+                                        <span class="flag">🇺🇸</span>
+                                        <span>English</span>
+                                    </div>
+                                    <div class="language-item" data-lang="es" data-flag="🇪🇸">
+                                        <span class="flag">🇪🇸</span>
+                                        <span>Español</span>
+                                    </div>
+                                    <div class="language-item" data-lang="fr" data-flag="🇫🇷">
+                                        <span class="flag">🇫🇷</span>
+                                        <span>Français</span>
+                                    </div>
+                                    <div class="language-item" data-lang="de" data-flag="🇩🇪">
+                                        <span class="flag">🇩🇪</span>
+                                        <span>Deutsch</span>
+                                    </div>
+                                    <div class="language-item" data-lang="it" data-flag="🇮🇹">
+                                        <span class="flag">🇮🇹</span>
+                                        <span>Italiano</span>
+                                    </div>
+                                    <div class="language-item" data-lang="tr" data-flag="🇹🇷">
+                                        <span class="flag">🇹🇷</span>
+                                        <span>Türkçe</span>
+                                    </div>
+                                    <div class="language-item" data-lang="pt" data-flag="🇵🇹">
+                                        <span class="flag">🇵🇹</span>
+                                        <span>Português</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ru" data-flag="🇷🇺">
+                                        <span class="flag">🇷🇺</span>
+                                        <span>Русский</span>
+                                    </div>
+                                    <div class="language-item" data-lang="zh" data-flag="🇨🇳">
+                                        <span class="flag">🇨🇳</span>
+                                        <span>中文</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ja" data-flag="🇯🇵">
+                                        <span class="flag">🇯🇵</span>
+                                        <span>日本語</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ar" data-flag="🇸🇦">
+                                        <span class="flag">🇸🇦</span>
+                                        <span>العربية</span>
+                                    </div>
+                                    <div class="language-item" data-lang="hi" data-flag="🇮🇳">
+                                        <span class="flag">🇮🇳</span>
+                                        <span>हिन्दी</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p data-translate="footer_copyright">&copy; <span id="current-year">2025</span> PDFrow. All rights reserved. Made with ❤️ for document processing.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- Support Us Modal -->
+    <div class="auth-modal" id="supportModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container support-modal-container">
+            <div class="auth-form-header">
+                <h2 data-translate="support_title">Support PDFrow ❤️</h2>
+                <p data-translate="support_subtitle">Help us keep PDFrow free and improve our services</p>
+                <button class="auth-close-btn" id="supportCloseBtn">&times;</button>
+            </div>
+            
+            <div class="support-content">
+                <div class="support-message">
+                    <p data-translate="support_message">
+                        PDFrow is completely free to use! If you have any questions, feedback, or need assistance with our tools,
+                        please don't hesitate to reach out through our contact form.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Form Modal -->
+    <div class="contact-modal" id="contactModal">
+        <div class="contact-modal-overlay" id="contactOverlay"></div>
+        <div class="contact-form-container">
+            <div class="contact-form-header">
+                <h2 data-translate="contact_form_title">How can we help you today?</h2>
+                <p data-translate="contact_form_subtitle">Questions, bug reports, feature requests, or general feedback</p>
+                <button class="contact-close-btn" id="contactCloseBtn">&times;</button>
+            </div>
+            
+            <form class="contact-form" id="contact-form" action="https://formsubmit.co/contact@pdfrow.com" method="POST">
+                <!-- FormSubmit Configuration -->
+                <input type="hidden" name="_subject" value="New Contact Form Submission - PDFrow">
+                <input type="hidden" name="_next" value="https://pdfrow.com/thank-you.html">
+                <input type="hidden" name="_captcha" value="true">
+                <input type="hidden" name="_template" value="table">
+                
+                <!-- Honeypot for spam protection -->
+                <input type="text" name="_honey" style="display:none !important; opacity:0; position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
+                
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        class="contact-input" 
+                        id="contactName"
+                        name="name"
+                        placeholder="Your full name" 
+                        data-translate-placeholder="contact_name_placeholder"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <div class="email-input-container">
+                        <svg class="email-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        <input 
+                            type="email" 
+                            class="contact-email" 
+                            id="contactEmail" 
+                            name="email"
+                            placeholder="Your email address" 
+                            data-translate-placeholder="contact_email_placeholder"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <select class="contact-select" id="contactType" name="subject" required>
+                        <option value="" data-translate="contact_select_topic">Select a topic</option>
+                        <option value="question" data-translate="contact_option_question">Ask a question</option>
+                        <option value="bug" data-translate="contact_option_bug">Report a bug</option>
+                        <option value="feature" data-translate="contact_option_feature">Request a feature</option>
+                        <option value="feedback" data-translate="contact_option_feedback">General feedback</option>
+                        <option value="business" data-translate="contact_option_business">Business inquiry</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <textarea 
+                        class="contact-textarea" 
+                        id="contactMessage" 
+                        name="message"
+                        rows="6" 
+                        placeholder="Tell us more details..." 
+                        data-translate-placeholder="contact_message_placeholder"
+                        required
+                    ></textarea>
+                </div>
+
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="contactTerms" required>
+                        <span class="checkmark"></span>
+                        <span class="checkbox-text">
+                            <span data-translate="contact_terms_text">I've read and accepted the</span>
+                            <a href="terms-conditions.html" target="_blank" class="terms-link" data-translate="contact_terms_link">Terms & Conditions</a>
+                            <span data-translate="contact_and">and</span>
+                            <a href="privacy-policy.html" target="_blank" class="privacy-link" data-translate="contact_privacy_link">Privacy Policy</a>.
+                        </span>
+                    </label>
+                </div>
+
+                <!-- hCaptcha -->
+                <div class="form-group hcaptcha-container">
+                    <div class="h-captcha" data-sitekey="0d1af27e-28de-4c60-8bce-5cb49414df58" data-theme="dark"></div>
+                </div>
+
+                <button type="submit" class="contact-submit-btn" data-translate="contact_submit_btn">Send Message</button>
+            </form>
+
+            <div class="contact-footer">
+                <p data-translate="contact_confidential_note">All your information will be treated confidentially</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Performance optimized: Libraries will load immediately when tools are used -->
+    <!-- Supabase Authentication -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    
+    <!-- React and React Router -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-router-dom@6/dist/umd/react-router-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Other Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <script src="support.js"></script>
+    <script src="blog-data.js"></script>
+    <script src="blog-init.js"></script>
+    <script src="blog-post.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- Simple Vanilla JS Router (more reliable than React Router) -->
+    <script>
+        // Tool data for navigation cards with categories
+        const toolsData = [
+            { id: 'jpg-to-pdf', title: 'JPG to PDF', description: 'Convert JPG images to PDF documents', icon: '<img src="jpg to pdf.png" alt="JPG to PDF" style="width: 90px; height: 90px;">', url: '/jpg-to-pdf.html', categories: ['all', 'convert-to-pdf'] },
+            { id: 'word-to-pdf', title: 'Word to PDF', description: 'Convert Word documents to PDF files', icon: '<img src="pdf to word.png" alt="Word to PDF" style="width: 90px; height: 90px;">', url: '/word-to-pdf.html', categories: ['all', 'convert-to-pdf'] },
+            { id: 'powerpoint-to-pdf', title: 'PowerPoint to PDF', description: 'Convert PowerPoint presentations to PDF files', icon: '<img src="pdf to powerpoint.png" alt="PowerPoint to PDF" style="width: 90px; height: 90px;">', url: '/powerpoint-to-pdf.html', categories: ['all', 'convert-to-pdf'] },
+            { id: 'excel-to-pdf', title: 'Excel to PDF', description: 'Convert Excel spreadsheets to PDF files', icon: '<img src="pdf to excel.png" alt="Excel to PDF" style="width: 90px; height: 90px;">', url: '/excel-to-pdf.html', categories: ['all', 'convert-to-pdf'] },
+            { id: 'pdf-to-jpg', title: 'PDF to JPG', description: 'Convert PDF pages to JPG images', icon: '<img src="pdf to jpg.png" alt="PDF to JPG" style="width: 90px; height: 90px;">', url: '/pdf-to-jpg.html', categories: ['all', 'convert-from-pdf'] },
+            { id: 'pdf-to-word', title: 'PDF to Word', description: 'Convert PDF files to editable Word documents', icon: '<img src="pdf to word.png" alt="PDF to Word" style="width: 90px; height: 90px;">', url: '/pdf-to-word.html', categories: ['all', 'convert-from-pdf'] },
+            { id: 'pdf-to-powerpoint', title: 'PDF to PowerPoint', description: 'Convert PDF files to editable PowerPoint presentations', icon: '<img src="pdf to powerpoint.png" alt="PDF to PowerPoint" style="width: 90px; height: 90px;">', url: '/pdf-to-powerpoint.html', categories: ['all', 'convert-from-pdf'] },
+            { id: 'pdf-to-excel', title: 'PDF to Excel', description: 'Convert PDF files to editable Excel spreadsheets', icon: '<img src="pdf to excel.png" alt="PDF to Excel" style="width: 90px; height: 90px;">', url: '/pdf-to-excel.html', categories: ['all', 'convert-from-pdf'] },
+            { id: 'compress-pdf', title: 'Compress PDF', description: 'Reduce PDF file size for easier sharing', icon: '<img src="compress pdf.png" alt="Compress PDF" style="width: 90px; height: 90px;">', url: '/compress-pdf.html', categories: ['all', 'edit-pdf'] },
+            { id: 'merge-pdf', title: 'Merge PDF', description: 'Combine multiple PDF files into one', icon: '<img src="merge-pdf-new.png.png" alt="Merge PDF" style="width: 90px; height: 90px;">', url: '/merge-pdf.html', categories: ['all', 'edit-pdf'] },
+            { id: 'split-pdf', title: 'Split PDF', description: 'Extract specific pages or split PDF into separate files', icon: '<img src="split-pdf.png" alt="Split PDF" style="width: 90px; height: 90px;">', url: '/split-pdf.html', categories: ['all', 'edit-pdf'] },
+            { id: 'crop-pdf', title: 'Crop PDF', description: 'Crop PDF pages to custom dimensions', icon: '<img src="Crop PDF.png" alt="Crop PDF" style="width: 90px; height: 90px;">', url: '/crop-pdf.html', categories: ['all', 'edit-pdf'] },
+            { id: 'rotate-pdf', title: 'Rotate PDF', description: 'Rotate PDF pages by 90°, 180°, 270° or custom angles', icon: '<img src="rotate pdf.png" alt="Rotate PDF" style="width: 110px; height: 110px;">', url: '/rotate-pdf.html', categories: ['all', 'edit-pdf'] },
+            { id: 'organize-pdf', title: 'Organize PDF', description: 'Sort, add and delete PDF pages with drag and drop', icon: '<img src="organize pdf.png" alt="Organize PDF" style="width: 90px; height: 90px;">', url: '/organize-pdf.html', categories: ['all', 'edit-pdf'] },
+            { id: 'add-page-numbers', title: 'Add Page Numbers', description: 'Add page numbers to PDFs with custom positioning and styling', icon: '<img src="add page number.png" alt="Add Page Numbers" style="width: 90px; height: 90px;">', url: '/add-page-numbers.html', categories: ['all', 'edit-pdf'] },
+            { id: 'add-watermark', title: 'Add Watermark', description: 'Add text or image watermarks to PDFs with custom styling', icon: '<img src="add watermark.png" alt="Add Watermark" style="width: 90px; height: 90px;">', url: '/add-watermark.html', categories: ['all', 'edit-pdf'] },
+            { id: 'png-to-jpg', title: 'PNG to JPG', description: 'Convert PNG images to JPG format', icon: '<img src="icon for web app too.png" alt="PNG to JPG" style="width: 90px; height: 90px;">', url: '/png-to-jpg.html', categories: ['all', 'image-tools'] },
+            { id: 'jpg-to-png', title: 'JPG to PNG', description: 'Convert JPG images to PNG format', icon: '<img src="jpg png.png" alt="JPG to PNG" style="width: 90px; height: 90px;">', url: '/jpg-to-png.html', categories: ['all', 'image-tools'] },
+            { id: 'sign-pdf', title: 'Sign PDF', description: 'Add digital signatures to PDF documents with drawing, upload, or typing', icon: '<img src="sign pdf.png" alt="Sign PDF" style="width: 90px; height: 90px;">', url: '/sign-pdf.html', categories: ['all', 'sign-protect'] }
+        ];
+
+        // Router class
+        class SimpleRouter {
+            constructor() {
+                this.routes = {};
+                this.currentRoute = null;
+                
+                // Bind event listeners
+                window.addEventListener('popstate', () => this.handleRoute());
+                document.addEventListener('click', (e) => this.handleClick(e));
+                
+                // Initialize
+                this.handleRoute();
+            }
+            
+            route(path, handler) {
+                this.routes[path] = handler;
+            }
+            
+            navigate(path) {
+                window.history.pushState({}, '', path);
+                this.handleRoute();
+            }
+            
+            handleRoute() {
+                const path = window.location.pathname;
+                const handler = this.routes[path] || this.routes['*'];
+                if (handler) {
+                    handler();
+                    this.currentRoute = path;
+                }
+            }
+            
+            handleClick(e) {
+                const link = e.target.closest('[data-route]');
+                if (link) {
+                    e.preventDefault();
+                    const route = link.getAttribute('data-route');
+                    
+                    // Handle special cases with custom URLs
+                    const toolId = route.replace('/', '');
+                    const tool = toolsData.find(t => t.id === toolId);
+                    
+                    if (tool && tool.url) {
+                        // Navigate to custom URL (external page)
+                        window.location.href = tool.url;
+                    } else {
+                        // Use standard router navigation
+                        this.navigate(route);
+                    }
+                }
+            }
+        }
+
+        // Create router instance
+        const router = new SimpleRouter();
+
+        // Show landing page with tool cards
+        function showLandingPage() {
+            // Show navigation cards in react app
+            const reactApp = document.getElementById('react-app');
+            reactApp.style.display = 'block';
+            reactApp.innerHTML = `
+                <section class="tools-section" id="tools">
+                    <div class="section-header">
+                        <h2 class="section-title">Powerful Document Tools</h2>
+                        <p class="section-subtitle">Choose from our comprehensive suite of document processing tools</p>
+                    </div>
+
+                    <!-- Category Tabs -->
+                    <div class="tools-categories">
+                        <button class="category-tab active" data-category="all">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            <span>All Tools</span>
+                        </button>
+                        <button class="category-tab" data-category="convert-to-pdf">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14,2 14,8 20,8"></polyline>
+                                <line x1="12" y1="18" x2="12" y2="12"></line>
+                                <line x1="9" y1="15" x2="15" y2="15"></line>
+                            </svg>
+                            <span>Convert To PDF</span>
+                        </button>
+                        <button class="category-tab" data-category="convert-from-pdf">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14,2 14,8 20,8"></polyline>
+                                <line x1="12" y1="12" x2="12" y2="18"></line>
+                                <polyline points="9,15 12,18 15,15"></polyline>
+                            </svg>
+                            <span>Convert From PDF</span>
+                        </button>
+                        <button class="category-tab" data-category="edit-pdf">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                            <span>Edit PDF</span>
+                        </button>
+                        <button class="category-tab" data-category="image-tools">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21,15 16,10 5,21"></polyline>
+                            </svg>
+                            <span>Image Tools</span>
+                        </button>
+                        <button class="category-tab" data-category="sign-protect">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                <path d="M9 12l2 2 4-4"></path>
+                            </svg>
+                            <span>Sign & Protect</span>
+                        </button>
+                    </div>
+
+                    <div class="tools-grid">
+                        ${toolsData.map(tool => `
+                            <a href="${tool.url || `/${tool.id}`}" class="tool-card-nav ${tool.categories.map(cat => `category-${cat}`).join(' ')}" data-route="/${tool.id}" data-categories="${tool.categories.join(',')}">
+                                <div class="tool-collapse-header">
+                                    <div class="tool-collapse-title">
+                                        <div class="tool-collapse-icon" aria-hidden="true">${tool.icon}</div>
+                                        <div class="tool-collapse-text">
+                                            <h3 class="tool-title">${tool.title}</h3>
+                                            <p class="tool-description">${tool.description}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        `).join('')}
+                    </div>
+                </section>
+            `;
+
+            // Initialize category filtering
+            initCategoryFiltering();
+        }
+
+        // Show individual tool page
+        function showToolPage(toolId) {
+            const tool = toolsData.find(t => t.id === toolId);
+            if (!tool) {
+                router.navigate('/');
+                return;
+            }
+
+            // Since each tool now has its own dedicated page, redirect to it
+            if (tool.url) {
+                window.location.href = tool.url;
+            } else {
+                // Fallback to home page if no dedicated URL is found
+                router.navigate('/');
+            }
+        }
+
+        // Category filtering function
+        function initCategoryFiltering() {
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const toolCards = document.querySelectorAll('.tool-card-nav');
+
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const selectedCategory = tab.getAttribute('data-category');
+
+                    // Update active tab
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    // Filter tool cards with smooth transition
+                    toolCards.forEach(card => {
+                        const cardCategories = card.getAttribute('data-categories').split(',');
+
+                        if (selectedCategory === 'all' || cardCategories.includes(selectedCategory)) {
+                            // Show card
+                            card.style.display = 'flex';
+                            // Force reflow for animation
+                            void card.offsetWidth;
+                            card.classList.add('fade-in');
+                            setTimeout(() => {
+                                card.classList.remove('fade-in');
+                            }, 400);
+                        } else {
+                            // Hide card
+                            card.classList.add('fade-out');
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                                card.classList.remove('fade-out');
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        }
+
+        // Set up routes
+        router.route('/', showLandingPage);
+        toolsData.forEach(tool => {
+            router.route(`/${tool.id}`, () => showToolPage(tool.id));
+        });
+        router.route('*', showLandingPage); // Default route
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wait a moment for all scripts to load
+            setTimeout(() => {
+                router.handleRoute();
+            }, 100);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Blog Link</title>
+</head>
+<body>
+    <h1>Test Blog Link</h1>
+    <a href="blog-post.html?post=1">Test Blog Post 1</a>
+    <br><br>
+    <script>
+        console.log('Debug page loaded');
+        
+        // Test if blog data functions are available
+        setTimeout(function() {
+            if (typeof getBlogPost === 'function') {
+                console.log('getBlogPost function is available');
+                const post = getBlogPost(1);
+                console.log('Post 1 data:', post);
+            } else {
+                console.error('getBlogPost function is NOT available');
+            }
+        }, 1000);
+    </script>
+    <script src="blog-data.js"></script>
+</body>
+</html>
