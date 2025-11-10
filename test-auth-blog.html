@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Auth on Blog - PDFrow</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Logo Size Customization -->
+    <style>
+        .logo-image {
+            width: 56px !important;
+            height: 56px !important;
+        }
+        
+        .logo-text {
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .footer .logo-image {
+            width: 48px !important;
+            height: 48px !important;
+        }
+        
+        .footer .logo-text {
+            font-size: 1.3rem !important;
+        }
+        
+        .logo {
+            align-items: center !important;
+            gap: 0.75rem !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- hCaptcha -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <script src="hcaptcha-config.js"></script>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                    </div>
+                    <h1 class="logo-text">PDFrow</h1>
+                </a>
+                
+                <div class="nav-actions">
+                    <!-- Auth Buttons -->
+                    <div id="auth-buttons" class="auth-buttons">
+                        <button class="btn-auth btn-login" id="loginBtn">Login</button>
+                        <button class="btn-auth btn-signup" id="signupBtn">Sign Up</button>
+                    </div>
+
+                    <!-- User Menu -->
+                    <div id="user-menu" class="user-menu" style="display: none;">
+                        <div class="user-avatar" id="userAvatar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </div>
+                        <span class="user-name" id="userName">User</span>
+                        <button class="profile-btn" id="profileBtn">Profile</button>
+                        <button class="logout-btn" id="logoutBtn">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <main style="padding: 2rem; text-align: center;">
+            <h1>Test Auth Functionality</h1>
+            <p>Click Login or Sign Up to test the auth functionality on blog pages.</p>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="support.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Test auth blog page loaded');
+            console.log('Auth system available:', !!window.pdfrowAuth);
+            console.log('Supabase available:', !!window.supabaseClient);
+            console.log('hCaptcha available:', !!window.hcaptcha);
+        });
+    </script>
+</body>
+</html>

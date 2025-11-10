@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Blog Post - PDFrow</title>
+    <meta name="description" id="page-description" content="Read the latest insights and tips about document processing from PDFrow">
+    
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/svg+xml" href="Official Logo PDFrow.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0066ff">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Logo Size Customization -->
+    <style>
+        .logo-image {
+            width: 56px !important;
+            height: 56px !important;
+        }
+        
+        .logo-text {
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .footer .logo-image {
+            width: 48px !important;
+            height: 48px !important;
+        }
+        
+        .footer .logo-text {
+            font-size: 1.3rem !important;
+        }
+        
+        .logo {
+            align-items: center !important;
+            gap: 0.75rem !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- hCaptcha -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <script src="hcaptcha-config.js"></script>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                    </div>
+                    <h1 class="logo-text">PDFrow</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html#tools" class="nav-link">Tools</a>
+                    <a href="index.html#features" class="nav-link">Features</a>
+                    <a href="index.html#how-it-works" class="nav-link">How It Works</a>
+                    <a href="index.html#blog" class="nav-link">Blog</a>
+                    <a href="index.html#faq" class="nav-link">FAQ</a>
+                    <button class="support-btn" id="supportBtn">Support Us ❤️</button>
+                </div>
+
+                <div class="nav-actions">
+                    <!-- Auth Buttons (shown when not logged in) -->
+                    <div id="auth-buttons" class="auth-buttons">
+                        <button class="btn-auth btn-login" id="loginBtn">Login</button>
+                        <button class="btn-auth btn-signup" id="signupBtn">Sign Up</button>
+                    </div>
+
+                    <!-- User Menu (shown when logged in) -->
+                    <div id="user-menu" class="user-menu" style="display: none;">
+                        <div class="user-avatar" id="userAvatar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="User profile avatar">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-email">user@example.com</span>
+                            <div class="user-dropdown">
+                                <button class="dropdown-item" id="profileBtn">Profile</button>
+                                <button class="dropdown-item" id="logoutBtn">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="theme-toggle" id="theme-toggle">
+                        <div class="theme-toggle-track">
+                            <div class="theme-toggle-thumb">
+                                <svg class="theme-icon sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Light theme">
+                                    <circle cx="12" cy="12" r="5"/>
+                                    <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                                </svg>
+                                <svg class="theme-icon dimmed-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Dimmed theme">
+                                    <path d="M12 3a6.364 6.364 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                                    <path d="M20 3v4m-2-2h4"/>
+                                </svg>
+                                <svg class="theme-icon moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Dark theme">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Blog Post Content -->
+        <main class="blog-post-main">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a href="index.html" class="breadcrumb-link">Home</a>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Breadcrumb separator">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+                <a href="index.html#blog" class="breadcrumb-link">Blog</a>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Breadcrumb separator">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+                <span class="breadcrumb-current" id="breadcrumb-title">Post</span>
+            </div>
+
+            <div class="blog-post-container" id="blog-post-container">
+                <!-- Loading state -->
+                <div class="loading-state" id="loading-state">
+                    <div class="loading-spinner"></div>
+                    <p>Loading post...</p>
+                </div>
+
+                <!-- Error state -->
+                <div class="error-state" id="error-state" style="display: none;">
+                    <div class="error-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="m15 9-6 6m0-6 6 6"/>
+                        </svg>
+                    </div>
+                    <h2>Post Not Found</h2>
+                    <p>The blog post you're looking for doesn't exist or has been moved.</p>
+                    <a href="index.html#blog" class="btn-primary">Back to Blog</a>
+                </div>
+
+                <!-- Blog post content -->
+                <article class="blog-post" id="blog-post" style="display: none;">
+                    <header class="blog-post-header">
+                        <div class="blog-post-meta">
+                            <span class="blog-post-category" id="post-category">Category</span>
+                            <span class="blog-post-date" id="post-date">Date</span>
+                            <span class="blog-post-read-time" id="post-read-time">Read time</span>
+                        </div>
+                        <h1 class="blog-post-title" id="post-title">Blog Post Title</h1>
+                        <p class="blog-post-excerpt" id="post-excerpt">Blog post excerpt goes here</p>
+                        
+                        <div class="blog-post-share">
+                            <span>Share:</span>
+                            <a href="#" class="share-btn" id="share-copy" aria-label="Copy link">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="User profile avatar">
+                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                                </svg>
+                            </a>
+                            <a href="mailto:?subject=Check out this article&body=I found this interesting article: " class="share-btn" id="share-email" aria-label="Share via email">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </header>
+
+                    <div class="blog-post-content" id="post-content">
+                        <!-- Article content will be inserted here -->
+                    </div>
+                </article>
+
+                <!-- Related Posts -->
+                <section class="related-posts" id="related-posts" style="display: none;">
+                    <h2>Related Posts</h2>
+                    <div class="related-posts-grid" id="related-posts-grid">
+                        <!-- Related posts will be inserted here -->
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <div class="logo-icon">
+                                <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                            </div>
+                            <h3 class="logo-text">PDFrow</h3>
+                        </div>
+                        <p class="footer-description">
+                            Next-generation document processing platform. Fast, secure, and always free.
+                        </p>
+                        <div class="footer-social">
+                            <a href="https://instagram.com/pdfrow" class="social-link" aria-label="Follow us on Instagram">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                                </svg>
+                            </a>
+                            <a href="mailto:contact@pdfrow.com" class="social-link" aria-label="Contact us via email">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4>Tools</h4>
+                            <ul>
+                                <li><a href="compress-pdf.html">Compress PDF</a></li>
+                                <li><a href="merge-pdf.html">Merge PDF</a></li>
+                                <li><a href="split-pdf.html">Split PDF</a></li>
+                                <li><a href="jpg-to-pdf.html">JPG to PDF</a></li>
+                            </ul>
+                        </div>
+
+
+                        <div class="footer-column">
+                            <h4>Support</h4>
+                            <ul>
+                                <li><a href="index.html#faq">FAQ</a></li>
+                                <li><a href="index.html#how-it-works">How It Works</a></li>
+                                <li><a href="index.html#blog">Blog</a></li>
+                                <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+                                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <p>&copy; <span id="current-year">2025</span> PDFrow. All rights reserved. Made with ❤️ for document processing.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="support.js"></script>
+    <script src="blog-data.js"></script>
+    <script src="blog-post.js"></script>
+</body>
+</html>
