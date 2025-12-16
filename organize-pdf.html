@@ -1,0 +1,2613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organize PDF Pages Online Free - Sort, Add, Delete PDF Pages | PDFrow</title>
+    <meta name="description" content="Organize PDF pages online for free. Sort, add, and delete PDF pages with drag and drop. Rearrange your PDF pages easily and securely with PDFrow.">
+    <meta name="keywords" content="organize PDF, sort PDF pages, add PDF pages, delete PDF pages, rearrange PDF, PDF page organizer, PDF page sorter">
+    <meta name="author" content="PDFrow">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Organize PDF Pages Online Free - Sort, Add, Delete PDF Pages | PDFrow">
+    <meta property="og:description" content="Organize PDF pages online for free. Sort, add, and delete PDF pages with drag and drop. Rearrange your PDF pages easily and securely.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pdfrow.com/organize-pdf">
+    <meta property="og:image" content="https://pdfrow.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="PDFrow PDF Organizer - Sort, Add, Delete PDF Pages">
+    <meta property="og:site_name" content="PDFrow">
+    
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Organize PDF Pages Online Free - Sort, Add, Delete PDF Pages | PDFrow">
+    <meta name="twitter:description" content="Organize PDF pages online for free. Sort, add, and delete PDF pages with drag and drop. Rearrange your PDF pages easily and securely.">
+    <meta name="twitter:image" content="https://pdfrow.com/og-image.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://pdfrow.com/organize-pdf.html">
+    
+    <!-- Apple meta tags -->
+    <meta name="application-name" content="PDFrow">
+    <meta name="apple-mobile-web-app-title" content="PDFrow">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="url-import.css">
+    
+    <!-- Logo Size Customization -->
+    <style>
+        .logo-image {
+            width: 56px !important;
+            height: 56px !important;
+        }
+        
+        .logo-text {
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .footer .logo-image {
+            width: 48px !important;
+            height: 48px !important;
+        }
+        
+        .footer .logo-text {
+            font-size: 1.3rem !important;
+        }
+        
+        .logo {
+            align-items: center !important;
+            gap: 0.75rem !important;
+        }
+    </style>
+    
+    <!-- Page-specific styles -->
+    <style>
+        .page-header {
+            position: relative;
+            padding: 1rem 0 2rem 0;
+            margin-top: 6rem;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .page-header-background {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+        
+        .header-decoration {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--accent-primary) 10%, transparent 70%);
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+        
+        .page-header-content {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .breadcrumb-link:hover {
+            color: var(--accent-primary);
+        }
+        
+        .breadcrumb-current {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .page-title-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tool-icon-large {
+            flex-shrink: 0;
+        }
+        
+        .icon-background {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 8px 32px rgba(var(--accent-primary-rgb), 0.3);
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+            line-height: 1.2;
+        }
+        
+        .page-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+            max-width: 600px;
+        }
+        
+        .tool-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+        
+        .feature-item:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-item svg {
+            color: var(--accent-primary);
+            flex-shrink: 0;
+        }
+        
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            max-width: fit-content;
+        }
+        
+        .security-badge svg {
+            color: var(--accent-primary);
+            flex-shrink: 0;
+        }
+        
+        /* PDF Page Organizer Styles */
+        .page-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            min-height: 200px;
+        }
+        
+        .page-thumbnails.drag-over {
+            border-color: var(--accent-primary);
+            background-color: rgba(var(--accent-primary-rgb), 0.05);
+        }
+        
+        .page-thumbnail {
+            position: relative;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem;
+            cursor: grab;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        
+        .page-thumbnail:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .page-thumbnail.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+            cursor: grabbing;
+        }
+        
+        .page-thumbnail.selected {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px rgba(var(--accent-primary-rgb), 0.2);
+        }
+        
+        .page-preview {
+            width: 100%;
+            height: 150px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .page-preview canvas {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 4px;
+        }
+        
+        .page-info {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .page-number {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .page-actions {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .page-thumbnail:hover .page-actions {
+            opacity: 1;
+        }
+        
+        .page-action-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            transition: background 0.2s ease;
+        }
+        
+        .page-action-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+        
+        .delete-btn:hover {
+            background: #dc3545;
+        }
+        
+        .organize-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .organize-btn {
+            padding: 0.75rem 1rem;
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .organize-btn:hover:not(:disabled) {
+            background: var(--accent-secondary);
+            transform: translateY(-1px);
+        }
+        
+        .organize-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .organize-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .organize-btn.secondary:hover:not(:disabled) {
+            background: var(--bg-primary);
+            border-color: var(--accent-primary);
+        }
+        
+        .page-count {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+        
+        .organize-info {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border: 1px solid #2196f3;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .organize-info.show {
+            display: block;
+        }
+        
+        .organize-info h4 {
+            margin: 0 0 0.5rem;
+            color: #1976d2;
+            font-size: 1rem;
+        }
+        
+        .organize-info ul {
+            margin: 0;
+            padding-left: 1.25rem;
+            color: #424242;
+            font-size: 0.875rem;
+        }
+        
+        .organize-info li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* File Navigation Styles */
+        .file-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(138, 43, 226, 0.1));
+            border: 2px solid var(--accent-primary);
+            border-radius: 8px;
+        }
+
+        .page-nav-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 100;
+            pointer-events: auto;
+            font-size: 14px;
+            font-weight: 500;
+            min-width: 100px;
+        }
+
+        .page-nav-btn:hover:not(:disabled) {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .page-nav-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .page-nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .page-info {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .page-title-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .tool-features {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .feature-item {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .page-thumbnails {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 0.75rem;
+                padding: 0.75rem;
+            }
+            
+            .page-preview {
+                height: 120px;
+            }
+            
+            .organize-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .organize-btn {
+                text-align: center;
+            }
+        }
+    </style>
+
+    <!-- Compact Feature and Step Cards Styles -->
+    <style>
+        /* Make feature cards more compact */
+        .features-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .feature-card {
+            padding: 1.25rem;
+            border-radius: 12px;
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Make step cards more compact */
+        .steps-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .step-card {
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .step-card .step-number {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .step-card p {
+            font-size: 1rem;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .features-grid,
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+
+    <!-- hCaptcha -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <script src="hcaptcha-config.js"></script>
+    
+    <!-- Loading States CSS -->
+    <style>
+        .processing-state, .upload-feedback, .error-state, .success-state, .validation-error {
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        .processing-state {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border: 1px solid var(--border-color);
+        }
+        
+        .upload-feedback {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        
+        .error-state {
+            background: linear-gradient(135deg, #ffeaea 0%, #fff0f0 100%);
+            border: 1px solid #f44336;
+            color: #c62828;
+        }
+        
+        .success-state {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            border: 1px solid #4b5563;
+            color: #e5e7eb;
+        }
+
+        .success-state h4 {
+            color: #a78bfa;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-state p {
+            color: #d1d5db;
+            margin: 0;
+        }
+
+        .success-state .success-icon {
+            margin-bottom: 1rem;
+        }
+
+        .success-state .success-icon svg {
+            width: 48px;
+            height: 48px;
+            color: #10b981;
+        }
+
+        body:not(.dark-mode) .success-state {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border: 1px solid #d1d5db;
+            color: #374151;
+        }
+
+        body:not(.dark-mode) .success-state h4 {
+            color: #7c3aed;
+        }
+
+        body:not(.dark-mode) .success-state p {
+            color: #4b5563;
+        }
+
+        .download-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .btn-download-primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-download-primary:hover {
+            background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .btn-download-secondary {
+            background: #374151;
+            color: #e5e7eb;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download-secondary:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
+        }
+
+        /* Light mode adjustments */
+        body:not(.dark-mode) .btn-download-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        body:not(.dark-mode) .btn-download-secondary:hover {
+            background: #d1d5db;
+        }
+
+        /* Continue Workflow Buttons */
+        .continue-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 0.75rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .continue-btn:hover {
+            border-color: var(--accent-primary);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(168, 85, 247, 0.1));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+        }
+
+        .continue-btn span:first-child {
+            font-size: 1.5rem;
+        }
+
+        .continue-btn span:last-child {
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* Continue Section Styles */
+        .continue-section {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid #4b5563;
+        }
+
+        .continue-title {
+            color: #d1d5db;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        .continue-tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .continue-tool-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            background: #1f2937;
+            border: 1px solid #374151;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #e5e7eb;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .continue-tool-btn:hover {
+            background: #374151;
+            border-color: #7c3aed;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+        }
+
+        .continue-tool-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .continue-tool-icon svg {
+            stroke: white;
+        }
+
+        .continue-tool-btn span {
+            flex: 1;
+            text-align: left;
+        }
+
+        .continue-arrow {
+            stroke: #9ca3af;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .continue-tool-btn:hover .continue-arrow {
+            transform: translateX(3px);
+            stroke: #7c3aed;
+        }
+
+        /* Light mode adjustments for continue section */
+        body:not(.dark-mode) .continue-section {
+            border-top-color: #d1d5db;
+        }
+
+        body:not(.dark-mode) .continue-title {
+            color: #374151;
+        }
+
+        body:not(.dark-mode) .continue-tool-btn {
+            background: #ffffff;
+            border-color: #e5e7eb;
+            color: #374151;
+        }
+
+        body:not(.dark-mode) .continue-tool-btn:hover {
+            background: #f9fafb;
+            border-color: #7c3aed;
+        }
+
+        body:not(.dark-mode) .continue-arrow {
+            stroke: #6b7280;
+        }
+
+        body:not(.dark-mode) .continue-tool-btn:hover .continue-arrow {
+            stroke: #7c3aed;
+        }
+
+        /* Responsive design for continue section */
+        @media (max-width: 768px) {
+            .continue-tools {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .validation-error {
+            background: linear-gradient(135deg, #fff3cd 0%, #fcf4d6 100%);
+            border: 2px solid #ffc107;
+            color: #856404;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PDFrow PDF Organizer",
+        "description": "Organize PDF pages online for free. Sort, add, and delete PDF pages with drag and drop functionality.",
+        "url": "https://pdfrow.com/organize-pdf",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Free PDF page organization",
+            "Drag and drop functionality", 
+            "Add and delete pages",
+            "Sort PDF pages",
+            "Secure file processing",
+            "No software installation required"
+        ]
+    }
+    </script>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="/" class="logo">
+                    <div class="logo-icon">
+                        <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                    </div>
+                    <h1 class="logo-text">PDFrow</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="/" class="nav-link" data-translate="nav_tools">Tools</a>
+                    <a href="/" class="nav-link" data-translate="nav_features">Features</a>
+                    <a href="/" class="nav-link" data-translate="nav_how_it_works">How It Works</a>
+                    <a href="/" class="nav-link" data-translate="nav_blog">Blog</a>
+                    <a href="/" class="nav-link" data-translate="nav_faq">FAQ</a>
+                </div>
+
+                <div class="nav-actions">
+                    <!-- Auth Buttons (shown when not logged in) -->
+                    <div id="auth-buttons" class="auth-buttons">
+                        <button class="btn-auth btn-login" id="loginBtn">Login</button>
+                        <button class="btn-auth btn-signup" id="signupBtn">Sign Up</button>
+                    </div>
+
+                    <!-- User Menu (shown when logged in) -->
+                    <div id="user-menu" class="user-menu" style="display: none;">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span class="user-email">user@example.com</span>
+                        <div class="user-dropdown">
+                            <button class="dropdown-item" id="profileBtn">Profile</button>
+                            <button class="dropdown-item" id="logoutBtn">Logout</button>
+                        </div>
+                    </div>
+                    
+                    <div class="theme-toggle" id="theme-toggle">
+                    <div class="theme-toggle-track">
+                        <div class="theme-toggle-thumb">
+                            <svg class="theme-icon sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Light theme">
+                                <circle cx="12" cy="12" r="5"/>
+                                <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                            </svg>
+                            <svg class="theme-icon dimmed-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Dimmed theme">
+                                <path d="M12 3a6.364 6.364 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                                <path d="M20 3v4m-2-2h4"/>
+                            </svg>
+                            <svg class="theme-icon moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Dark theme">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="page-header-background">
+                <div class="header-decoration"></div>
+            </div>
+            <div class="page-header-content">
+                <nav class="breadcrumb">
+                    <a href="/" class="breadcrumb-link" data-translate="breadcrumb_home">Home</a>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9,18 15,12 9,6"/>
+                    </svg>
+                    <span class="breadcrumb-current" data-translate="breadcrumb_organize">PDF Organizer</span>
+                </nav>
+
+                <div class="page-title-section">
+                    <div class="tool-icon-large">
+                        <div class="icon-background">
+                            <img src="organize-pdf.png" alt="Organize PDF Icon" style="width: 85px; height: 80px;">
+                        </div>
+                    </div>
+
+                    <div class="page-title-text">
+                        <h1 class="page-title" data-translate="organize_pdf_title">Organize PDF</h1>
+                        <p class="page-description" data-translate="organize_pdf_description">
+                            Sort, add and delete PDF pages with our intuitive drag and drop organizer. Drag and drop the page thumbnails and sort them in our PDF organizer.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="tool-features">
+                    <div class="feature-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10,9 9,9 8,9"/>
+                        </svg>
+                        <span data-translate="drag_drop">Drag & Drop</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12l2 2 4-4"/>
+                            <path d="M21 12c.552 0 1-.448 1-1V5a2 2 0 00-2-2H4a2 2 0 00-2 2v6c0 .552.448 1 1 1h18z"/>
+                        </svg>
+                        <span data-translate="sort_pages">Sort Pages</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="15" y1="9" x2="9" y2="15"/>
+                            <line x1="9" y1="9" x2="15" y2="15"/>
+                        </svg>
+                        <span data-translate="delete_pages">Delete Pages</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <circle cx="12" cy="16" r="1"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <span data-translate="secure_100">100% Secure</span>
+                    </div>
+                </div>
+
+                <!-- Security Badge -->
+                <div class="security-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span data-translate="security_badge_organize">100% Secure - Files processed locally</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Section -->
+        <section class="tools-section" id="tools">
+            <div class="section-header">
+                <h2 class="section-title" data-translate="pdf_organizer_title">PDF Page Organizer Tool</h2>
+                <p class="section-subtitle" data-translate="pdf_organizer_subtitle">Organize your PDF pages with drag and drop functionality</p>
+            </div>
+
+            <div class="tools-grid">
+                <!-- Organize PDF Tool -->
+                <div class="tool-card active" data-tool="organize-pdf">
+                    <div class="privacy-badge">
+                        <span class="lock-icon">🔒</span>
+                        <span data-translate="privacy_badge">100% client‑side. Files never leave your device.</span>
+                    </div>
+
+                    <!-- Upload Method Toggle -->
+                    <div class="upload-method-toggle">
+                        <button class="upload-method-btn active" data-method="local" type="button">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                            <span data-translate="upload_from_computer">Upload from Computer</span>
+                        </button>
+                        <button class="upload-method-btn" data-method="url" type="button">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                            </svg>
+                            <span data-translate="import_from_url">Import from URL</span>
+                        </button>
+                    </div>
+
+                    <!-- URL Import Section -->
+                    <div class="url-import-section" id="url-import-section">
+                        <div class="url-input-container">
+                            <svg class="url-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                            </svg>
+                            <input type="url" class="url-input" id="url-input" placeholder="Paste Dropbox or Google Drive link here..." data-translate-placeholder="url_placeholder" aria-label="URL input for file import">
+                        </div>
+                        <button class="url-import-btn" id="url-import-btn" type="button">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            <span data-translate="import_file">Import File</span>
+                        </button>
+                        <div class="download-progress" id="download-progress">
+                            <div class="progress-info">
+                                <span id="progress-text" data-translate="downloading">Downloading...</span>
+                                <span id="progress-percent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="url-error-message" id="url-error-message"></div>
+                        <div class="url-success-message" id="url-success-message"></div>
+                        <div class="url-hints">
+                            <div class="url-hints-title" data-translate="url_hints_title">Supported sources:</div>
+                            <ul class="url-hints-list">
+                                <li data-translate="hint_dropbox">Dropbox shared links</li>
+                                <li data-translate="hint_google_drive">Google Drive shared files</li>
+                                <li data-translate="hint_direct_urls">Direct file URLs</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="upload-area" data-translate="upload_area_pdf">
+                        <div class="upload-icon">
+                            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                        </div>
+                        <div class="upload-text">
+                            <p data-translate="upload_text">Click to select or drag and drop your PDF files</p>
+                            <p class="upload-subtext" data-translate="upload_pdf_subtext">PDF files • Up to 10 files • Max 50MB total batch size</p>
+                        </div>
+                        <input type="file" class="file-input" accept=".pdf" multiple>
+                    </div>
+                    
+                    <!-- File Navigation -->
+                    <div class="file-navigation" id="fileNavigation" style="display: none; margin-bottom: 1rem;">
+                        <button class="page-nav-btn" id="prevFile" disabled data-translate="previous_file">Previous File</button>
+                        <span class="page-info"><span data-translate="file_label">File</span> <span id="currentFileNum">1</span> <span data-translate="of_label">of</span> <span id="totalFiles">1</span></span>
+                        <button class="page-nav-btn" id="nextFile" disabled data-translate="next_file">Next File</button>
+                        <span class="page-info" style="margin-left: 1rem;" id="currentFileName">-</span>
+                    </div>
+
+                    <!-- PDF Page Thumbnails -->
+                    <div class="page-thumbnails" id="pageThumbnails" style="display: none;">
+                        <!-- Page thumbnails will be dynamically generated here -->
+                    </div>
+
+                    <!-- Organize Info -->
+                    <div class="organize-info" id="organizeInfo">
+                        <h4 data-translate="organize_title">How to organize your PDF pages:</h4>
+                        <ul>
+                            <li data-translate="organize_instruction_1"><strong>Drag and drop</strong> page thumbnails to reorder them</li>
+                            <li data-translate="organize_instruction_2"><strong>Click the X</strong> button on any page to delete it</li>
+                            <li data-translate="organize_instruction_3"><strong>Select multiple pages</strong> by clicking while holding Ctrl/Cmd</li>
+                            <li data-translate="organize_instruction_4"><strong>Download</strong> your organized PDF when ready</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Organize Controls -->
+                    <div class="organize-controls" id="organizeControls" style="display: none;">
+                        <div class="page-count" id="pageCount"><span data-translate="pages_count">0 pages</span></div>
+                        <button class="organize-btn secondary" id="selectAllBtn" data-translate="select_all">Select All</button>
+                        <button class="organize-btn secondary" id="deselectAllBtn" data-translate="deselect_all">Deselect All</button>
+                        <button class="organize-btn secondary" id="deleteSelectedBtn" data-translate="delete_selected">Delete Selected</button>
+                        <button class="organize-btn" id="downloadOrganizedBtn" data-translate="download_organized_pdf">Download Organized PDF</button>
+                    </div>
+                    
+                    <div class="files-list"></div>
+                    
+                    <div class="convert-section">
+                        <button class="convert-btn" disabled data-translate="organize_pdf_btn" title="Please upload PDF files first" aria-describedby="organize-pdf-hint">Organize PDF</button>
+                        <div class="convert-hint" id="organize-pdf-hint" data-translate="hint_upload_files_first">Upload PDF files above to start organizing</div>
+                    </div>
+                    
+                    <div class="results"></div>
+                    
+                    <!-- Loading State -->
+                    <div class="processing-state" id="processing-state" style="display: none;">
+                        <div class="processing-container">
+                            <div class="processing-spinner">
+                                <div class="spinner"></div>
+                            </div>
+                            <div class="processing-text">
+                                <h3 id="processing-title" data-translate="processing_title">Processing your PDF...</h3>
+                                <p id="processing-description" data-translate="processing_description">Please wait while we prepare your pages</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upload Feedback -->
+                    <div class="upload-feedback" id="upload-feedback" style="display: none;">
+                        <div class="feedback-container">
+                            <div class="feedback-icon" id="feedback-icon">📁</div>
+                            <div class="feedback-text">
+                                <h4 id="feedback-title" data-translate="feedback_title">PDF uploaded successfully!</h4>
+                                <p id="feedback-description" data-translate="feedback_description">Ready to organize your pages</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Validation Error State -->
+                    <div class="validation-error" id="validation-error" style="display: none;">
+                        <div class="validation-container">
+                            <div class="validation-icon">🚫</div>
+                            <div class="validation-text">
+                                <h4 id="validation-title" data-translate="validation_title">File validation failed</h4>
+                                <p id="validation-description" data-translate="validation_description">Please check your file and try again</p>
+                                <div class="validation-details" id="validation-details">
+                                    <ul id="validation-list"></ul>
+                                </div>
+                                <button class="organize-btn" id="dismiss-btn" data-translate="dismiss_btn">Dismiss</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error State -->
+                    <div class="error-state" id="error-state" style="display: none;">
+                        <div class="error-container">
+                            <div class="error-icon">⚠️</div>
+                            <div class="error-text">
+                                <h4 id="error-title" data-translate="error_title">Processing failed</h4>
+                                <p id="error-description" data-translate="error_description">Please try again or contact support if the problem persists</p>
+                                <button class="organize-btn" id="retry-btn" data-translate="retry_btn">Try Again</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Success State -->
+                    <div class="success-state" id="success-state" style="display: none;">
+                        <div class="success-container">
+                            <div class="success-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                            </div>
+                            <div class="success-text">
+                                <h4 id="success-title" data-translate="success_title">PDF organized successfully!</h4>
+                                <p id="success-description" data-translate="success_description">Your organized PDF is ready for download</p>
+                            </div>
+                        </div>
+                        <div class="download-actions">
+                            <button class="btn-download-primary" id="downloadPdfBtn" data-translate="download_file">Download File</button>
+                            <button class="btn-download-secondary" id="convertAnotherBtn" data-translate="convert_another">Convert Another</button>
+                        </div>
+
+                        <!-- Continue to other tools -->
+                        <div class="continue-section" id="continueSection">
+                            <h4 class="continue-title" data-translate="continue_title">Continue to...</h4>
+                            <div class="continue-tools">
+                                <button class="continue-tool-btn" data-tool="merge-pdf">
+                                    <div class="continue-tool-icon">
+                                        <img src="merge-pdf.png" alt="Merge PDF" style="width: 35px; height: 35px; object-fit: contain;">
+                                    </div>
+                                    <span>Merge PDF</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="rotate-pdf">
+                                    <div class="continue-tool-icon">
+                                        <img src="rotate-pdf.png" alt="Rotate PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                    </div>
+                                    <span>Rotate PDF</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="protect-pdf">
+                                    <div class="continue-tool-icon">
+                                        <img src="protect-pdf.png" alt="Protect PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                    </div>
+                                    <span>Protect PDF</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="compress-pdf">
+                                    <div class="continue-tool-icon">
+                                        <img src="compress-pdf-png.png" alt="Compress PDF" style="width: 35px; height: 35px; object-fit: contain;">
+                                    </div>
+                                    <span>Compress PDF</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="edit-pdf">
+                                    <div class="continue-tool-icon">
+                                        <img src="edit-pdf-png.png" alt="Edit PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                    </div>
+                                    <span>Edit PDF</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="sign-pdf">
+                                    <div class="continue-tool-icon">
+                                        <img src="sign-pdf.png" alt="Sign PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                    </div>
+                                    <span>Sign PDF</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="split-pdf">
+                                    <div class="continue-tool-icon">
+                                        <img src="split-pdf.png" alt="Split PDF" style="width: 35px; height: 35px; object-fit: contain;">
+                                    </div>
+                                    <span>Split PDF</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="crop-pdf">
+                                    <div class="continue-tool-icon">
+                                        <img src="crop-pdf.png" alt="Crop PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                    </div>
+                                    <span>Crop PDF</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="pdf-to-jpg">
+                                    <div class="continue-tool-icon">
+                                        <img src="pdf-to-jpg.png" alt="PDF to JPG" style="width: 40px; height: 40px; object-fit: contain;">
+                                    </div>
+                                    <span>PDF to JPG</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="pdf-to-word">
+                                    <div class="continue-tool-icon">
+                                        <img src="pdf-to-word.png" alt="PDF to Word" style="width: 40px; height: 40px; object-fit: contain;">
+                                    </div>
+                                    <span>PDF to Word</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="pdf-to-powerpoint">
+                                    <div class="continue-tool-icon">
+                                        <img src="pdf-to-powerpoint.png" alt="PDF to PowerPoint" style="width: 40px; height: 40px; object-fit: contain;">
+                                    </div>
+                                    <span>PDF to PowerPoint</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="pdf-to-excel">
+                                    <div class="continue-tool-icon">
+                                        <img src="pdf-to-excel.png" alt="PDF to Excel" style="width: 40px; height: 40px; object-fit: contain;">
+                                    </div>
+                                    <span>PDF to Excel</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="add-page-numbers">
+                                    <div class="continue-tool-icon">
+                                        <img src="add-page-numbers.png" alt="Add Page Numbers" style="width: 30px; height: 30px; object-fit: contain;">
+                                    </div>
+                                    <span>Add Page Numbers</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="add-watermark">
+                                    <div class="continue-tool-icon">
+                                        <img src="add-watermark.png" alt="Add Watermark" style="width: 30px; height: 30px; object-fit: contain;">
+                                    </div>
+                                    <span>Add Watermark</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+
+                                <button class="continue-tool-btn" data-tool="jpg-to-pdf">
+                                    <div class="continue-tool-icon">
+                                        <img src="jpg-to-pdf.png" alt="JPG to PDF" style="width: 40px; height: 40px; object-fit: contain;">
+                                    </div>
+                                    <span>JPG to PDF</span>
+                                    <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="section-header">
+                <h2 data-translate="why_choose_title">Why Choose PDFrow PDF Organizer?</h2>
+                <p data-translate="why_choose_subtitle">Powerful and intuitive PDF page management</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📑</div>
+                    <h3 data-translate="feature_drag_drop">Drag & Drop Interface</h3>
+                    <p data-translate="feature_drag_drop_desc">Intuitive drag and drop functionality to reorder pages exactly how you want them</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 data-translate="feature_secure">100% Secure</h3>
+                    <p data-translate="feature_secure_desc">Your files are processed locally and automatically deleted after processing</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 data-translate="feature_realtime">Real-time Preview</h3>
+                    <p data-translate="feature_realtime_desc">See page thumbnails in real-time as you organize your PDF documents</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3 data-translate="feature_no_software">No Software Needed</h3>
+                    <p data-translate="feature_no_software_desc">Works directly in your browser - no downloads or installations required</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works-section" id="how-it-works">
+            <div class="section-header">
+                <h2 data-translate="how_to_organize_title">How to Organize PDF Pages</h2>
+                <p data-translate="how_to_organize_subtitle">Simple 3-step process to organize your PDF pages with drag and drop</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">
+                        <span class="step-icon">📁</span>
+                        1
+                    </div>
+                    <h3 data-translate="step1_title">Upload Your PDF</h3>
+                    <p data-translate="step1_desc">Select your PDF file from your device, or simply drag and drop it into the upload area. The file is processed locally for maximum security.</p>
+                    <div class="step-features">
+                        <span class="step-feature" data-translate="step1_feature1">• Supports up to 50MB per file</span>
+                        <span class="step-feature" data-translate="step1_feature2">• Instant page preview</span>
+                        <span class="step-feature" data-translate="step1_feature3">• Secure local processing</span>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">
+                        <span class="step-icon">📑</span>
+                        2
+                    </div>
+                    <h3 data-translate="step2_title">Organize Pages</h3>
+                    <p data-translate="step2_desc">Use drag and drop to reorder pages, delete unwanted pages, or select multiple pages for bulk operations. See real-time previews of your changes.</p>
+                    <div class="step-features">
+                        <span class="step-feature" data-translate="step2_feature1">• <strong>Drag & drop:</strong> Reorder pages easily</span>
+                        <span class="step-feature" data-translate="step2_feature2">• <strong>Delete pages:</strong> Remove unwanted content</span>
+                        <span class="step-feature" data-translate="step2_feature3">• <strong>Multi-select:</strong> Bulk operations support</span>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">
+                        <span class="step-icon">⬇️</span>
+                        3
+                    </div>
+                    <h3 data-translate="step3_title">Download & Save</h3>
+                    <p data-translate="step3_desc">Download your newly organized PDF with all changes applied. The file maintains its original quality with your custom page arrangement.</p>
+                    <div class="step-features">
+                        <span class="step-feature" data-translate="step3_feature1">• Instant download available</span>
+                        <span class="step-feature" data-translate="step3_feature2">• Original quality maintained</span>
+                        <span class="step-feature" data-translate="step3_feature3">• Custom file naming</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <div class="logo-icon">
+                                <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                            </div>
+                            <h3 class="logo-text">PDFrow</h3>
+                        </div>
+                        <p class="footer-description" data-translate="footer_description">
+                            Next-generation document processing platform. Fast, secure, and always free.
+                        </p>
+                        <div class="footer-social">
+                            <a href="https://instagram.com/pdfrow" class="social-link" aria-label="Follow us on Instagram">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                                </svg>
+                            </a>
+                            <a href="mailto:contact@pdfrow.com" class="social-link" aria-label="Contact us via email">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4 data-translate="footer_tools_title">Tools</h4>
+                            <ul>
+                                <li><a href="compress-pdf.html" data-translate="footer_pdf_compressor">Compress PDF</a></li>
+                                <li><a href="merge-pdf.html" data-translate="footer_pdf_merger">Merge PDF</a></li>
+                                <li><a href="split-pdf.html">Split PDF</a></li>
+                                <li><a href="organize-pdf.html">Organize PDF</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-column">
+                            <h4 data-translate="footer_support_title">Support</h4>
+                            <ul>
+                                <li><a href="index.html#faq" data-translate="footer_faq">FAQ</a></li>
+                                <li><a href="index.html#how-it-works" data-translate="footer_how_it_works">How It Works</a></li>
+                                <li><a href="index.html#contact" id="footerContactLink" data-translate="footer_contact">Contact</a></li>
+                                <li><a href="terms-conditions.html" data-translate="footer_terms">Terms & Conditions</a></li>
+                                <li><a href="privacy-policy.html" data-translate="footer_privacy">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-column">
+                            <h4 data-translate="language">Language</h4>
+                            <div class="language-dropdown">
+                                <button class="language-btn" id="languageBtn">
+                                    <span class="flag" id="currentFlag">🇺🇸</span>
+                                    <span id="currentLang">English</span>
+                                    <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                        <polyline points="6,9 12,15 18,9"/>
+                                    </svg>
+                                </button>
+                                <div class="language-menu" id="languageMenu">
+                                    <div class="language-item" data-lang="en" data-flag="🇺🇸">
+                                        <span class="flag">🇺🇸</span>
+                                        <span>English</span>
+                                    </div>
+                                    <div class="language-item" data-lang="es" data-flag="🇪🇸">
+                                        <span class="flag">🇪🇸</span>
+                                        <span>Español</span>
+                                    </div>
+                                    <div class="language-item" data-lang="fr" data-flag="🇫🇷">
+                                        <span class="flag">🇫🇷</span>
+                                        <span>Français</span>
+                                    </div>
+                                    <div class="language-item" data-lang="de" data-flag="🇩🇪">
+                                        <span class="flag">🇩🇪</span>
+                                        <span>Deutsch</span>
+                                    </div>
+                                    <div class="language-item" data-lang="it" data-flag="🇮🇹">
+                                        <span class="flag">🇮🇹</span>
+                                        <span>Italiano</span>
+                                    </div>
+                                    <div class="language-item" data-lang="tr" data-flag="🇹🇷">
+                                        <span class="flag">🇹🇷</span>
+                                        <span>Türkçe</span>
+                                    </div>
+                                    <div class="language-item" data-lang="pt" data-flag="🇵🇹">
+                                        <span class="flag">🇵🇹</span>
+                                        <span>Português</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ru" data-flag="🇷🇺">
+                                        <span class="flag">🇷🇺</span>
+                                        <span>Русский</span>
+                                    </div>
+                                    <div class="language-item" data-lang="zh" data-flag="🇨🇳">
+                                        <span class="flag">🇨🇳</span>
+                                        <span>中文</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ja" data-flag="🇯🇵">
+                                        <span class="flag">🇯🇵</span>
+                                        <span>日本語</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ar" data-flag="🇸🇦">
+                                        <span class="flag">🇸🇦</span>
+                                        <span>العربية</span>
+                                    </div>
+                                    <div class="language-item" data-lang="hi" data-flag="🇮🇳">
+                                        <span class="flag">🇮🇳</span>
+                                        <span>हिन्दी</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p data-translate="footer_copyright">&copy; <span id="current-year">2025</span> PDFrow. All rights reserved. Made with ❤️ for document processing.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Support Us Modal -->
+    <div class="auth-modal" id="supportModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container support-modal-container">
+            <div class="auth-form-header">
+                <h2 data-translate="support_title">Support PDFrow ❤️</h2>
+                <p data-translate="support_subtitle">Help us keep PDFrow free and improve our services</p>
+                <button class="auth-close-btn" id="supportCloseBtn">&times;</button>
+            </div>
+            
+            <div class="support-content">
+                <div class="support-message">
+                    <p data-translate="support_message">
+                        PDFrow is completely free to use and will always remain so. Your support helps us:
+                    </p>
+                    <ul>
+                        <li data-translate="support_point_1">Keep servers running and fast</li>
+                        <li data-translate="support_point_2">Add new features regularly</li>
+                        <li data-translate="support_point_3">Maintain high security standards</li>
+                        <li data-translate="support_point_4">Provide excellent user experience</li>
+                    </ul>
+                </div>
+                
+                <div class="support-options">
+                    <div class="support-option">
+                        <h3 data-translate="support_share_title">Share PDFrow</h3>
+                        <p data-translate="support_share_desc">Tell your friends about PDFrow</p>
+                        <div class="share-buttons">
+                            <a href="https://twitter.com/intent/tweet?text=Check%20out%20PDFrow%20-%20free%20online%20PDF%20tools!&url=https://pdfrow.com" target="_blank" class="share-btn twitter">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                                <span data-translate="share_twitter">Twitter</span>
+                            </a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://pdfrow.com" target="_blank" class="share-btn facebook">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                                <span data-translate="share_facebook">Facebook</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="support-option">
+                        <h3 data-translate="support_donation_title">Make a Donation</h3>
+                        <p data-translate="support_donation_desc">Support our mission with a contribution</p>
+                        <div class="donation-buttons">
+                            <a href="https://www.paypal.com/donate/?hosted_button_id=YOUR_BUTTON_ID" target="_blank" class="donation-btn paypal">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.421c-.296-.13-.66-.198-1.084-.198h-2.99c-.524 0-.968.382-1.05.9L14.583 12.4c-.024.137-.024.273 0 .41.082.518.526.9 1.05.9h2.99c1.084 0 1.917-.198 2.482-.594.565-.396.847-.99.847-1.782 0-.99-.347-1.782-1.04-2.376z"/>
+                                </svg>
+                                <span data-translate="donate_paypal">PayPal</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="support-thanks">
+                    <p data-translate="support_thanks">
+                        Thank you for helping us keep PDFrow free for everyone! ❤️
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="auth-modal" id="loginModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container">
+            <div class="auth-form-header">
+                <h2 data-translate="login_title">Welcome Back</h2>
+                <p data-translate="login_subtitle">Sign in to access your PDFrow account</p>
+                <button class="auth-close-btn" id="loginCloseBtn">&times;</button>
+            </div>
+            
+            <div class="auth-form-content">
+                <div class="auth-input-group">
+                    <label for="loginEmail" data-translate="label_email">Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <label for="loginPassword" data-translate="label_password">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                
+                <button class="auth-submit-btn" id="loginSubmitBtn" data-translate="btn_sign_in">
+                    Sign In
+                </button>
+                
+                <div class="auth-divider">
+                    <span data-translate="auth_or">or</span>
+                </div>
+                
+                <button class="auth-google-btn" id="loginGoogleBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span data-translate="btn_continue_google">Continue with Google</span>
+                </button>
+                
+                <div class="auth-links">
+                    <a href="#" id="forgotPasswordLink" data-translate="link_forgot_password">Forgot password?</a>
+                    <span data-translate="auth_no_account">Don't have an account? 
+                        <a href="#" id="switchToSignup" data-translate="link_sign_up">Sign up</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="auth-modal" id="signupModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container">
+            <div class="auth-form-header">
+                <h2 data-translate="signup_title">Create Account</h2>
+                <p data-translate="signup_subtitle">Join PDFrow and unlock premium features</p>
+                <button class="auth-close-btn" id="signupCloseBtn">&times;</button>
+            </div>
+            
+            <div class="auth-form-content">
+                <div class="auth-input-group">
+                    <label for="signupName" data-translate="label_name">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <label for="signupEmail" data-translate="label_email">Email</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <label for="signupPassword" data-translate="label_password">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password" required>
+                </div>
+                
+                <div class="auth-checkbox-group">
+                    <label>
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span data-translate="checkbox_agree_terms">I agree to the 
+                            <a href="terms-conditions.html" target="_blank">Terms of Service</a> 
+                            and <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+                        </span>
+                    </label>
+                </div>
+                
+                <button class="auth-submit-btn" id="signupSubmitBtn" data-translate="btn_create_account">
+                    Create Account
+                </button>
+                
+                <div class="auth-divider">
+                    <span data-translate="auth_or">or</span>
+                </div>
+                
+                <button class="auth-google-btn" id="signupGoogleBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span data-translate="btn_continue_google">Continue with Google</span>
+                </button>
+                
+                <div class="auth-links">
+                    <span data-translate="auth_have_account">Already have an account? 
+                        <a href="#" id="switchToLogin" data-translate="link_sign_in">Sign in</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="auth-modal" id="contactModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container">
+            <div class="auth-form-header">
+                <h2 data-translate="contact_title">Contact Us</h2>
+                <p data-translate="contact_subtitle">We'd love to hear from you</p>
+                <button class="auth-close-btn" id="contactCloseBtn">&times;</button>
+            </div>
+            
+            <div class="auth-form-content">
+                <form id="contactForm">
+                    <div class="auth-input-group">
+                        <label for="contactName" data-translate="label_name">Name</label>
+                        <input type="text" id="contactName" name="name" placeholder="Your name" required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="contactEmail" data-translate="label_email">Email</label>
+                        <input type="email" id="contactEmail" name="email" placeholder="Your email" required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="contactSubject" data-translate="label_subject">Subject</label>
+                        <input type="text" id="contactSubject" name="subject" placeholder="Message subject" required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="contactMessage" data-translate="label_message">Message</label>
+                        <textarea id="contactMessage" name="message" placeholder="Your message" rows="4" required></textarea>
+                    </div>
+                    
+                    <!-- hCaptcha container -->
+                    <div id="contact-hcaptcha" class="h-captcha" data-sitekey="your-hcaptcha-site-key"></div>
+                    
+                    <button type="submit" class="auth-submit-btn" id="contactSubmitBtn" data-translate="btn_send_message">
+                        Send Message
+                    </button>
+                </form>
+                
+                <div id="contactSuccess" class="success-message" style="display: none;">
+                    <p data-translate="contact_success">Thank you! Your message has been sent successfully.</p>
+                </div>
+                
+                <div id="contactError" class="error-message" style="display: none;">
+                    <p data-translate="contact_error">Sorry, there was an error sending your message. Please try again.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include required scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="support.js"></script>
+    <script src="url-import.js"></script>
+    <script src="organize-pdf-translations.js"></script>
+    <script src="script.js"></script>
+
+    <!-- PDF Organizer Script -->
+    <script>
+        class PDFOrganizer {
+            constructor() {
+                this.pages = [];
+                this.selectedPages = new Set();
+                this.currentPDF = null;
+                this.isDragging = false;
+                this.uploadedFiles = []; // Store multiple files
+                this.currentFileIndex = 0; // Track current file
+                this.init();
+            }
+            
+            init() {
+                // Set up PDF.js worker
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                
+                // Get elements
+                this.fileInput = document.querySelector('.file-input');
+                this.uploadArea = document.querySelector('.upload-area');
+                this.pageThumbnails = document.getElementById('pageThumbnails');
+                this.organizeControls = document.getElementById('organizeControls');
+                this.organizeInfo = document.getElementById('organizeInfo');
+                this.pageCount = document.getElementById('pageCount');
+                this.convertBtn = document.querySelector('.convert-btn');
+                
+                // Control buttons
+                this.selectAllBtn = document.getElementById('selectAllBtn');
+                this.deselectAllBtn = document.getElementById('deselectAllBtn');
+                this.deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+                this.downloadBtn = document.getElementById('downloadOrganizedBtn');
+
+                // File navigation elements
+                this.fileNavigation = document.getElementById('fileNavigation');
+                this.prevFileBtn = document.getElementById('prevFile');
+                this.nextFileBtn = document.getElementById('nextFile');
+                this.currentFileNum = document.getElementById('currentFileNum');
+                this.totalFiles = document.getElementById('totalFiles');
+                this.currentFileName = document.getElementById('currentFileName');
+
+                this.setupEventListeners();
+            }
+            
+            setupEventListeners() {
+                // File upload
+                this.fileInput.addEventListener('change', (e) => this.handleFileUpload(e.target.files));
+                this.uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
+                this.uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
+                this.convertBtn.addEventListener('click', () => this.startOrganizing());
+                
+                // Control buttons
+                this.selectAllBtn.addEventListener('click', () => this.selectAllPages());
+                this.deselectAllBtn.addEventListener('click', () => this.deselectAllPages());
+                this.deleteSelectedBtn.addEventListener('click', () => this.deleteSelectedPages());
+                this.downloadBtn.addEventListener('click', () => this.downloadOrganizedPDF());
+
+                // File navigation buttons
+                if (this.prevFileBtn) {
+                    this.prevFileBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (this.currentFileIndex > 0) {
+                            this.currentFileIndex--;
+                            this.loadFile(this.uploadedFiles[this.currentFileIndex]);
+                            this.updateFileNavigation();
+                        }
+                    });
+                }
+                if (this.nextFileBtn) {
+                    this.nextFileBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (this.currentFileIndex < this.uploadedFiles.length - 1) {
+                            this.currentFileIndex++;
+                            this.loadFile(this.uploadedFiles[this.currentFileIndex]);
+                            this.updateFileNavigation();
+                        }
+                    });
+                }
+            }
+            
+            handleDragOver(e) {
+                e.preventDefault();
+                this.uploadArea.classList.add('drag-over');
+            }
+            
+            handleDrop(e) {
+                e.preventDefault();
+                this.uploadArea.classList.remove('drag-over');
+                this.handleFileUpload(e.dataTransfer.files);
+            }
+            
+            async handleFileUpload(files) {
+                if (files.length === 0) return;
+
+                // Filter and store all PDF files
+                this.uploadedFiles = Array.from(files).filter(file => file.type === 'application/pdf');
+
+                if (this.uploadedFiles.length === 0) {
+                    alert('Please select at least one PDF file.');
+                    return;
+                }
+
+                // Start with the first file
+                this.currentFileIndex = 0;
+                await this.loadFile(this.uploadedFiles[0]);
+                this.updateFileNavigation();
+            }
+
+            async loadFile(file) {
+                this.showProcessing('Loading PDF...', 'Please wait while we process your PDF');
+
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+                    this.currentPDF = await pdfjsLib.getDocument(arrayBuffer).promise;
+                    await this.renderPageThumbnails();
+                    this.showUploadSuccess();
+                    this.enableOrganizing();
+                } catch (error) {
+                    console.error('Error loading PDF:', error);
+                    this.showError('Error loading PDF file. Please try again.');
+                }
+            }
+
+            updateFileNavigation() {
+                if (this.uploadedFiles.length > 1) {
+                    if (this.fileNavigation) this.fileNavigation.style.display = 'flex';
+                    if (this.currentFileNum) this.currentFileNum.textContent = this.currentFileIndex + 1;
+                    if (this.totalFiles) this.totalFiles.textContent = this.uploadedFiles.length;
+                    if (this.currentFileName) this.currentFileName.textContent = this.uploadedFiles[this.currentFileIndex]?.name || '-';
+                    if (this.prevFileBtn) this.prevFileBtn.disabled = this.currentFileIndex === 0;
+                    if (this.nextFileBtn) this.nextFileBtn.disabled = this.currentFileIndex === this.uploadedFiles.length - 1;
+                } else {
+                    if (this.fileNavigation) this.fileNavigation.style.display = 'none';
+                }
+            }
+            
+            async renderPageThumbnails() {
+                this.pages = [];
+                this.pageThumbnails.innerHTML = '';
+                
+                for (let pageNum = 1; pageNum <= this.currentPDF.numPages; pageNum++) {
+                    const page = await this.currentPDF.getPage(pageNum);
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Set canvas dimensions for thumbnail
+                    const viewport = page.getViewport({ scale: 0.5 });
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    
+                    // Render page to canvas
+                    await page.render({
+                        canvasContext: ctx,
+                        viewport: viewport
+                    }).promise;
+                    
+                    // Create page object
+                    const pageData = {
+                        pageNum: pageNum,
+                        canvas: canvas.cloneNode(),
+                        originalIndex: pageNum - 1
+                    };
+                    
+                    // Clone canvas content
+                    const clonedCtx = pageData.canvas.getContext('2d');
+                    clonedCtx.drawImage(canvas, 0, 0);
+                    
+                    this.pages.push(pageData);
+                    this.createPageThumbnail(pageData);
+                }
+                
+                this.updatePageCount();
+            }
+            
+            createPageThumbnail(pageData) {
+                const thumbnail = document.createElement('div');
+                thumbnail.className = 'page-thumbnail';
+                thumbnail.draggable = true;
+                thumbnail.dataset.pageNum = pageData.pageNum;
+                thumbnail.dataset.originalIndex = pageData.originalIndex;
+                
+                thumbnail.innerHTML = `
+                    <div class="page-actions">
+                        <button class="page-action-btn delete-btn" title="Delete page">
+                            ×
+                        </button>
+                    </div>
+                    <div class="page-preview"></div>
+                    <div class="page-info">
+                        <span class="page-number">Page ${pageData.pageNum}</span>
+                    </div>
+                `;
+                
+                // Add canvas to preview
+                const preview = thumbnail.querySelector('.page-preview');
+                preview.appendChild(pageData.canvas);
+                
+                // Event listeners
+                thumbnail.addEventListener('click', (e) => this.togglePageSelection(thumbnail, e));
+                thumbnail.addEventListener('dragstart', (e) => this.handleDragStart(e, thumbnail));
+                thumbnail.addEventListener('dragover', (e) => this.handleThumbnailDragOver(e));
+                thumbnail.addEventListener('drop', (e) => this.handleThumbnailDrop(e, thumbnail));
+                
+                // Delete button
+                const deleteBtn = thumbnail.querySelector('.delete-btn');
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.deletePage(thumbnail);
+                });
+                
+                this.pageThumbnails.appendChild(thumbnail);
+            }
+            
+            togglePageSelection(thumbnail, e) {
+                if (e.ctrlKey || e.metaKey) {
+                    // Multi-select mode
+                    const pageNum = thumbnail.dataset.pageNum;
+                    if (this.selectedPages.has(pageNum)) {
+                        this.selectedPages.delete(pageNum);
+                        thumbnail.classList.remove('selected');
+                    } else {
+                        this.selectedPages.add(pageNum);
+                        thumbnail.classList.add('selected');
+                    }
+                } else {
+                    // Single select mode
+                    this.deselectAllPages();
+                    const pageNum = thumbnail.dataset.pageNum;
+                    this.selectedPages.add(pageNum);
+                    thumbnail.classList.add('selected');
+                }
+            }
+            
+            selectAllPages() {
+                this.selectedPages.clear();
+                const thumbnails = this.pageThumbnails.querySelectorAll('.page-thumbnail');
+                thumbnails.forEach(thumbnail => {
+                    const pageNum = thumbnail.dataset.pageNum;
+                    this.selectedPages.add(pageNum);
+                    thumbnail.classList.add('selected');
+                });
+            }
+            
+            deselectAllPages() {
+                this.selectedPages.clear();
+                const thumbnails = this.pageThumbnails.querySelectorAll('.page-thumbnail');
+                thumbnails.forEach(thumbnail => {
+                    thumbnail.classList.remove('selected');
+                });
+            }
+            
+            deleteSelectedPages() {
+                if (this.selectedPages.size === 0) {
+                    alert('Please select pages to delete.');
+                    return;
+                }
+                
+                if (this.selectedPages.size === this.pages.length) {
+                    alert('Cannot delete all pages. At least one page must remain.');
+                    return;
+                }
+                
+                const selectedArray = Array.from(this.selectedPages);
+                selectedArray.forEach(pageNum => {
+                    const thumbnail = this.pageThumbnails.querySelector(`[data-page-num="${pageNum}"]`);
+                    if (thumbnail) {
+                        this.deletePage(thumbnail);
+                    }
+                });
+                
+                this.selectedPages.clear();
+            }
+            
+            deletePage(thumbnail) {
+                const pageNum = parseInt(thumbnail.dataset.pageNum);
+                const pageIndex = this.pages.findIndex(page => page.pageNum === pageNum);
+                
+                if (pageIndex !== -1) {
+                    this.pages.splice(pageIndex, 1);
+                    thumbnail.remove();
+                    this.selectedPages.delete(pageNum.toString());
+                    this.updatePageCount();
+                }
+                
+                if (this.pages.length === 0) {
+                    this.resetOrganizer();
+                }
+            }
+            
+            handleDragStart(e, thumbnail) {
+                this.isDragging = true;
+                thumbnail.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', thumbnail.dataset.pageNum);
+                e.dataTransfer.effectAllowed = 'move';
+            }
+            
+            handleThumbnailDragOver(e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+            }
+            
+            handleThumbnailDrop(e, targetThumbnail) {
+                e.preventDefault();
+                
+                const draggedPageNum = e.dataTransfer.getData('text/plain');
+                const draggedThumbnail = this.pageThumbnails.querySelector(`[data-page-num="${draggedPageNum}"]`);
+                
+                if (draggedThumbnail && draggedThumbnail !== targetThumbnail) {
+                    // Determine drop position
+                    const rect = targetThumbnail.getBoundingClientRect();
+                    const midPoint = rect.left + rect.width / 2;
+                    const insertAfter = e.clientX > midPoint;
+                    
+                    // Reorder in DOM
+                    if (insertAfter) {
+                        targetThumbnail.parentNode.insertBefore(draggedThumbnail, targetThumbnail.nextSibling);
+                    } else {
+                        targetThumbnail.parentNode.insertBefore(draggedThumbnail, targetThumbnail);
+                    }
+                    
+                    // Update pages array order
+                    this.reorderPagesArray();
+                }
+                
+                // Clean up dragging state
+                const draggingThumbnail = this.pageThumbnails.querySelector('.dragging');
+                if (draggingThumbnail) {
+                    draggingThumbnail.classList.remove('dragging');
+                }
+                this.isDragging = false;
+            }
+            
+            reorderPagesArray() {
+                const newOrder = [];
+                const thumbnails = this.pageThumbnails.querySelectorAll('.page-thumbnail');
+                
+                thumbnails.forEach(thumbnail => {
+                    const pageNum = parseInt(thumbnail.dataset.pageNum);
+                    const pageData = this.pages.find(page => page.pageNum === pageNum);
+                    if (pageData) {
+                        newOrder.push(pageData);
+                    }
+                });
+                
+                this.pages = newOrder;
+            }
+            
+            updatePageCount() {
+                this.pageCount.textContent = `${this.pages.length} page${this.pages.length !== 1 ? 's' : ''}`;
+            }
+            
+            startOrganizing() {
+                if (!this.currentPDF) {
+                    alert('Please upload a PDF file first.');
+                    return;
+                }
+                
+                this.enableOrganizing();
+            }
+            
+            enableOrganizing() {
+                this.pageThumbnails.style.display = 'grid';
+                this.organizeControls.style.display = 'flex';
+                this.organizeInfo.classList.add('show');
+                this.convertBtn.style.display = 'none';
+                this.hideAllStates();
+            }
+            
+            async downloadOrganizedPDF() {
+                if (this.pages.length === 0) {
+                    alert('No pages to download.');
+                    return;
+                }
+                
+                this.showProcessing('Creating PDF...', 'Please wait while we generate your organized PDF');
+                
+                try {
+                    // Create completely new PDF without inheriting metadata
+                    const { jsPDF } = window.jspdf;
+                    
+                    // Initialize with explicit options to prevent metadata inheritance
+                    const pdf = new jsPDF({
+                        orientation: 'portrait',
+                        unit: 'mm',
+                        format: 'a4',
+                        compress: false
+                    });
+                    
+                    // Remove the default first page
+                    pdf.deletePage(1);
+                    
+                    // Process each page independently to avoid metadata inheritance
+                    for (let i = 0; i < this.pages.length; i++) {
+                        const pageData = this.pages[i];
+                        const originalPage = await this.currentPDF.getPage(pageData.originalIndex + 1);
+                        
+                        // Create a clean canvas for rendering
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Set high-quality rendering
+                        const scale = 2.0; // Higher quality
+                        const viewport = originalPage.getViewport({ scale: scale });
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        
+                        // Clear canvas to ensure no metadata contamination
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        
+                        // Render the page content only (no metadata)
+                        await originalPage.render({
+                            canvasContext: ctx,
+                            viewport: viewport,
+                            intent: 'print' // Use print intent to avoid viewer metadata
+                        }).promise;
+                        
+                        // Convert to clean image data
+                        const imgData = canvas.toDataURL('image/jpeg', 0.98);
+                        
+                        // Calculate dimensions maintaining aspect ratio
+                        const pageWidth = 210; // A4 width in mm
+                        const pageHeight = (canvas.height * pageWidth) / canvas.width;
+                        
+                        // Add new page and image
+                        pdf.addPage([pageWidth, pageHeight]);
+                        pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight, undefined, 'FAST');
+                        
+                        // Clear canvas for next iteration
+                        canvas.remove();
+                    }
+                    
+                    // Set clean metadata AFTER all pages are added
+                    pdf.setProperties({
+                        title: 'Organized PDF - PDFrow',
+                        subject: 'PDF pages organized and rearranged',
+                        author: 'PDFrow',
+                        creator: 'PDFrow PDF Organizer',
+                        producer: 'PDFrow Free PDF Tools',
+                        keywords: 'PDF, organize, rearrange, pages'
+                    });
+                    
+                    // Generate PDF blob (don't auto-download)
+                    const pdfBlob = pdf.output('blob');
+
+                    // Store blob globally for workflow continuation and manual download
+                    window.organizedPdfBlob = pdfBlob;
+                    window.organizedPdfName = 'organized-document.pdf';
+
+                    // Show success state instead of auto-downloading
+                    this.showSuccess();
+                    
+                } catch (error) {
+                    console.error('Error creating PDF:', error);
+                    this.showError('Error creating PDF. Please try again.');
+                }
+            }
+            
+            resetOrganizer() {
+                this.pages = [];
+                this.selectedPages.clear();
+                this.currentPDF = null;
+                this.pageThumbnails.style.display = 'none';
+                this.organizeControls.style.display = 'none';
+                this.organizeInfo.classList.remove('show');
+                this.convertBtn.style.display = 'block';
+                this.convertBtn.disabled = true;
+                this.hideAllStates();
+            }
+            
+            // State management methods
+            showProcessing(title, description) {
+                this.hideAllStates();
+                const processingState = document.getElementById('processing-state');
+                const processingTitle = document.getElementById('processing-title');
+                const processingDescription = document.getElementById('processing-description');
+                
+                if (processingTitle) processingTitle.textContent = title;
+                if (processingDescription) processingDescription.textContent = description;
+                processingState.style.display = 'block';
+            }
+            
+            showUploadSuccess() {
+                this.hideAllStates();
+                const uploadFeedback = document.getElementById('upload-feedback');
+                uploadFeedback.style.display = 'block';
+                
+                setTimeout(() => {
+                    uploadFeedback.style.display = 'none';
+                }, 3000);
+            }
+            
+            showSuccess() {
+                this.hideAllStates();
+                const successState = document.getElementById('success-state');
+                successState.style.display = 'block';
+                
+                setTimeout(() => {
+                    successState.style.display = 'none';
+                }, 5000);
+            }
+            
+            showError(message) {
+                this.hideAllStates();
+                const errorState = document.getElementById('error-state');
+                const errorDescription = document.getElementById('error-description');
+                
+                if (errorDescription) errorDescription.textContent = message;
+                errorState.style.display = 'block';
+                
+                // Retry button
+                const retryBtn = document.getElementById('retry-btn');
+                if (retryBtn) {
+                    retryBtn.onclick = () => this.hideAllStates();
+                }
+            }
+            
+            hideAllStates() {
+                const states = ['processing-state', 'upload-feedback', 'error-state', 'success-state', 'validation-error'];
+                states.forEach(stateId => {
+                    const element = document.getElementById(stateId);
+                    if (element) element.style.display = 'none';
+                });
+            }
+        }
+        
+        // Initialize PDF Organizer when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            window.pdfOrganizer = new PDFOrganizer();
+
+            // Handle download button click
+            const downloadBtn = document.getElementById('downloadPdfBtn');
+            const convertAnotherBtn = document.getElementById('convertAnotherBtn');
+            const successState = document.getElementById('success-state');
+            const processingState = document.getElementById('processing-state');
+            const fileInput = document.querySelector('.file-input');
+            const filesList = document.querySelector('.files-list');
+            const convertBtn = document.querySelector('.convert-btn');
+            const uploadArea = document.getElementById('upload-area');
+            const resultsSection = document.querySelector('.results');
+
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function() {
+                    // Check if we have an organized PDF blob
+                    if (window.organizedPdfBlob) {
+                        const url = URL.createObjectURL(window.organizedPdfBlob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = window.organizedPdfName || 'organized-document.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    } else if (window.converter && window.converter.currentDownloadLinks) {
+                        // Download all files
+                        window.converter.downloadAll();
+                    } else if (window.wordToPDFConverter && window.wordToPDFConverter.currentDownloadLinks) {
+                        window.wordToPDFConverter.downloadAll();
+                    } else if (window.powerpointToPDFConverter && window.powerpointToPDFConverter.currentDownloadLinks) {
+                        window.powerpointToPDFConverter.downloadAll();
+                    } else if (window.excelToPDFConverter && window.excelToPDFConverter.currentDownloadLinks) {
+                        window.excelToPDFConverter.downloadAll();
+                    }
+                });
+            }
+
+            if (convertAnotherBtn) {
+                convertAnotherBtn.addEventListener('click', function() {
+                    // Reset the tool state
+                    if (successState) successState.style.display = 'none';
+                    if (processingState) processingState.style.display = 'none';
+                    if (resultsSection) {
+                        resultsSection.style.display = 'block';
+                        resultsSection.innerHTML = '';
+                    }
+                    if (filesList) filesList.innerHTML = '';
+                    if (fileInput) fileInput.value = '';
+                    if (convertBtn) {
+                        convertBtn.disabled = true;
+                        convertBtn.title = 'Please upload files first';
+                    }
+                    if (uploadArea) uploadArea.style.display = 'block';
+
+                    // Clear organized PDF blob
+                    window.organizedPdfBlob = null;
+                    window.organizedPdfName = null;
+
+                    // Clear converter state
+                    if (window.converter) {
+                        window.converter.currentDownloadLinks = null;
+                    } else if (window.wordToPDFConverter) {
+                        window.wordToPDFConverter.currentDownloadLinks = null;
+                    } else if (window.powerpointToPDFConverter) {
+                        window.powerpointToPDFConverter.currentDownloadLinks = null;
+                    } else if (window.excelToPDFConverter) {
+                        window.excelToPDFConverter.currentDownloadLinks = null;
+                    }
+                });
+            }
+
+            // Handle "Continue to..." workflow buttons
+            const continueButtons = document.querySelectorAll('.continue-tool-btn');
+            continueButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetTool = this.getAttribute('data-tool');
+
+                    if (window.organizedPdfBlob) {
+                        // Convert blob to base64
+                        const reader = new FileReader();
+                        reader.onloadend = function() {
+                            const base64data = reader.result;
+                            sessionStorage.setItem('continuedFile', JSON.stringify({
+                                name: window.organizedPdfName || 'organized-document.pdf',
+                                type: 'application/pdf',
+                                data: base64data,
+                                from: 'organize-pdf'
+                            }));
+
+                            // Navigate to the target tool
+                            window.location.href = `${targetTool}.html`;
+                        };
+                        reader.readAsDataURL(window.organizedPdfBlob);
+                    } else {
+                        // No file available, just navigate
+                        window.location.href = `${targetTool}.html`;
+                    }
+                });
+            });
+
+            // Check for continued file from another tool
+            setTimeout(() => {
+                checkForContinuedFile();
+            }, 200);
+        });
+
+        // Function to check and load continued file
+        function checkForContinuedFile() {
+            const continuedFileData = sessionStorage.getItem('continuedFile');
+            if (continuedFileData) {
+                try {
+                    const fileInfo = JSON.parse(continuedFileData);
+
+                    // Convert base64 back to blob
+                    fetch(fileInfo.data)
+                        .then(res => res.blob())
+                        .then(blob => {
+                            // Create a File object
+                            const file = new File([blob], fileInfo.name, { type: fileInfo.type });
+
+                            // Get the file input element
+                            const fileInput = document.querySelector('.file-input');
+                            if (fileInput) {
+                                // Create a DataTransfer object to simulate file upload
+                                const dataTransfer = new DataTransfer();
+                                dataTransfer.items.add(file);
+                                fileInput.files = dataTransfer.files;
+
+                                // Trigger change event to process the file
+                                const event = new Event('change', { bubbles: true });
+                                fileInput.dispatchEvent(event);
+
+                                // Show a notification that file was loaded
+                                console.log(`File "${fileInfo.name}" automatically loaded from ${fileInfo.from}`);
+                            }
+
+                            // Clear sessionStorage after loading
+                            sessionStorage.removeItem('continuedFile');
+                        })
+                        .catch(error => {
+                            console.error('Error loading continued file:', error);
+                            sessionStorage.removeItem('continuedFile');
+                        });
+                } catch (error) {
+                    console.error('Error parsing continued file data:', error);
+                    sessionStorage.removeItem('continuedFile');
+                }
+            }
+        }
+    </script>
+
+    <script>
+        // Initialize the organize PDF tool on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize URL import feature
+            if (typeof initializeURLImport !== 'undefined') {
+                initializeURLImport('pdf');
+            }
+
+            // Wait for converter to be ready
+            if (typeof converter !== 'undefined') {
+                // Initialize the organize PDF tool
+                const organizeTool = document.querySelector('[data-tool="organize-pdf"]');
+                if (organizeTool) {
+                    organizeTool.style.display = 'block';
+                    organizeTool.classList.add('active');
+
+                    // Make sure the tool is properly initialized in the converter
+                    if (!converter.tools.has('organize-pdf')) {
+                        converter.initializeSpecificTool(organizeTool, 'organize-pdf');
+                    }
+
+                    // Set current tool
+                    converter.currentTool = 'organize-pdf';
+                }
+            } else {
+                // Retry after a short delay if converter isn't ready
+                setTimeout(() => {
+                    if (typeof converter !== 'undefined') {
+                        const organizeTool = document.querySelector('[data-tool="organize-pdf"]');
+                        if (organizeTool) {
+                            organizeTool.style.display = 'block';
+                            organizeTool.classList.add('active');
+
+                            if (!converter.tools.has('organize-pdf')) {
+                                converter.initializeSpecificTool(organizeTool, 'organize-pdf');
+                            }
+
+                            converter.currentTool = 'organize-pdf';
+                        }
+                    }
+                }, 100);
+            }
+        });
+
+        // Handle "Continue to..." workflow buttons
+        document.addEventListener('click', async function(e) {
+            const continueBtn = e.target.closest('.continue-btn');
+            if (!continueBtn) return;
+
+            const targetTool = continueBtn.dataset.tool;
+
+            // Get the organized PDF from the global variable
+            if (!targetTool || !window.organizedPdfBlob) {
+                alert('No processed file available. Please organize a PDF first.');
+                return;
+            }
+
+            try {
+                // Convert blob to base64
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    const base64data = reader.result;
+
+                    // Store in sessionStorage
+                    sessionStorage.setItem('continuedFile', JSON.stringify({
+                        name: window.organizedPdfName || 'organized.pdf',
+                        type: 'application/pdf',
+                        data: base64data,
+                        from: 'Organize PDF'
+                    }));
+
+                    // Navigate to the target tool
+                    window.location.href = targetTool;
+                };
+
+                reader.readAsDataURL(window.organizedPdfBlob);
+            } catch (error) {
+                console.error('Error preparing file for continuation:', error);
+                alert('Error preparing file. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

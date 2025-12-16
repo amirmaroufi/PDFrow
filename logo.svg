@@ -1,0 +1,70 @@
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Main gradient for the icon -->
+    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0066ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8000ff;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Secondary gradient for accents -->
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff0080;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0066ff;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Drop shadow -->
+    <filter id="dropshadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.3)"/>
+    </filter>
+  </defs>
+  
+  <!-- Background circle with gradient -->
+  <circle cx="20" cy="20" r="18" fill="url(#mainGradient)" filter="url(#dropshadow)" opacity="0.9"/>
+  
+  <!-- Inner circle for depth -->
+  <circle cx="20" cy="20" r="15" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  
+  <!-- Main document stack showing multiple documents -->
+  <g transform="translate(10, 8)">
+    <!-- Back document -->
+    <rect x="3" y="3" width="14" height="18" rx="2" fill="rgba(255,255,255,0.3)" opacity="0.6"/>
+    
+    <!-- Middle document -->
+    <rect x="1.5" y="1.5" width="14" height="18" rx="2" fill="rgba(255,255,255,0.5)" opacity="0.8"/>
+    
+    <!-- Front document -->
+    <rect x="0" y="0" width="14" height="18" rx="2" fill="rgba(255,255,255,0.9)" filter="url(#glow)"/>
+    
+    <!-- Document corner fold -->
+    <path d="M10 0 L10 4 L14 4 Z" fill="rgba(0,245,255,0.3)"/>
+    
+    <!-- Modern document lines with varying widths -->
+    <rect x="2" y="6" width="8" height="1.5" rx="0.5" fill="url(#accentGradient)" opacity="0.8"/>
+    <rect x="2" y="8.5" width="10" height="1.5" rx="0.5" fill="url(#accentGradient)" opacity="0.6"/>
+    <rect x="2" y="11" width="6" height="1.5" rx="0.5" fill="url(#accentGradient)" opacity="0.8"/>
+    <rect x="2" y="13.5" width="9" height="1.5" rx="0.5" fill="url(#accentGradient)" opacity="0.6"/>
+  </g>
+  
+  <!-- Processing arrow/flow indicator -->
+  <g transform="translate(26, 18)">
+    <path d="M0 2 L6 2 L4 0 L6 2 L4 4 Z" fill="url(#accentGradient)" filter="url(#glow)" opacity="0.9"/>
+  </g>
+        
+  <!-- Subtle tech pattern overlay -->
+  <g opacity="0.15">
+    <circle cx="12" cy="12" r="1" fill="white"/>
+    <circle cx="28" cy="12" r="1" fill="white"/>
+    <circle cx="12" cy="28" r="1" fill="white"/>
+    <circle cx="28" cy="28" r="1" fill="white"/>
+  </g>
+</svg>

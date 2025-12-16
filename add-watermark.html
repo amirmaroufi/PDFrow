@@ -1,0 +1,3239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Watermark to PDF Online Free - PDF Watermarking Tool | PDFrow</title>
+    <meta name="description" content="Add text or image watermarks to PDF files with custom styling for free. Fast, secure, and no software required. Protect your documents and add professional branding.">
+    <meta name="keywords" content="add watermark PDF, PDF watermark, watermark PDF online, protect PDF, brand PDF, free PDF watermark, online PDF watermarking">
+    <meta name="author" content="PDFrow">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Add Watermark to PDF Online Free - PDF Watermarking Tool | PDFrow">
+    <meta property="og:description" content="Add text or image watermarks to PDF files with custom styling for free. Fast, secure, and no software required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pdfrow.com/add-watermark">
+    <meta property="og:image" content="https://pdfrow.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="PDFrow Add Watermark - Protect and Brand Your PDFs">
+    <meta property="og:site_name" content="PDFrow">
+    
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Add Watermark to PDF Online Free - PDF Watermarking Tool | PDFrow">
+    <meta name="twitter:description" content="Add text or image watermarks to PDF files with custom styling for free. Fast, secure, and no software required.">
+    <meta name="twitter:image" content="https://pdfrow.com/og-image.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://pdfrow.com/add-watermark.html">
+
+    <!-- Apple meta tags -->
+    <meta name="application-name" content="PDFrow">
+    <meta name="apple-mobile-web-app-title" content="PDFrow">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="url-import.css">
+    
+    <!-- Logo Size Customization -->
+    <style>
+        .logo-image {
+            width: 56px !important;
+            height: 56px !important;
+        }
+        
+        .logo-text {
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .footer .logo-image {
+            width: 48px !important;
+            height: 48px !important;
+        }
+        
+        .footer .logo-text {
+            font-size: 1.3rem !important;
+        }
+        
+        .logo {
+            align-items: center !important;
+            gap: 0.75rem !important;
+        }
+    </style>
+    
+    <!-- Page-specific styles -->
+    <style>
+        .page-header {
+            position: relative;
+            padding: 1rem 0 2rem 0;
+            margin-top: 6rem;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .page-header-background {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+        
+        .header-decoration {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--accent-primary) 10%, transparent 70%);
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+        
+        .page-header-content {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .breadcrumb-link:hover {
+            color: var(--accent-primary);
+        }
+        
+        .breadcrumb-current {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .page-title-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tool-icon-large {
+            flex-shrink: 0;
+        }
+        
+        .icon-background {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 8px 32px rgba(var(--accent-primary-rgb), 0.3);
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+            line-height: 1.2;
+        }
+        
+        .page-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+            max-width: 600px;
+        }
+        
+        .tool-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+        
+        .feature-item:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-item svg {
+            color: var(--accent-primary);
+            flex-shrink: 0;
+        }
+        
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            max-width: fit-content;
+        }
+        
+        .security-badge svg {
+            color: var(--accent-primary);
+            flex-shrink: 0;
+        }
+        
+        /* Modern Watermark Controls */
+        .watermark-options {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .watermark-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        /* Type Tabs */
+        .type-tabs {
+            display: flex;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 4px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .type-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .type-tab input {
+            display: none;
+        }
+        
+        .type-tab.active {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* File Navigation */
+        .file-navigation {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+            padding: 0.75rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .page-nav-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 100;
+            pointer-events: auto;
+            font-size: 14px;
+            font-weight: 500;
+            min-width: 100px;
+        }
+
+        .page-nav-btn:hover:not(:disabled) {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .page-nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: var(--bg-secondary);
+        }
+
+        .page-info-file {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Panel Sections */
+        .watermark-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .panel-section {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .panel-section h4 {
+            margin: 0 0 1rem 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Text Input Styling */
+        .watermark-texts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .watermark-text-item {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .watermark-text-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        
+        .remove-text-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--error-border, #fecaca);
+            border-radius: 6px;
+            background: var(--error-bg, #fef2f2);
+            color: var(--error-text, #dc2626);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+        }
+        
+        .remove-text-btn:hover {
+            background: var(--error-text, #dc2626);
+            color: white;
+        }
+        
+        .add-text-btn {
+            padding: 0.6rem 1rem;
+            border: 1px dashed var(--border-color);
+            border-radius: 6px;
+            background: transparent;
+            color: var(--accent-primary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .add-text-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        /* Style Grid */
+        .style-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .style-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .style-item label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        
+        .style-item select {
+            padding: 0.6rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+        }
+        
+        /* Ensure dark mode compatibility */
+        .dark-mode .style-item select {
+            background: #2a2a2a;
+            color: #ffffff;
+            border-color: #444;
+        }
+        
+        /* Color Picker */
+        .color-picker {
+            margin-top: 1rem;
+        }
+        
+        .color-picker label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        
+        .color-swatches {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.25rem;
+        }
+        
+        .color-swatch {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .color-swatch input {
+            display: none;
+        }
+        
+        .color-swatch span {
+            display: block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+        
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-swatch.active span {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px var(--accent-primary);
+        }
+        
+        /* Position Selector */
+        .position-selector label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        
+        .position-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            max-width: 120px;
+        }
+        
+        .pos-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .pos-btn:hover, .pos-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        /* Effects Grid */
+        .effects-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .effect-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .effect-item label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        
+        .range-value {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent-primary);
+        }
+        
+        .effect-item input[type="range"] {
+            width: 100%;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+            outline: none;
+            appearance: none;
+        }
+        
+        .effect-item input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            cursor: pointer;
+        }
+        
+        /* Image Upload */
+        .image-upload {
+            text-align: center;
+            padding: 1rem;
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            transition: border-color 0.2s;
+        }
+        
+        .image-upload:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .upload-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            background: var(--accent-primary);
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-btn:hover {
+            background: var(--accent-secondary);
+        }
+        
+        .upload-hint {
+            margin: 0;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Compact Options Layout */
+        .options-layout {
+            display: grid;
+            grid-template-columns: 1fr 140px;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        
+        .options-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+        
+        /* Content Options (Left Column) */
+        .content-section {
+            background: var(--bg-primary);
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .style-section {
+            background: var(--bg-primary);
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .style-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .style-item label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.2rem;
+            display: block;
+        }
+        
+        .style-item select {
+            width: 100%;
+            padding: 0.3rem;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            font-size: 0.75rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        
+        /* Dark mode support for watermark text styles */
+        .dark-mode .style-item label {
+            color: #e5e5e5;
+        }
+        
+        .dark-mode .style-item select {
+            background: #2a2a2a;
+            color: #ffffff;
+            border-color: #444;
+        }
+        
+        .dark-mode .style-item select:focus {
+            border-color: #666;
+            outline: none;
+        }
+        
+        .dark-mode .style-item select option {
+            background: #2a2a2a;
+            color: #ffffff;
+        }
+        
+        .dark-mode .section-label {
+            color: #e5e5e5;
+        }
+        
+        .dark-mode .pos-btn {
+            background: #2a2a2a;
+            color: #ffffff;
+            border-color: #444;
+        }
+        
+        .dark-mode .pos-btn:hover, .dark-mode .pos-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .dark-mode .position-current {
+            background: #2a2a2a;
+            color: #ffffff;
+            border-color: #444;
+        }
+        
+        .dark-mode .position-options {
+            background: #2a2a2a;
+            border-color: #444;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dark-mode .pos-option {
+            background: #2a2a2a;
+            color: #ffffff;
+        }
+        
+        .dark-mode .pos-option:hover, .dark-mode .pos-option.active {
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        .color-section {
+            margin-top: 0.4rem;
+        }
+        
+        .color-section label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+        
+        .add-text-btn {
+            background: transparent;
+            color: var(--accent-primary);
+            border: 1px dashed var(--accent-primary);
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        
+        .add-text-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        /* Position & Effects (Right Column) */
+        .position-section, .effects-section {
+            background: var(--bg-primary);
+            padding: 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .position-dropdown {
+            position: relative;
+            width: 100%;
+        }
+        
+        .position-current {
+            width: 100%;
+            height: 32px;
+            padding: 0.4rem 0.6rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+        
+        .position-current:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .position-arrow {
+            font-size: 0.6rem;
+            transition: transform 0.2s;
+        }
+        
+        .position-current.open .position-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .position-options {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .pos-option {
+            width: 100%;
+            height: 28px;
+            padding: 0.3rem 0.6rem;
+            border: none;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .pos-option:hover, .pos-option.active {
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        .pos-option:first-child {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+        
+        .pos-option:last-child {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .pos-btn:hover, .pos-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+            transform: translateY(-1px);
+        }
+        
+        .effect-item {
+            margin-bottom: 0.4rem;
+        }
+        
+        .effect-item label {
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .effect-item input[type="range"] {
+            width: 100%;
+            height: 3px;
+            border-radius: 2px;
+            background: var(--border-color);
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .effect-item input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            cursor: pointer;
+            border: 1px solid white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .effect-item input[type="range"]::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            cursor: pointer;
+            border: 1px solid white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        /* Simple Preview Section */
+        .preview-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .preview-section h4 {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .simple-preview {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            height: 350px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .preview-page-mock {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            position: relative;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mock-header {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .mock-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .mock-line {
+            height: 3px;
+            background: #ddd;
+            border-radius: 2px;
+            width: 100%;
+        }
+        
+        .mock-line.short {
+            width: 70%;
+        }
+        
+        .watermark-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .watermark-text {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            font-size: 24px;
+            color: #000000;
+            opacity: 0.5;
+            white-space: nowrap;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .watermark-image {
+            max-width: 100px;
+            max-height: 100px;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+        
+        /* Upload feedback styles */
+        .upload-feedback {
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-secondary, #f3f4f6);
+            border: 1px solid var(--border-color, #d1d5db);
+            border-radius: 8px;
+            color: var(--text-primary, #374151);
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .upload-feedback.active {
+            display: flex;
+        }
+        
+        .upload-feedback svg {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .dark-mode .upload-feedback {
+            background: var(--bg-secondary, #1f2937);
+            border-color: var(--border-color, #374151);
+            color: var(--text-primary, #e5e7eb);
+        }
+        
+        /* Validation error styles */
+        .validation-error {
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--error-bg, #fef2f2);
+            border: 1px solid var(--error-border, #fecaca);
+            border-radius: 8px;
+            color: var(--error-text, #dc2626);
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .validation-error.active {
+            display: flex;
+        }
+        
+        .validation-error svg {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .validation-error-content {
+            flex: 1;
+        }
+        
+        .validation-error-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .validation-error-details {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+        
+        .dark-mode .validation-error {
+            background: var(--error-bg, #1f1818);
+            border-color: var(--error-border, #451a1a);
+            color: var(--error-text, #f87171);
+        }
+        
+        @media (max-width: 768px) {
+            .page-title-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .tool-features {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .feature-item {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .watermark-options {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+            
+            .preview-section {
+                order: -1;
+            }
+            
+            .preview-canvas-container {
+                min-height: 150px;
+            }
+            
+            .preview-canvas-container.has-canvas {
+                min-height: auto;
+            }
+            
+            #watermark-preview-canvas {
+                max-width: 200px;
+                max-height: 250px;
+            }
+            
+            .style-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .color-swatches {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .options-layout {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            
+            .style-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .position-buttons {
+                max-width: 150px;
+            }
+        }
+        
+        /* PDF Preview Canvas Styles */
+        .preview-container {
+            position: relative;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .preview-canvas-container {
+            position: relative;
+            display: inline-block;
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0 auto;
+            width: auto;
+            min-height: 200px;
+        }
+        
+        .preview-canvas-container.has-canvas {
+            min-height: auto;
+            width: auto;
+            display: inline-block;
+        }
+        
+        .preview-canvas-container .preview-placeholder {
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        
+        .preview-canvas-container.has-canvas .preview-placeholder {
+            display: none;
+        }
+        
+        #watermark-preview-canvas {
+            border-radius: 2px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            display: block;
+            vertical-align: top;
+            max-width: 250px;
+            max-height: 350px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .preview-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .placeholder-icon {
+            font-size: 2rem;
+            opacity: 0.6;
+        }
+        
+        .preview-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.4rem;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .preview-btn {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+        
+        .preview-btn:hover:not(:disabled) {
+            background: var(--accent-secondary);
+            transform: translateY(-1px);
+        }
+        
+        .preview-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        #watermark-page-info {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            min-width: 80px;
+            text-align: center;
+        }
+    </style>
+
+    <!-- Compact Feature and Step Cards Styles -->
+    <style>
+        /* Make feature cards more compact */
+        .features-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .feature-card {
+            padding: 1.25rem;
+            border-radius: 12px;
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Make step cards more compact */
+        .steps-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .step-card {
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .step-card .step-number {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .step-card p {
+            font-size: 1rem;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .features-grid,
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Success State and Download Actions */
+        .success-state {
+            display: none;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            border: 1px solid #4b5563;
+            color: #e5e7eb;
+        }
+
+        .success-state h4 {
+            color: #a78bfa;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-state p {
+            color: #d1d5db;
+            margin: 0;
+        }
+
+        .success-state .success-icon {
+            margin-bottom: 1rem;
+        }
+
+        .success-state .success-icon svg {
+            width: 48px;
+            height: 48px;
+            color: #10b981;
+        }
+
+        body:not(.dark-mode) .success-state {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border: 1px solid #d1d5db;
+            color: #374151;
+        }
+
+        body:not(.dark-mode) .success-state h4 {
+            color: #7c3aed;
+        }
+
+        body:not(.dark-mode) .success-state p {
+            color: #4b5563;
+        }
+
+        .download-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .btn-download-primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-download-primary:hover {
+            background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .btn-download-secondary {
+            background: #374151;
+            color: #e5e7eb;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download-secondary:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
+        }
+
+        body:not(.dark-mode) .btn-download-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        body:not(.dark-mode) .btn-download-secondary:hover {
+            background: #d1d5db;
+        }
+
+        /* Continue Workflow Buttons */
+        .continue-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 0.75rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .continue-btn:hover {
+            border-color: var(--accent-primary);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(168, 85, 247, 0.1));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+        }
+
+        .continue-btn span:first-child {
+            font-size: 1.5rem;
+        }
+
+        .continue-btn span:last-child {
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* Continue Section Styles */
+        .continue-section {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid #4b5563;
+        }
+
+        .continue-title {
+            color: #d1d5db;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        .continue-tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .continue-tool-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            background: #1f2937;
+            border: 1px solid #374151;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #e5e7eb;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .continue-tool-btn:hover {
+            background: #374151;
+            border-color: #7c3aed;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+        }
+
+        .continue-tool-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .continue-tool-icon svg {
+            stroke: white;
+        }
+
+        .continue-tool-btn span {
+            flex: 1;
+            text-align: left;
+        }
+
+        .continue-arrow {
+            stroke: #9ca3af;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .continue-tool-btn:hover .continue-arrow {
+            transform: translateX(3px);
+            stroke: #7c3aed;
+        }
+
+        /* Light mode adjustments for continue section */
+        body:not(.dark-mode) .continue-section {
+            border-top-color: #d1d5db;
+        }
+
+        body:not(.dark-mode) .continue-title {
+            color: #374151;
+        }
+
+        body:not(.dark-mode) .continue-tool-btn {
+            background: #ffffff;
+            border-color: #e5e7eb;
+            color: #374151;
+        }
+
+        body:not(.dark-mode) .continue-tool-btn:hover {
+            background: #f9fafb;
+            border-color: #7c3aed;
+        }
+
+        body:not(.dark-mode) .continue-arrow {
+            stroke: #6b7280;
+        }
+
+        body:not(.dark-mode) .continue-tool-btn:hover .continue-arrow {
+            stroke: #7c3aed;
+        }
+    </style>
+
+    <!-- hCaptcha -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <script src="hcaptcha-config.js"></script>
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PDFrow Add Watermark Tool",
+        "description": "Add text or image watermarks to PDF files with custom styling for free. Fast, secure, and no software required.",
+        "url": "https://pdfrow.com/add-watermark",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Free PDF watermarking",
+            "Text and image watermarks", 
+            "Custom positioning and styling",
+            "No software installation required",
+            "Secure file processing"
+        ]
+    }
+    </script>
+
+    <!-- Translation System -->
+    <script src="add-watermark-translations.js"></script>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="/" class="logo">
+                    <div class="logo-icon">
+                        <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                    </div>
+                    <h1 class="logo-text">PDFrow</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="/" class="nav-link" data-translate="nav_tools">Tools</a>
+                    <a href="/" class="nav-link" data-translate="nav_features">Features</a>
+                    <a href="/" class="nav-link" data-translate="nav_how_it_works">How It Works</a>
+                    <a href="/" class="nav-link" data-translate="nav_blog">Blog</a>
+                    <a href="/" class="nav-link" data-translate="nav_faq">FAQ</a>
+                </div>
+
+                <div class="nav-actions">
+                    <!-- Auth Buttons (shown when not logged in) -->
+                    <div id="auth-buttons" class="auth-buttons">
+                        <button class="btn-auth btn-login" id="loginBtn" data-translate="btn_login">Login</button>
+                        <button class="btn-auth btn-signup" id="signupBtn" data-translate="btn_signup">Sign Up</button>
+                    </div>
+
+                    <!-- User Menu (shown when logged in) -->
+                    <div id="user-menu" class="user-menu" style="display: none;">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span class="user-email">user@example.com</span>
+                        <div class="user-dropdown">
+                            <button class="dropdown-item" id="profileBtn" data-translate="btn_profile">Profile</button>
+                            <button class="dropdown-item" id="logoutBtn" data-translate="btn_logout">Logout</button>
+                        </div>
+                    </div>
+                    
+                    <div class="theme-toggle" id="theme-toggle">
+                    <div class="theme-toggle-track">
+                        <div class="theme-toggle-thumb">
+                            <svg class="theme-icon sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Light theme">
+                                <circle cx="12" cy="12" r="5"/>
+                                <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                            </svg>
+                            <svg class="theme-icon dimmed-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Dimmed theme">
+                                <path d="M12 3a6.364 6.364 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                                <path d="M20 3v4m-2-2h4"/>
+                            </svg>
+                            <svg class="theme-icon moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Dark theme">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="page-header-background">
+                <div class="header-decoration"></div>
+            </div>
+            <div class="page-header-content">
+                <nav class="breadcrumb">
+                    <a href="/" class="breadcrumb-link" data-translate="breadcrumb_home">Home</a>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9,18 15,12 9,6"/>
+                    </svg>
+                    <span class="breadcrumb-current" data-translate="breadcrumb_current">Add Watermark</span>
+                </nav>
+
+                <div class="page-title-section">
+                    <div class="tool-icon-large">
+                        <div class="icon-background">
+                            <img src="add-watermark.png" alt="Add Watermark" style="width: 50px; height: 50px;">
+                        </div>
+                    </div>
+
+                    <div class="page-title-text">
+                        <h1 class="page-title" data-translate="page_title">Add Watermark</h1>
+                        <p class="page-description" data-translate="page_description">
+                            Protect your documents and add professional branding with custom text or image watermarks. Perfect for protecting copyrights and adding company branding.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="tool-features">
+                    <div class="feature-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 9V5a3 3 0 0 0-6 0v4"/>
+                            <rect x="2" y="9" width="20" height="12" rx="2" ry="2"/>
+                            <circle cx="12" cy="15" r="2"/>
+                        </svg>
+                        <span data-translate="feature_text_image">Text & Image</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v6l3-3"/>
+                            <path d="M9 5l3 3"/>
+                            <circle cx="12" cy="13" r="8"/>
+                            <path d="M8 13h8"/>
+                            <path d="M12 9v8"/>
+                        </svg>
+                        <span data-translate="feature_position">Custom Position</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v6m0 6v6"/>
+                            <path d="m21 12-6-3-6 3-6-3-6 3"/>
+                        </svg>
+                        <span data-translate="feature_transparency">Transparency</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <circle cx="12" cy="16" r="1"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <span data-translate="feature_secure">100% Secure</span>
+                    </div>
+                </div>
+                
+                <!-- Security Badge -->
+                <div class="security-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span data-translate="security_badge">100% Secure - Files processed locally</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Section -->
+        <section class="tools-section" id="tools">
+            <div class="section-header">
+                <h2 class="section-title" data-translate="section_title">PDF Watermark Tool</h2>
+                <p class="section-subtitle" data-translate="section_subtitle">Add professional text or image watermarks with custom styling</p>
+            </div>
+
+            <div class="tools-grid">
+                <!-- Add Watermark Tool -->
+                <div class="tool-card active" data-tool="add-watermark">
+                    <div class="privacy-badge">
+                        <span class="lock-icon">🔒</span>
+                        <span data-translate="privacy_badge">100% client‑side. Files never leave your device.</span>
+                    </div>
+
+                    <!-- Upload Method Toggle -->
+                    <div class="upload-method-toggle">
+                        <button class="upload-method-btn active" data-method="local" type="button">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                            <span data-translate="upload_from_computer">Upload from Computer</span>
+                        </button>
+                        <button class="upload-method-btn" data-method="url" type="button">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                            </svg>
+                            <span data-translate="import_from_url">Import from URL</span>
+                        </button>
+                    </div>
+
+                    <!-- URL Import Section -->
+                    <div class="url-import-section" id="url-import-section">
+                        <div class="url-input-container">
+                            <svg class="url-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                            </svg>
+                            <input type="url" class="url-input" id="url-input" data-translate="url_placeholder" placeholder="Paste Dropbox or Google Drive link here..." aria-label="URL input for file import">
+                        </div>
+                        <button class="url-import-btn" id="url-import-btn" type="button">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            <span data-translate="import_file_btn">Import File</span>
+                        </button>
+                        <div class="download-progress" id="download-progress">
+                            <div class="progress-info">
+                                <span id="download-status" data-translate="download_status">Downloading...</span>
+                                <span id="download-size">0 MB / 0 MB</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="download-progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="url-error-message" id="url-error-message"></div>
+                        <div class="url-success-message" id="url-success-message"></div>
+                        <div class="url-hints">
+                            <div class="url-hints-title" data-translate="supported_services">Supported services:</div>
+                            <ul class="url-hints-list">
+                                <li data-translate="service_dropbox">Dropbox: Share link and paste here</li>
+                                <li data-translate="service_gdrive">Google Drive: Get shareable link (Anyone with the link can view)</li>
+                                <li data-translate="service_direct">Direct PDF URLs</li>
+                                <li data-translate="max_file_size">Maximum file size: 50MB</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="upload-area" data-translate="upload_area_pdf">
+                        <div class="upload-icon">
+                            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                        </div>
+                        <div class="upload-text">
+                            <p data-translate="upload_text">Click to select or drag and drop your PDF file</p>
+                            <p class="upload-subtext" data-translate="upload_pdf_subtext">PDF files • Up to 10 files • Max 50MB total batch size</p>
+                        </div>
+                        <input type="file" class="file-input" accept=".pdf" multiple>
+                    </div>
+                    
+                    <!-- Upload Feedback -->
+                    <div class="upload-feedback" id="uploadFeedback">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20,6 9,17 4,12"/>
+                        </svg>
+                        <span id="uploadFeedbackText">File uploaded successfully!</span>
+                    </div>
+                    
+                    <!-- Validation Error -->
+                    <div class="validation-error" id="validationError">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="15" y1="9" x2="9" y2="15"/>
+                            <line x1="9" y1="9" x2="15" y2="15"/>
+                        </svg>
+                        <div class="validation-error-content">
+                            <div class="validation-error-title" id="validationErrorTitle">Invalid File</div>
+                            <div class="validation-error-details" id="validationErrorDetails">Please select a valid PDF file.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="watermark-options" style="display: none;">
+                        <div class="watermark-controls">
+                            <!-- Watermark Type Tabs -->
+                            <div class="type-tabs">
+                                <label class="type-tab active">
+                                    <input type="radio" name="watermark-type" value="text" checked>
+                                    <span data-translate="watermark_type_text">📝 Text</span>
+                                </label>
+                                <label class="type-tab">
+                                    <input type="radio" name="watermark-type" value="image">
+                                    <span data-translate="watermark_type_image">🖼️ Image</span>
+                                </label>
+                            </div>
+
+                            <!-- File Navigation -->
+                            <div class="file-navigation" id="fileNavigation" style="display: none; margin-bottom: 1rem;">
+                                <button class="page-nav-btn" id="prevFile" data-translate="file_nav_previous" disabled>Previous File</button>
+                                <span class="page-info-file"><span data-translate="file_nav_text">File</span> <span id="currentFileNum">1</span> <span data-translate="file_nav_of">of</span> <span id="totalFiles">1</span></span>
+                                <button class="page-nav-btn" id="nextFile" data-translate="file_nav_next" disabled>Next File</button>
+                                <span class="page-info-file" style="margin-left: 1rem;" id="currentFileName">-</span>
+                            </div>
+
+                            <!-- Compact Options Layout -->
+                            <div class="options-layout">
+                                <!-- Left Column: Content Options -->
+                                <div class="options-column content-options">
+                                    <!-- Text Watermark Panel -->
+                                    <div id="text-watermark-options" class="watermark-panel">
+                                        <div class="content-section">
+                                            <label class="section-label" data-translate="text_content_label">Text Content</label>
+                                            <div class="watermark-texts-container">
+                                                <div class="watermark-text-item">
+                                                    <input type="text" class="watermark-text-input" data-translate="text_input_placeholder" placeholder="Enter watermark text" value="CONFIDENTIAL">
+                                                    <button type="button" class="remove-text-btn" data-translate="remove_text_btn" title="Remove text">×</button>
+                                                </div>
+                                                <button type="button" id="add-text-btn" class="add-text-btn" data-translate="add_text_btn">+ Add Text</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="style-section">
+                                            <label class="section-label" data-translate="text_style_label">Text Style</label>
+                                            <div class="style-row">
+                                                <div class="style-item">
+                                                    <label data-translate="font_size_label">Size</label>
+                                                    <select id="watermark-font-size">
+                                                        <option value="12" data-translate="font_size_12pt">12pt</option>
+                                                        <option value="18" data-translate="font_size_18pt">18pt</option>
+                                                        <option value="24" data-translate="font_size_24pt" selected>24pt</option>
+                                                        <option value="36" data-translate="font_size_36pt">36pt</option>
+                                                        <option value="48" data-translate="font_size_48pt">48pt</option>
+                                                    </select>
+                                                </div>
+                                                <div class="style-item">
+                                                    <label data-translate="font_label">Font</label>
+                                                    <select id="watermark-font">
+                                                        <option value="Helvetica" data-translate="font_helvetica">Helvetica</option>
+                                                        <option value="Times-Roman" data-translate="font_times">Times</option>
+                                                        <option value="Courier" data-translate="font_courier">Courier</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="color-section">
+                                                <label data-translate="color_label">Color</label>
+                                                <div class="color-swatches">
+                                                    <label class="color-swatch active" data-translate="color_black" title="Black">
+                                                        <input type="radio" name="watermark-color" value="#000000" checked>
+                                                        <span style="background: #000000;"></span>
+                                                    </label>
+                                                    <label class="color-swatch" data-translate="color_red" title="Red">
+                                                        <input type="radio" name="watermark-color" value="#ff0000">
+                                                        <span style="background: #ff0000;"></span>
+                                                    </label>
+                                                    <label class="color-swatch" data-translate="color_blue" title="Blue">
+                                                        <input type="radio" name="watermark-color" value="#0000ff">
+                                                        <span style="background: #0000ff;"></span>
+                                                    </label>
+                                                    <label class="color-swatch" data-translate="color_gray" title="Gray">
+                                                        <input type="radio" name="watermark-color" value="#808080">
+                                                        <span style="background: #808080;"></span>
+                                                    </label>
+                                                    <label class="color-swatch" data-translate="color_green" title="Green">
+                                                        <input type="radio" name="watermark-color" value="#008000">
+                                                        <span style="background: #008000;"></span>
+                                                    </label>
+                                                    <label class="color-swatch" data-translate="color_purple" title="Purple">
+                                                        <input type="radio" name="watermark-color" value="#800080">
+                                                        <span style="background: #800080;"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Image Watermark Panel -->
+                                    <div id="image-watermark-options" class="watermark-panel" style="display: none;">
+                                        <div class="content-section">
+                                            <label class="section-label" data-translate="upload_image_label">Upload Image</label>
+                                            <div class="image-upload">
+                                                <input type="file" id="watermark-image" accept="image/*" hidden>
+                                                <button type="button" class="upload-btn" onclick="document.getElementById('watermark-image').click()">
+                                                    <span data-translate="choose_image_file">📁 Choose Image File</span>
+                                                </button>
+                                                <p class="upload-hint" data-translate="image_formats_hint">PNG, JPG, or GIF files</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Right Column: Position & Effects -->
+                                <div class="options-column position-effects">
+                                    <div class="position-section">
+                                        <label class="section-label" data-translate="position_label">Position</label>
+
+                                        <!-- Position Dropdown -->
+                                        <div class="position-dropdown">
+                                            <button type="button" class="position-current" id="position-current">
+                                                <span class="position-text" data-translate="position_center">Center</span>
+                                                <span class="position-arrow">▼</span>
+                                            </button>
+
+                                            <div class="position-options" id="position-options" style="display: none;">
+                                                <button type="button" class="pos-option active" data-position="center" data-translate="position_center">Center</button>
+                                                <button type="button" class="pos-option" data-position="top-left" data-translate="position_top_left">Top Left</button>
+                                                <button type="button" class="pos-option" data-position="top-center" data-translate="position_top_center">Top Center</button>
+                                                <button type="button" class="pos-option" data-position="top-right" data-translate="position_top_right">Top Right</button>
+                                                <button type="button" class="pos-option" data-position="center-left" data-translate="position_center_left">Center Left</button>
+                                                <button type="button" class="pos-option" data-position="center-right" data-translate="position_center_right">Center Right</button>
+                                                <button type="button" class="pos-option" data-position="bottom-left" data-translate="position_bottom_left">Bottom Left</button>
+                                                <button type="button" class="pos-option" data-position="bottom-center" data-translate="position_bottom_center">Bottom Center</button>
+                                                <button type="button" class="pos-option" data-position="bottom-right" data-translate="position_bottom_right">Bottom Right</button>
+                                                <button type="button" class="pos-option" data-position="diagonal" data-translate="position_diagonal">Diagonal</button>
+                                            </div>
+                                        </div>
+
+                                        <select id="watermark-position" style="display: none;">
+                                            <option value="center" selected>Center</option>
+                                            <option value="top-left">Top Left</option>
+                                            <option value="top-center">Top Center</option>
+                                            <option value="top-right">Top Right</option>
+                                            <option value="center-left">Center Left</option>
+                                            <option value="center-right">Center Right</option>
+                                            <option value="bottom-left">Bottom Left</option>
+                                            <option value="bottom-center">Bottom Center</option>
+                                            <option value="bottom-right">Bottom Right</option>
+                                            <option value="diagonal">Diagonal</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="effects-section">
+                                        <label class="section-label" data-translate="effects_label">Effects</label>
+                                        <div class="effect-item">
+                                            <label><span data-translate="opacity_label">Opacity</span> <span class="range-value">50%</span></label>
+                                            <input type="range" id="watermark-opacity" min="10" max="100" value="50">
+                                        </div>
+                                        <div class="effect-item">
+                                            <label><span data-translate="rotation_label">Rotation</span> <span class="range-value">0°</span></label>
+                                            <input type="range" id="watermark-rotation" min="0" max="360" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- PDF Preview Section -->
+                        <div class="preview-section" id="watermark-preview-section">
+                            <h4 data-translate="preview_label">📄 Preview</h4>
+                            <div class="preview-container">
+                                <div class="preview-canvas-container" id="previewCanvasContainer">
+                                    <canvas id="watermark-preview-canvas"></canvas>
+                                    <div class="preview-placeholder" id="previewPlaceholder">
+                                        <div class="placeholder-icon">📄</div>
+                                        <p data-translate="preview_placeholder">Upload a PDF to see preview</p>
+                                    </div>
+                                </div>
+                                <div class="preview-controls">
+                                    <button id="watermark-prev-page" class="preview-btn" data-translate="preview_previous_btn" disabled>❮ Previous</button>
+                                    <span id="watermark-page-info">Page 1 of 1</span>
+                                    <button id="watermark-next-page" class="preview-btn" data-translate="preview_next_btn" disabled>Next ❯</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="files-list"></div>
+                    
+                    <div class="convert-section">
+                        <button class="convert-btn" disabled data-translate="add_watermark_btn" title="Please upload a PDF file first" aria-describedby="add-watermark-hint">Add Watermark</button>
+                        <div class="convert-hint" id="add-watermark-hint" data-translate="hint_upload_files_first">Upload a PDF file above to enable watermarking</div>
+                    </div>
+
+                    <div class="results"></div>
+
+                    <!-- Success State -->
+                    <div class="success-state" id="success-state" style="display: none;">
+                        <div class="success-container">
+                            <div class="success-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                            </div>
+                            <div class="success-text">
+                                <h4 id="success-title" data-translate="success_title">Watermark added successfully!</h4>
+                                <p id="success-description" data-translate="success_description">Your watermarked PDF is ready for download</p>
+                            </div>
+                            <div class="download-actions">
+                                <button class="btn-download-primary" id="downloadPdfBtn" data-translate="download_pdf">Download PDF</button>
+                                <button class="btn-download-secondary" id="convertAnotherBtn" data-translate="process_another">Process Another</button>
+                            </div>
+
+                            <!-- Continue to other tools -->
+                            <div class="continue-section" id="continueSection">
+                                <h4 class="continue-title" data-translate="continue_title">Continue to...</h4>
+                                <div class="continue-tools">
+                                    <button class="continue-tool-btn" data-tool="merge-pdf">
+                                        <div class="continue-tool-icon">
+                                            <img src="merge-pdf.png" alt="Merge PDF" style="width: 35px; height: 35px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_merge">Merge PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="rotate-pdf">
+                                        <div class="continue-tool-icon">
+                                            <img src="rotate-pdf.png" alt="Rotate PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_rotate">Rotate PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="protect-pdf">
+                                        <div class="continue-tool-icon">
+                                            <img src="protect-pdf.png" alt="Protect PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_protect">Protect PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="compress-pdf">
+                                        <div class="continue-tool-icon">
+                                            <img src="compress-pdf-png.png" alt="Compress PDF" style="width: 35px; height: 35px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_compress">Compress PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="edit-pdf">
+                                        <div class="continue-tool-icon">
+                                            <img src="edit-pdf-png.png" alt="Edit PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_edit">Edit PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="sign-pdf">
+                                        <div class="continue-tool-icon">
+                                            <img src="sign-pdf.png" alt="Sign PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_sign">Sign PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="split-pdf">
+                                        <div class="continue-tool-icon">
+                                            <img src="split-pdf.png" alt="Split PDF" style="width: 35px; height: 35px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_split">Split PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="organize-pdf">
+                                        <div class="continue-tool-icon">
+                                            <img src="organize-pdf.png" alt="Organize PDF" style="width: 45px; height: 45px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_organize">Organize PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="crop-pdf">
+                                        <div class="continue-tool-icon">
+                                            <img src="crop-pdf.png" alt="Crop PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_crop">Crop PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="pdf-to-jpg">
+                                        <div class="continue-tool-icon">
+                                            <img src="pdf-to-jpg.png" alt="PDF to JPG" style="width: 40px; height: 40px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_pdf_to_jpg">PDF to JPG</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="pdf-to-word">
+                                        <div class="continue-tool-icon">
+                                            <img src="pdf-to-word.png" alt="PDF to Word" style="width: 40px; height: 40px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_pdf_to_word">PDF to Word</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="pdf-to-powerpoint">
+                                        <div class="continue-tool-icon">
+                                            <img src="pdf-to-powerpoint.png" alt="PDF to PowerPoint" style="width: 40px; height: 40px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_pdf_to_ppt">PDF to PowerPoint</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="pdf-to-excel">
+                                        <div class="continue-tool-icon">
+                                            <img src="pdf-to-excel.png" alt="PDF to Excel" style="width: 40px; height: 40px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_pdf_to_excel">PDF to Excel</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="add-page-numbers">
+                                        <div class="continue-tool-icon">
+                                            <img src="add-page-numbers.png" alt="Add Page Numbers" style="width: 35px; height: 35px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_add_page_numbers">Add Page Numbers</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+
+                                    <button class="continue-tool-btn" data-tool="jpg-to-pdf">
+                                        <div class="continue-tool-icon">
+                                            <img src="jpg-to-pdf.png" alt="JPG to PDF" style="width: 40px; height: 40px; object-fit: contain;">
+                                        </div>
+                                        <span data-translate="tool_jpg_to_pdf">JPG to PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="section-header">
+                <h2 data-translate="features_section_title">Why Choose PDFrow Watermark Tool?</h2>
+                <p data-translate="features_section_subtitle">Professional, fast, and secure PDF watermarking</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 data-translate="feature_lightning_title">Lightning Fast</h3>
+                    <p data-translate="feature_lightning_desc">Add watermarks to PDF files in seconds with our optimized processing engine</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 data-translate="feature_secure_title">100% Secure</h3>
+                    <p data-translate="feature_secure_desc">Your files are processed locally and automatically deleted after processing</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 data-translate="feature_styling_title">Custom Styling</h3>
+                    <p data-translate="feature_styling_desc">Add text or image watermarks with custom positioning, transparency, and styling options</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3 data-translate="feature_no_software_title">No Software Needed</h3>
+                    <p data-translate="feature_no_software_desc">Works directly in your browser - no downloads or installations required</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works-section" id="how-it-works">
+            <div class="section-header">
+                <h2 data-translate="how_it_works_title">How to Add Watermarks to PDF</h2>
+                <p data-translate="how_it_works_subtitle">Simple 3-step process to protect and brand your documents</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 data-translate="step_1_title">Upload PDF</h3>
+                    <p data-translate="step_1_desc">Select or drag and drop your PDF file to get started</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 data-translate="step_2_title">Customize Watermark</h3>
+                    <p data-translate="step_2_desc">Choose text or image watermark with custom positioning and transparency</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 data-translate="step_3_title">Download</h3>
+                    <p data-translate="step_3_desc">Get your watermarked PDF file instantly</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <div class="logo-icon">
+                                <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                            </div>
+                            <h3 class="logo-text">PDFrow</h3>
+                        </div>
+                        <p class="footer-description" data-translate="footer_description">
+                            Next-generation document processing platform. Fast, secure, and always free.
+                        </p>
+                        <div class="footer-social">
+                            <a href="https://instagram.com/pdfrow" class="social-link" aria-label="Follow us on Instagram">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                                </svg>
+                            </a>
+                            <a href="mailto:contact@pdfrow.com" class="social-link" aria-label="Contact us via email">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4 data-translate="footer_tools_title">Tools</h4>
+                            <ul>
+                                <li><a href="compress-pdf.html" data-translate="footer_pdf_compressor">PDF Compressor</a></li>
+                                <li><a href="merge-pdf.html" data-translate="footer_pdf_merger">PDF Merger</a></li>
+                                <li><a href="split-pdf.html" data-translate="footer_pdf_splitter">PDF Splitter</a></li>
+                                <li><a href="pdf-to-jpg.html" data-translate="footer_pdf_to_jpg">PDF to JPG</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-column">
+                            <h4 data-translate="footer_features_title">Features</h4>
+                            <ul>
+                                <li><a href="add-watermark.html" data-translate="footer_add_watermarks">Add Watermarks</a></li>
+                                <li><a href="add-page-numbers.html" data-translate="footer_page_numbers">Page Numbers</a></li>
+                                <li><a href="jpg-to-pdf.html" data-translate="footer_image_to_pdf">Image to PDF</a></li>
+                                <li><a href="/" data-translate="footer_privacy_first">Privacy First</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-column">
+                            <h4 data-translate="footer_support_title">Support</h4>
+                            <ul>
+                                <li><a href="/" data-translate="footer_faq">FAQ</a></li>
+                                <li><a href="/" data-translate="footer_how_it_works">How It Works</a></li>
+                                <li><a href="/" id="footerContactLink" data-translate="footer_contact">Contact</a></li>
+                                <li><a href="terms-conditions.html" data-translate="footer_terms">Terms & Conditions</a></li>
+                                <li><a href="privacy-policy.html" data-translate="footer_privacy">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-column">
+                            <h4 data-translate="language">Language</h4>
+                            <div class="language-dropdown">
+                                <button class="language-btn" id="languageBtn">
+                                    <span class="flag" id="currentFlag">🇺🇸</span>
+                                    <span id="currentLang">English</span>
+                                    <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                        <polyline points="6,9 12,15 18,9"/>
+                                    </svg>
+                                </button>
+                                <div class="language-menu" id="languageMenu">
+                                    <div class="language-item" data-lang="en" data-flag="🇺🇸">
+                                        <span class="flag">🇺🇸</span>
+                                        <span>English</span>
+                                    </div>
+                                    <div class="language-item" data-lang="es" data-flag="🇪🇸">
+                                        <span class="flag">🇪🇸</span>
+                                        <span>Español</span>
+                                    </div>
+                                    <div class="language-item" data-lang="fr" data-flag="🇫🇷">
+                                        <span class="flag">🇫🇷</span>
+                                        <span>Français</span>
+                                    </div>
+                                    <div class="language-item" data-lang="de" data-flag="🇩🇪">
+                                        <span class="flag">🇩🇪</span>
+                                        <span>Deutsch</span>
+                                    </div>
+                                    <div class="language-item" data-lang="it" data-flag="🇮🇹">
+                                        <span class="flag">🇮🇹</span>
+                                        <span>Italiano</span>
+                                    </div>
+                                    <div class="language-item" data-lang="tr" data-flag="🇹🇷">
+                                        <span class="flag">🇹🇷</span>
+                                        <span>Türkçe</span>
+                                    </div>
+                                    <div class="language-item" data-lang="pt" data-flag="🇵🇹">
+                                        <span class="flag">🇵🇹</span>
+                                        <span>Português</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ru" data-flag="🇷🇺">
+                                        <span class="flag">🇷🇺</span>
+                                        <span>Русский</span>
+                                    </div>
+                                    <div class="language-item" data-lang="zh" data-flag="🇨🇳">
+                                        <span class="flag">🇨🇳</span>
+                                        <span>中文</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ja" data-flag="🇯🇵">
+                                        <span class="flag">🇯🇵</span>
+                                        <span>日本語</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ar" data-flag="🇸🇦">
+                                        <span class="flag">🇸🇦</span>
+                                        <span>العربية</span>
+                                    </div>
+                                    <div class="language-item" data-lang="hi" data-flag="🇮🇳">
+                                        <span class="flag">🇮🇳</span>
+                                        <span>हिन्दी</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p data-translate="footer_copyright">&copy; <span id="current-year">2025</span> PDFrow. All rights reserved. Made with ❤️ for document processing.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Support Us Modal -->
+    <div class="auth-modal" id="supportModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container support-modal-container">
+            <div class="auth-form-header">
+                <h2 data-translate="support_title">Support PDFrow ❤️</h2>
+                <p data-translate="support_subtitle">Help us keep PDFrow free and improve our services</p>
+                <button class="auth-close-btn" id="supportCloseBtn">&times;</button>
+            </div>
+            
+            <div class="support-content">
+                <div class="support-message">
+                    <p data-translate="support_message">
+                        PDFrow is completely free to use and will always remain so. Your support helps us:
+                    </p>
+                    <ul>
+                        <li data-translate="support_point_1">Keep servers running and fast</li>
+                        <li data-translate="support_point_2">Add new features regularly</li>
+                        <li data-translate="support_point_3">Maintain high security standards</li>
+                        <li data-translate="support_point_4">Provide excellent user experience</li>
+                    </ul>
+                </div>
+                
+                <div class="support-options">
+                    <div class="support-option">
+                        <h3 data-translate="support_share_title">Share PDFrow</h3>
+                        <p data-translate="support_share_desc">Tell your friends about PDFrow</p>
+                        <div class="share-buttons">
+                            <a href="https://twitter.com/intent/tweet?text=Check%20out%20PDFrow%20-%20free%20online%20PDF%20tools!&url=https://pdfrow.com" target="_blank" class="share-btn twitter">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                                <span data-translate="share_twitter">Twitter</span>
+                            </a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://pdfrow.com" target="_blank" class="share-btn facebook">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                                <span data-translate="share_facebook">Facebook</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="support-option">
+                        <h3 data-translate="support_donation_title">Make a Donation</h3>
+                        <p data-translate="support_donation_desc">Support our mission with a contribution</p>
+                        <div class="donation-buttons">
+                            <a href="https://www.paypal.com/donate/?hosted_button_id=YOUR_BUTTON_ID" target="_blank" class="donation-btn paypal">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.421c-.296-.13-.66-.198-1.084-.198h-2.99c-.524 0-.968.382-1.05.9L14.583 12.4c-.024.137-.024.273 0 .41.082.518.526.9 1.05.9h2.99c1.084 0 1.917-.198 2.482-.594.565-.396.847-.99.847-1.782 0-.99-.347-1.782-1.04-2.376z"/>
+                                </svg>
+                                <span data-translate="donate_paypal">PayPal</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="support-thanks">
+                    <p data-translate="support_thanks">
+                        Thank you for helping us keep PDFrow free for everyone! ❤️
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="auth-modal" id="loginModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container">
+            <div class="auth-form-header">
+                <h2 data-translate="login_title">Welcome Back</h2>
+                <p data-translate="login_subtitle">Sign in to access your PDFrow account</p>
+                <button class="auth-close-btn" id="loginCloseBtn">&times;</button>
+            </div>
+            
+            <div class="auth-form-content">
+                <div class="auth-input-group">
+                    <label for="loginEmail" data-translate="label_email">Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <label for="loginPassword" data-translate="label_password">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                
+                <button class="auth-submit-btn" id="loginSubmitBtn" data-translate="btn_sign_in">
+                    Sign In
+                </button>
+                
+                <div class="auth-divider">
+                    <span data-translate="auth_or">or</span>
+                </div>
+                
+                <button class="auth-google-btn" id="loginGoogleBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span data-translate="btn_continue_google">Continue with Google</span>
+                </button>
+                
+                <div class="auth-links">
+                    <a href="#" id="forgotPasswordLink" data-translate="link_forgot_password">Forgot password?</a>
+                    <span data-translate="auth_no_account">Don't have an account? 
+                        <a href="#" id="switchToSignup" data-translate="link_sign_up">Sign up</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="auth-modal" id="signupModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container">
+            <div class="auth-form-header">
+                <h2 data-translate="signup_title">Create Account</h2>
+                <p data-translate="signup_subtitle">Join PDFrow and unlock premium features</p>
+                <button class="auth-close-btn" id="signupCloseBtn">&times;</button>
+            </div>
+            
+            <div class="auth-form-content">
+                <div class="auth-input-group">
+                    <label for="signupName" data-translate="label_name">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <label for="signupEmail" data-translate="label_email">Email</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <label for="signupPassword" data-translate="label_password">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password" required>
+                </div>
+                
+                <div class="auth-checkbox-group">
+                    <label>
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span data-translate="checkbox_agree_terms">I agree to the 
+                            <a href="terms-conditions.html" target="_blank">Terms of Service</a> 
+                            and <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+                        </span>
+                    </label>
+                </div>
+                
+                <button class="auth-submit-btn" id="signupSubmitBtn" data-translate="btn_create_account">
+                    Create Account
+                </button>
+                
+                <div class="auth-divider">
+                    <span data-translate="auth_or">or</span>
+                </div>
+                
+                <button class="auth-google-btn" id="signupGoogleBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span data-translate="btn_continue_google">Continue with Google</span>
+                </button>
+                
+                <div class="auth-links">
+                    <span data-translate="auth_have_account">Already have an account? 
+                        <a href="#" id="switchToLogin" data-translate="link_sign_in">Sign in</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="auth-modal" id="contactModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container">
+            <div class="auth-form-header">
+                <h2 data-translate="contact_title">Contact Us</h2>
+                <p data-translate="contact_subtitle">We'd love to hear from you</p>
+                <button class="auth-close-btn" id="contactCloseBtn">&times;</button>
+            </div>
+            
+            <div class="auth-form-content">
+                <form id="contactForm">
+                    <div class="auth-input-group">
+                        <label for="contactName" data-translate="label_name">Name</label>
+                        <input type="text" id="contactName" name="name" placeholder="Your name" required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="contactEmail" data-translate="label_email">Email</label>
+                        <input type="email" id="contactEmail" name="email" placeholder="Your email" required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="contactSubject" data-translate="label_subject">Subject</label>
+                        <input type="text" id="contactSubject" name="subject" placeholder="Message subject" required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="contactMessage" data-translate="label_message">Message</label>
+                        <textarea id="contactMessage" name="message" placeholder="Your message" rows="4" required></textarea>
+                    </div>
+                    
+                    <!-- hCaptcha container -->
+                    <div id="contact-hcaptcha" class="h-captcha" data-sitekey="your-hcaptcha-site-key"></div>
+                    
+                    <button type="submit" class="auth-submit-btn" id="contactSubmitBtn" data-translate="btn_send_message">
+                        Send Message
+                    </button>
+                </form>
+                
+                <div id="contactSuccess" class="success-message" style="display: none;">
+                    <p data-translate="contact_success">Thank you! Your message has been sent successfully.</p>
+                </div>
+                
+                <div id="contactError" class="error-message" style="display: none;">
+                    <p data-translate="contact_error">Sorry, there was an error sending your message. Please try again.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include required scripts -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="support.js"></script>
+    <script src="url-import.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Initialize watermark tool when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 Initializing watermark tool...');
+
+            // Initialize URL import feature with PDF file validation
+            setTimeout(() => {
+                if (typeof initializeURLImport !== 'undefined') {
+                    console.log('📥 Initializing URL import for PDF files');
+                    initializeURLImport('pdf');
+                } else {
+                    console.warn('⚠️ URL import module not loaded yet, retrying...');
+                    setTimeout(() => {
+                        if (typeof initializeURLImport !== 'undefined') {
+                            initializeURLImport('pdf');
+                        }
+                    }, 500);
+                }
+            }, 100);
+
+            // Wait for converter to be ready
+            const waitForConverter = setInterval(() => {
+                if (typeof converter !== 'undefined' && converter.tools) {
+                    clearInterval(waitForConverter);
+
+                    // Set up the watermark tool to use PDF preview
+                    const tool = converter.tools.get('add-watermark');
+                    if (tool) {
+                        console.log('✅ Watermark tool found, setting up PDF preview...');
+
+                        // Initialize multi-file support
+                        tool.uploadedFiles = [];
+                        tool.currentFileIndex = 0;
+
+                        // Set up file navigation buttons
+                        setupFileNavigationButtons();
+
+                        // The converter system will automatically handle file uploads
+                        // We just need to set up preview initialization after files are added
+                        console.log('✅ Watermark tool setup complete - converter will handle file uploads');
+
+                        // Set up canvas container observer to remove white space
+                        const canvas = document.getElementById('watermark-preview-canvas');
+                        const container = document.getElementById('previewCanvasContainer');
+                        
+                        if (canvas && container) {
+                            // Use MutationObserver to watch for canvas size changes
+                            const observer = new MutationObserver(() => {
+                                if (canvas.width > 0 && canvas.height > 0) {
+                                    container.classList.add('has-canvas');
+                                } else {
+                                    container.classList.remove('has-canvas');
+                                }
+                            });
+                            
+                            observer.observe(canvas, {
+                                attributes: true,
+                                attributeFilter: ['width', 'height']
+                            });
+                            
+                            // Also check periodically
+                            setInterval(() => {
+                                if (canvas.width > 0 && canvas.height > 0) {
+                                    container.classList.add('has-canvas');
+                                } else {
+                                    container.classList.remove('has-canvas');
+                                }
+                            }, 500);
+                        }
+                    } else {
+                        console.warn('⚠️ Watermark tool not found in converter');
+                    }
+                }
+            }, 100);
+            
+            // Set up watermark option change listeners
+            const setupOptionListeners = () => {
+                // Listen for watermark option changes
+                const elements = [
+                    'input[name="watermark-type"]',
+                    'input[name="watermark-color"]', 
+                    '#watermark-position',
+                    '#watermark-opacity',
+                    '#watermark-rotation',
+                    '#watermark-font-size',
+                    '.watermark-text-input'
+                ];
+                
+                elements.forEach(selector => {
+                    const elementList = document.querySelectorAll(selector);
+                    elementList.forEach(element => {
+                        const eventType = element.type === 'range' ? 'input' : 'change';
+                        element.addEventListener(eventType, () => {
+                            // Update watermark preview when options change
+                            if (typeof converter !== 'undefined') {
+                                const tool = converter.tools.get('add-watermark');
+                                if (tool && tool.previewPDF) {
+                                    console.log('🎨 Updating watermark preview...');
+                                    converter.updateWatermarkPreview('add-watermark');
+                                }
+                            }
+                        });
+                        
+                        // Also listen for input events on text inputs
+                        if (element.type === 'text') {
+                            element.addEventListener('input', () => {
+                                if (typeof converter !== 'undefined') {
+                                    const tool = converter.tools.get('add-watermark');
+                                    if (tool && tool.previewPDF) {
+                                        converter.updateWatermarkPreview('add-watermark');
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+                
+                // Handle image upload for watermark
+                const imageInput = document.querySelector('.image-upload input[type="file"]');
+                if (imageInput) {
+                    imageInput.addEventListener('change', (e) => {
+                        if (e.target.files.length > 0) {
+                            const file = e.target.files[0];
+                            if (file.type.startsWith('image/')) {
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                    window.currentWatermarkImage = e.target.result;
+                                    // Update preview
+                                    if (typeof converter !== 'undefined') {
+                                        const tool = converter.tools.get('add-watermark');
+                                        if (tool && tool.previewPDF) {
+                                            converter.updateWatermarkPreview('add-watermark');
+                                        }
+                                    }
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        }
+                    });
+                }
+            };
+            
+            // Set up listeners immediately and also after a delay
+            setupOptionListeners();
+            setTimeout(setupOptionListeners, 1000);
+
+            // File navigation helper functions
+            function setupFileNavigationButtons() {
+                const prevFileBtn = document.getElementById('prevFile');
+                const nextFileBtn = document.getElementById('nextFile');
+
+                if (prevFileBtn) {
+                    prevFileBtn.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('⬅️ Previous file clicked');
+
+                        const tool = converter.tools.get('add-watermark');
+                        if (tool && tool.currentFileIndex > 0) {
+                            tool.currentFileIndex--;
+                            loadFileAtIndex(tool.currentFileIndex);
+                            updateFileNavigation();
+                        }
+                    };
+                }
+
+                if (nextFileBtn) {
+                    nextFileBtn.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('➡️ Next file clicked');
+
+                        const tool = converter.tools.get('add-watermark');
+                        if (tool && tool.currentFileIndex < tool.uploadedFiles.length - 1) {
+                            tool.currentFileIndex++;
+                            loadFileAtIndex(tool.currentFileIndex);
+                            updateFileNavigation();
+                        }
+                    };
+                }
+
+                console.log('🔧 File navigation buttons configured');
+            }
+
+            async function loadFileAtIndex(index) {
+                const tool = converter.tools.get('add-watermark');
+                if (!tool || index < 0 || index >= tool.uploadedFiles.length) {
+                    console.error('Invalid file index:', index);
+                    return;
+                }
+
+                const file = tool.uploadedFiles[index];
+                console.log(`📖 Loading file ${index + 1}:`, file.name);
+
+                try {
+                    // Load the PDF using converter's system
+                    tool.files = [file]; // Set current file
+                    tool.currentFileIndex = index;
+
+                    // Re-initialize preview with the new file
+                    if (typeof converter.initializeWatermarkPreview === 'function') {
+                        await converter.initializeWatermarkPreview('add-watermark');
+                    }
+                } catch (error) {
+                    console.error('❌ Error loading PDF:', error);
+                }
+            }
+
+            function updateFileNavigation() {
+                const tool = converter.tools.get('add-watermark');
+                if (!tool) return;
+
+                const fileNavigation = document.getElementById('fileNavigation');
+                const prevFileBtn = document.getElementById('prevFile');
+                const nextFileBtn = document.getElementById('nextFile');
+                const currentFileNum = document.getElementById('currentFileNum');
+                const totalFiles = document.getElementById('totalFiles');
+                const currentFileName = document.getElementById('currentFileName');
+
+                if (tool.uploadedFiles && tool.uploadedFiles.length > 1) {
+                    if (fileNavigation) fileNavigation.style.display = 'flex';
+                    if (currentFileNum) currentFileNum.textContent = tool.currentFileIndex + 1;
+                    if (totalFiles) totalFiles.textContent = tool.uploadedFiles.length;
+                    if (currentFileName) currentFileName.textContent = tool.uploadedFiles[tool.currentFileIndex]?.name || '-';
+                    if (prevFileBtn) prevFileBtn.disabled = tool.currentFileIndex === 0;
+                    if (nextFileBtn) nextFileBtn.disabled = tool.currentFileIndex === tool.uploadedFiles.length - 1;
+                } else {
+                    if (fileNavigation) fileNavigation.style.display = 'none';
+                }
+            }
+
+            // Monitor for file uploads
+            const fileInputMonitor = setInterval(() => {
+                const tool = converter?.tools?.get('add-watermark');
+                if (tool && tool.files && tool.files.length > 0) {
+                    // Only treat as new upload if:
+                    // 1. No uploadedFiles exist yet, OR
+                    // 2. The number of files has increased (new upload), OR
+                    // 3. All files are new (different names)
+                    const isNewUpload = !tool.uploadedFiles ||
+                                      tool.uploadedFiles.length === 0 ||
+                                      (tool.files.length > 1 && tool.files.length !== tool.uploadedFiles.length) ||
+                                      (tool.files.length > 1 && !tool.uploadedFiles.some(uf => uf.name === tool.files[0].name));
+
+                    if (isNewUpload) {
+                        // Store all uploaded files
+                        tool.uploadedFiles = [...tool.files];
+                        tool.currentFileIndex = 0;
+                        console.log('📁 Stored uploaded files:', tool.uploadedFiles.length);
+                        updateFileNavigation();
+                    } else {
+                        // Just update navigation UI if files already exist
+                        updateFileNavigation();
+                    }
+                }
+            }, 500);
+
+            // Check for continued file from another tool
+            setTimeout(() => {
+                checkForContinuedFile();
+            }, 200);
+        });
+
+        // Function to check and load continued file
+        function checkForContinuedFile() {
+            const continuedFileData = sessionStorage.getItem('continuedFile');
+            if (continuedFileData) {
+                try {
+                    const fileInfo = JSON.parse(continuedFileData);
+
+                    // Convert base64 back to blob
+                    fetch(fileInfo.data)
+                        .then(res => res.blob())
+                        .then(blob => {
+                            // Create a File object
+                            const file = new File([blob], fileInfo.name, { type: fileInfo.type });
+
+                            // Get the file input element
+                            const fileInput = document.querySelector('.file-input');
+                            if (fileInput) {
+                                // Create a DataTransfer object to simulate file upload
+                                const dataTransfer = new DataTransfer();
+                                dataTransfer.items.add(file);
+                                fileInput.files = dataTransfer.files;
+
+                                // Trigger change event to process the file
+                                const event = new Event('change', { bubbles: true });
+                                fileInput.dispatchEvent(event);
+
+                                // Show a notification that file was loaded
+                                console.log(`File "${fileInfo.name}" automatically loaded from ${fileInfo.from}`);
+                            }
+
+                            // Clear sessionStorage after loading
+                            sessionStorage.removeItem('continuedFile');
+                        })
+                        .catch(error => {
+                            console.error('Error loading continued file:', error);
+                            sessionStorage.removeItem('continuedFile');
+                        });
+                } catch (error) {
+                    console.error('Error parsing continued file data:', error);
+                    sessionStorage.removeItem('continuedFile');
+                }
+            }
+        }
+
+        // Global variable to store processed PDF data
+        let processedPdfBlob = null;
+        let processedPdfName = 'watermarked.pdf';
+
+        // Override convert button behavior for add-watermark tool
+        document.addEventListener('DOMContentLoaded', function() {
+            const convertBtn = document.querySelector('[data-tool="add-watermark"] .convert-btn');
+            const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+            const convertAnotherBtn = document.getElementById('convertAnotherBtn');
+            const successState = document.getElementById('success-state');
+            const resultsDiv = document.querySelector('.results');
+            const uploadArea = document.getElementById('upload-area');
+            const filesList = document.querySelector('.files-list');
+
+            if (convertBtn) {
+                convertBtn.addEventListener('click', async function(e) {
+                    e.stopImmediatePropagation();
+
+                    // Get uploaded files from converter
+                    let files = [];
+                    if (window.converter?.tools?.has('add-watermark')) {
+                        const tool = window.converter.tools.get('add-watermark');
+                        if (tool?.files?.length > 0) {
+                            files = tool.files;
+                        }
+                    }
+
+                    if (files.length === 0) {
+                        alert('Please upload a PDF file first');
+                        return;
+                    }
+
+                    const file = files[0];
+                    convertBtn.disabled = true;
+                    convertBtn.textContent = 'Processing...';
+
+                    try {
+                        // Read the PDF file
+                        const arrayBuffer = await file.arrayBuffer();
+
+                        // Get watermark settings
+                        const watermarkType = document.querySelector('[name="watermark-type"]:checked')?.value || 'text';
+
+                        // Load PDF with pdf-lib
+                        const { PDFDocument, rgb, degrees } = window.PDFLib;
+                        const pdfDoc = await PDFDocument.load(arrayBuffer);
+                        const pages = pdfDoc.getPages();
+
+                        if (watermarkType === 'text') {
+                            // Get text watermark settings
+                            const watermarkInputs = document.querySelectorAll('.watermark-text-input');
+                            const watermarkTexts = Array.from(watermarkInputs).map(input => input.value).filter(text => text.trim() !== '');
+                            const combinedText = watermarkTexts.length > 0 ? watermarkTexts.join(' • ') : 'CONFIDENTIAL';
+
+                            const fontSize = parseFloat(document.querySelector('#watermark-font-size')?.value) || 24;
+                            const opacityPercent = parseFloat(document.querySelector('#watermark-opacity')?.value) || 50;
+                            const opacity = opacityPercent / 100; // Convert 0-100 to 0-1
+                            const rotation = parseFloat(document.querySelector('#watermark-rotation')?.value) || 0;
+                            const color = document.querySelector('[name="watermark-color"]:checked')?.value || '#000000';
+                            const position = document.querySelector('#watermark-position')?.value || 'center';
+
+                            // Convert hex color to RGB
+                            const r = parseInt(color.slice(1, 3), 16) / 255;
+                            const g = parseInt(color.slice(3, 5), 16) / 255;
+                            const b = parseInt(color.slice(5, 7), 16) / 255;
+
+                            // Add text watermark to each page
+                            pages.forEach((page) => {
+                                const { width, height } = page.getSize();
+
+                                // Estimate text width (approximate)
+                                const textWidth = combinedText.length * fontSize * 0.6;
+                                const textHeight = fontSize;
+
+                                if (position === 'diagonal') {
+                                    // Diagonal pattern - wider spacing, full coverage
+                                    const spacingX = textWidth * 2.5;
+                                    const spacingY = textHeight * 4;
+
+                                    // Calculate diagonal lines to cover entire page
+                                    const diagonal = Math.sqrt(width * width + height * height);
+                                    const numLines = Math.ceil(diagonal / spacingY) + 3;
+
+                                    console.log('PDF Diagonal - Creating', numLines, 'lines with spacing:', spacingX, spacingY);
+
+                                    // PDF coordinates: Y=0 is BOTTOM, Y=height is TOP
+                                    for (let line = 0; line < numLines; line++) {
+                                        // Start each line from different position to cover entire page
+                                        let x = (line * spacingY) - height;
+                                        let y = height;
+
+                                        // Walk down the diagonal
+                                        while (y > -textHeight && x < width + textWidth) {
+                                            // Draw if visible on page
+                                            if (x > -textWidth && x < width && y > 0 && y < height) {
+                                                page.drawText(combinedText, {
+                                                    x: x,
+                                                    y: y,
+                                                    size: fontSize,
+                                                    color: rgb(r, g, b),
+                                                    opacity: opacity * 0.5,
+                                                    rotate: degrees(rotation - 45)
+                                                });
+                                            }
+
+                                            x += spacingX;
+                                            y -= spacingY;
+                                        }
+                                    }
+                                } else {
+                                    // Calculate position based on setting
+                                    let x, y;
+                                    const margin = 50;
+
+                                    switch(position) {
+                                        case 'top-left':
+                                            x = margin;
+                                            y = height - margin - textHeight;
+                                            break;
+                                        case 'top-center':
+                                            x = (width - textWidth) / 2;
+                                            y = height - margin - textHeight;
+                                            break;
+                                        case 'top-right':
+                                            x = width - margin - textWidth;
+                                            y = height - margin - textHeight;
+                                            break;
+                                        case 'center-left':
+                                            x = margin;
+                                            y = height / 2;
+                                            break;
+                                        case 'center-right':
+                                            x = width - margin - textWidth;
+                                            y = height / 2;
+                                            break;
+                                        case 'bottom-left':
+                                            x = margin;
+                                            y = margin + textHeight;
+                                            break;
+                                        case 'bottom-center':
+                                            x = (width - textWidth) / 2;
+                                            y = margin + textHeight;
+                                            break;
+                                        case 'bottom-right':
+                                            x = width - margin - textWidth;
+                                            y = margin + textHeight;
+                                            break;
+                                        default: // center
+                                            x = (width - textWidth) / 2;
+                                            y = height / 2;
+                                    }
+
+                                    page.drawText(combinedText, {
+                                        x: x,
+                                        y: y,
+                                        size: fontSize,
+                                        color: rgb(r, g, b),
+                                        opacity: opacity,
+                                        rotate: degrees(rotation)
+                                    });
+                                }
+                            });
+                        }
+                        // Image watermark would go here - for now just process as-is
+
+                        // Save the modified PDF
+                        const pdfBytes = await pdfDoc.save();
+                        processedPdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+                        processedPdfName = file.name.replace('.pdf', '_watermarked.pdf');
+
+                        // Hide upload area, results, and watermark options
+                        if (uploadArea) uploadArea.style.display = 'none';
+                        if (resultsDiv) resultsDiv.style.display = 'none';
+
+                        const watermarkOptions = document.querySelector('.watermark-options');
+                        if (watermarkOptions) watermarkOptions.style.display = 'none';
+
+                        // Show success state
+                        if (successState) successState.style.display = 'block';
+
+                    } catch (error) {
+                        console.error('Error processing PDF:', error);
+                        alert('Error processing PDF. Please try again.');
+                        convertBtn.disabled = false;
+                        convertBtn.textContent = 'Add Watermark';
+                    }
+                }, true);
+            }
+
+            // Handle download button
+            if (downloadPdfBtn) {
+                downloadPdfBtn.addEventListener('click', function() {
+                    if (processedPdfBlob) {
+                        const url = URL.createObjectURL(processedPdfBlob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = processedPdfName;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    }
+                });
+            }
+
+            // Handle process another button
+            if (convertAnotherBtn) {
+                convertAnotherBtn.addEventListener('click', function() {
+                    processedPdfBlob = null;
+                    processedPdfName = 'watermarked.pdf';
+                    if (successState) successState.style.display = 'none';
+                    if (uploadArea) uploadArea.style.display = 'block';
+                    if (resultsDiv) resultsDiv.style.display = 'block';
+                    if (filesList) filesList.innerHTML = '';
+                    if (convertBtn) {
+                        convertBtn.disabled = true;
+                        convertBtn.textContent = 'Add Watermark';
+                    }
+
+                    // Hide watermark options
+                    const watermarkOptions = document.querySelector('.watermark-options');
+                    if (watermarkOptions) watermarkOptions.style.display = 'none';
+
+                    // Clear file input
+                    const fileInput = document.querySelector('[data-tool="add-watermark"] .file-input');
+                    if (fileInput) fileInput.value = '';
+
+                    // Clear converter files
+                    if (window.converter) {
+                        window.converter.files = [];
+                        window.converter.currentDownloadLinks = null;
+                    }
+                });
+            }
+        });
+
+        // Handle "Continue to..." workflow buttons
+        document.addEventListener('click', async function(e) {
+            const continueBtn = e.target.closest('.continue-tool-btn');
+            if (!continueBtn) return;
+
+            const targetTool = continueBtn.dataset.tool;
+
+            if (!targetTool || !processedPdfBlob) {
+                alert('No processed file available. Please add a watermark to a PDF first.');
+                return;
+            }
+
+            try {
+                // Convert blob to base64
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    const base64data = reader.result;
+
+                    // Store in sessionStorage
+                    sessionStorage.setItem('continuedFile', JSON.stringify({
+                        name: processedPdfName,
+                        type: 'application/pdf',
+                        data: base64data,
+                        from: 'Add Watermark'
+                    }));
+
+                    // Navigate to the target tool
+                    window.location.href = `${targetTool}.html`;
+                };
+
+                reader.readAsDataURL(processedPdfBlob);
+            } catch (error) {
+                console.error('Error preparing file for continuation:', error);
+                alert('Error preparing file. Please try again.');
+            }
+        });
+    </script>
+
+    <!-- Translation Initialization -->
+    <script>
+    // Load saved language or default to English
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+        loadLanguage(savedLang);
+
+        // Update current language display
+        const langData = {
+            'en': { flag: '🇺🇸', name: 'English' },
+            'es': { flag: '🇪🇸', name: 'Español' },
+            'fr': { flag: '🇫🇷', name: 'Français' },
+            'de': { flag: '🇩🇪', name: 'Deutsch' },
+            'it': { flag: '🇮🇹', name: 'Italiano' },
+            'tr': { flag: '🇹🇷', name: 'Türkçe' },
+            'pt': { flag: '🇵🇹', name: 'Português' },
+            'ru': { flag: '🇷🇺', name: 'Русский' },
+            'zh': { flag: '🇨🇳', name: '中文' },
+            'ja': { flag: '🇯🇵', name: '日本語' },
+            'ar': { flag: '🇸🇦', name: 'العربية' },
+            'hi': { flag: '🇮🇳', name: 'हिन्दी' }
+        };
+
+        const currentFlag = document.getElementById('currentFlag');
+        const currentLang = document.getElementById('currentLang');
+        if (currentFlag && langData[savedLang]) {
+            currentFlag.textContent = langData[savedLang].flag;
+            currentLang.textContent = langData[savedLang].name;
+        }
+    });
+    </script>
+</body>
+</html>

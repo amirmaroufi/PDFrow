@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - PDFrow</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Logo Size Customization -->
+    <style>
+        .logo-image {
+            width: 56px !important;
+            height: 56px !important;
+        }
+        
+        .logo-text {
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .footer .logo-image {
+            width: 48px !important;
+            height: 48px !important;
+        }
+        
+        .footer .logo-text {
+            font-size: 1.3rem !important;
+        }
+        
+        .logo {
+            align-items: center !important;
+            gap: 0.75rem !important;
+        }
+    </style>
+    <style>
+        .thank-you-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            text-align: center;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .thank-you-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #0066ff, #667eea);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            animation: pulse 2s infinite;
+        }
+        
+        .thank-you-icon svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .thank-you-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .thank-you-message {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        
+        .thank-you-details {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            max-width: 500px;
+        }
+        
+        .thank-you-details h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .thank-you-details ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .thank-you-details li {
+            padding: 8px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .thank-you-details li::before {
+            content: "✓";
+            color: #0066ff;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(45deg, #0066ff, #667eea);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+            margin-top: 20px;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .contact-info {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+        
+        .contact-info h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info p {
+            color: #666;
+            margin: 5px 0;
+        }
+        
+        .dark-mode .thank-you-title,
+        .dark-mode .thank-you-details h3,
+        .dark-mode .contact-info h4 {
+            color: #fff;
+        }
+        
+        .dark-mode .thank-you-message,
+        .dark-mode .thank-you-details li,
+        .dark-mode .contact-info p {
+            color: #ccc;
+        }
+        
+        .dark-mode .thank-you-details {
+            background: #2a2a2a;
+            border: 1px solid #404040;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                    </div>
+                    <h1 class="logo-text">PDFrow</h1>
+                </a>
+            </div>
+        </nav>
+
+        <div class="thank-you-container">
+            <div class="thank-you-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 6L9 17l-5-5"/>
+                </svg>
+            </div>
+            
+            <h1 class="thank-you-title">Thank You!</h1>
+            
+            <p class="thank-you-message">
+                Your message has been successfully sent to the PDFrow team. 
+                We appreciate you taking the time to contact us and will respond as soon as possible.
+            </p>
+            
+            <div class="thank-you-details">
+                <h3>What happens next?</h3>
+                <ul>
+                    <li>Your message is being reviewed by our team</li>
+                    <li>We typically respond within 24-48 hours</li>
+                    <li>Check your email for our reply</li>
+                    <li>For urgent matters, we may respond sooner</li>
+                </ul>
+            </div>
+            
+            <a href="index.html" class="back-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5"/>
+                    <path d="M12 19l-7-7 7-7"/>
+                </svg>
+                Back to PDFrow
+            </a>
+            
+            <div class="contact-info">
+                <h4>Need Immediate Help?</h4>
+                <p>Email: contact@pdfrow.com</p>
+                <p>Response Time: Usually within 24 hours</p>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-bottom">
+                    <p>&copy; <span id="current-year">2025</span> PDFrow. All rights reserved. Made with ❤️ for document processing.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Update current year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Auto redirect after 30 seconds (optional)
+        setTimeout(() => {
+            const redirect = confirm("Would you like to return to PDFrow homepage?");
+            if (redirect) {
+                window.location.href = 'index.html';
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

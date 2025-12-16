@@ -1,0 +1,2853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop PDF Online Free - Custom PDF Cropping | PDFrow</title>
+    <meta name="description" content="Cut and crop PDF pages online for free. Remove unwanted sections, adjust page borders, and customize PDF dimensions. Fast, secure, and no software required.">
+    <meta name="keywords" content="cut PDF, crop PDF, PDF cutter, trim PDF, resize PDF, PDF cropping tool, free PDF crop, online PDF editor">
+    <meta name="author" content="PDFrow">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Crop PDF Online Free - Custom PDF Cropping | PDFrow">
+    <meta property="og:description" content="Cut and crop PDF pages online for free. Remove unwanted sections, adjust page borders, and customize PDF dimensions.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pdfrow.com/cut-pdf">
+    <meta property="og:image" content="https://pdfrow.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="PDFrow PDF Cutter - Crop PDF Pages Online">
+    <meta property="og:site_name" content="PDFrow">
+    
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Crop PDF Online Free - Custom PDF Cropping | PDFrow">
+    <meta name="twitter:description" content="Cut and crop PDF pages online for free. Remove unwanted sections, adjust page borders, and customize PDF dimensions.">
+    <meta name="twitter:image" content="https://pdfrow.com/og-image.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://pdfrow.com/crop-pdf.html">
+    
+    <!-- Apple meta tags -->
+    <meta name="application-name" content="PDFrow">
+    <meta name="apple-mobile-web-app-title" content="PDFrow">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="url-import.css">
+    
+    <!-- Logo Size Customization -->
+    <style>
+        .logo-image {
+            width: 56px !important;
+            height: 56px !important;
+        }
+        
+        .logo-text {
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .footer .logo-image {
+            width: 48px !important;
+            height: 48px !important;
+        }
+        
+        .footer .logo-text {
+            font-size: 1.3rem !important;
+        }
+        
+        .logo {
+            align-items: center !important;
+            gap: 0.75rem !important;
+        }
+    </style>
+    
+    <!-- Page-specific styles -->
+    <style>
+        .page-header {
+            position: relative;
+            padding: 1rem 0 2rem 0;
+            margin-top: 6rem;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .page-header-background {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+        
+        .header-decoration {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--accent-primary) 10%, transparent 70%);
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+        
+        .page-header-content {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .breadcrumb-link:hover {
+            color: var(--accent-primary);
+        }
+        
+        .breadcrumb-current {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .page-title-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tool-icon-large {
+            flex-shrink: 0;
+        }
+        
+        .icon-background {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 8px 32px rgba(var(--accent-primary-rgb), 0.3);
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+            line-height: 1.2;
+        }
+        
+        .page-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+            max-width: 600px;
+        }
+        
+        .tool-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+        
+        .feature-item:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-item svg {
+            color: var(--accent-primary);
+            flex-shrink: 0;
+        }
+        
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            max-width: fit-content;
+        }
+        
+        .security-badge svg {
+            color: var(--accent-primary);
+            flex-shrink: 0;
+        }
+        
+        /* PDF Preview and Cutting Styles */
+        .pdf-preview-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+        
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .preview-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+        
+        .pdf-canvas-container {
+            position: relative;
+            margin: 1rem auto;
+            max-width: 600px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            display: none;
+        }
+        
+        .pdf-canvas-container.active {
+            display: block;
+        }
+        
+        .pdf-canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+        
+        .crop-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+        
+        .crop-selection {
+            position: absolute;
+            border: 2px solid var(--accent-primary);
+            background: rgba(var(--accent-primary-rgb), 0.1);
+            pointer-events: all;
+            cursor: move;
+            min-width: 20px;
+            min-height: 20px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+        
+        .crop-handle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-primary);
+            border: 2px solid white;
+            border-radius: 50%;
+            z-index: 11;
+        }
+        
+        .crop-handle.nw { top: -5px; left: -5px; cursor: nw-resize; }
+        .crop-handle.ne { top: -5px; right: -5px; cursor: ne-resize; }
+        .crop-handle.sw { bottom: -5px; left: -5px; cursor: sw-resize; }
+        .crop-handle.se { bottom: -5px; right: -5px; cursor: se-resize; }
+        
+        .cutting-controls {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+        
+        .controls-header {
+            margin-bottom: 1rem;
+        }
+        
+        .controls-header h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+        
+        .controls-header p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        
+        .control-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .control-input {
+            flex: 1;
+        }
+        
+        .control-input input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        
+        .control-input input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px rgba(var(--accent-primary-rgb), 0.1);
+        }
+        
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .preset-btn {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .preset-btn:hover {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        .preview-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .file-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(138, 43, 226, 0.1));
+            border: 2px solid var(--accent-primary);
+            border-radius: 8px;
+        }
+
+        .page-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        
+        .page-nav-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .page-nav-btn:hover:not(:disabled) {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        .page-nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .page-info {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .cut-action-section {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .cut-btn {
+            padding: 0.75rem 2rem;
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 0 0.5rem;
+        }
+        
+        .cut-btn:hover:not(:disabled) {
+            background: var(--accent-secondary);
+            transform: translateY(-1px);
+        }
+        
+        .cut-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .reset-btn {
+            padding: 0.75rem 2rem;
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 0 0.5rem;
+        }
+        
+        .reset-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+        
+        .remove-pdf-btn {
+            padding: 0.5rem 1rem;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .remove-pdf-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+        }
+        
+        /* Spinner animation for loading */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .page-title-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .tool-features {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .feature-item {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .control-row {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .preset-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .preview-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .file-navigation {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .page-navigation {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .remove-pdf-btn {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            
+            .cut-action-section {
+                margin-top: 1rem;
+            }
+            
+            .cut-btn, .reset-btn {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* Success State and Download Actions */
+        .success-state {
+            display: none;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            border: 1px solid #4b5563;
+            color: #e5e7eb;
+        }
+
+        .success-state h4 {
+            color: #a78bfa;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-state p {
+            color: #d1d5db;
+            margin: 0;
+        }
+
+        .success-state .success-icon {
+            margin-bottom: 1rem;
+        }
+
+        .success-state .success-icon svg {
+            width: 48px;
+            height: 48px;
+            color: #10b981;
+        }
+
+        body:not(.dark-mode) .success-state {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border: 1px solid #d1d5db;
+            color: #374151;
+        }
+
+        body:not(.dark-mode) .success-state h4 {
+            color: #7c3aed;
+        }
+
+        body:not(.dark-mode) .success-state p {
+            color: #4b5563;
+        }
+
+        .download-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .btn-download-primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-download-primary:hover {
+            background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .btn-download-secondary {
+            background: #374151;
+            color: #e5e7eb;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download-secondary:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
+        }
+
+        /* Light mode adjustments */
+        body:not(.dark-mode) .btn-download-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        body:not(.dark-mode) .btn-download-secondary:hover {
+            background: #d1d5db;
+        }
+
+        /* Continue to other tools section */
+        .continue-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .continue-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .continue-tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.75rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .continue-tool-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .continue-tool-btn:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            transform: translateX(4px);
+        }
+
+        .continue-tool-btn:hover .continue-tool-icon svg,
+        .continue-tool-btn:hover .continue-arrow {
+            stroke: white;
+        }
+
+        .continue-tool-icon {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .continue-tool-icon svg {
+            transition: stroke 0.3s ease;
+        }
+
+        .continue-tool-btn span {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .continue-arrow {
+            flex-shrink: 0;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .continue-tool-btn:hover .continue-arrow {
+            opacity: 1;
+            transform: translateX(2px);
+        }
+    </style>
+
+    <!-- Compact Feature and Step Cards Styles -->
+    <style>
+        /* Make feature cards more compact */
+        .features-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .feature-card {
+            padding: 1.25rem;
+            border-radius: 12px;
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Make step cards more compact */
+        .steps-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .step-card {
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .step-card .step-number {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .step-card p {
+            font-size: 1rem;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .features-grid,
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+
+    <!-- hCaptcha -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <script src="hcaptcha-config.js"></script>
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PDFrow PDF Cutter",
+        "description": "Cut and crop PDF pages online for free. Remove unwanted sections, adjust page borders, and customize PDF dimensions.",
+        "url": "https://pdfrow.com/cut-pdf",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Free PDF cutting and cropping",
+            "Custom crop areas", 
+            "Preview before cutting",
+            "Secure file processing",
+            "Fast processing speed"
+        ]
+    }
+    </script>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="/" class="logo">
+                    <div class="logo-icon">
+                        <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                    </div>
+                    <h1 class="logo-text">PDFrow</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="/" class="nav-link" data-translate="nav_tools">Tools</a>
+                    <a href="/" class="nav-link" data-translate="nav_features">Features</a>
+                    <a href="/" class="nav-link" data-translate="nav_how_it_works">How It Works</a>
+                    <a href="/" class="nav-link" data-translate="nav_blog">Blog</a>
+                    <a href="/" class="nav-link" data-translate="nav_faq">FAQ</a>
+                </div>
+
+                <div class="nav-actions">
+                    <!-- Auth Buttons (shown when not logged in) -->
+                    <div id="auth-buttons" class="auth-buttons">
+                        <button class="btn-auth btn-login" id="loginBtn" data-translate="btn_login">Login</button>
+                        <button class="btn-auth btn-signup" id="signupBtn" data-translate="btn_signup">Sign Up</button>
+                    </div>
+
+                    <!-- User Menu (shown when logged in) -->
+                    <div id="user-menu" class="user-menu" style="display: none;">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span class="user-email">user@example.com</span>
+                        <div class="user-dropdown">
+                            <button class="dropdown-item" id="profileBtn" data-translate="btn_profile">Profile</button>
+                            <button class="dropdown-item" id="logoutBtn" data-translate="btn_logout">Logout</button>
+                        </div>
+                    </div>
+                    
+                    <div class="theme-toggle" id="theme-toggle">
+                    <div class="theme-toggle-track">
+                        <div class="theme-toggle-thumb">
+                            <svg class="theme-icon sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Light theme">
+                                <circle cx="12" cy="12" r="5"/>
+                                <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                            </svg>
+                            <svg class="theme-icon dimmed-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Dimmed theme">
+                                <path d="M12 3a6.364 6.364 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                                <path d="M20 3v4m-2-2h4"/>
+                            </svg>
+                            <svg class="theme-icon moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Dark theme">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="page-header-background">
+                <div class="header-decoration"></div>
+            </div>
+            <div class="page-header-content">
+                <nav class="breadcrumb">
+                    <a href="/" class="breadcrumb-link" data-translate="breadcrumb_home">Home</a>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9,18 15,12 9,6"/>
+                    </svg>
+                    <span class="breadcrumb-current" data-translate="breadcrumb_crop">Crop PDF</span>
+                </nav>
+                
+                <div class="page-title-section">
+                    <div class="tool-icon-large">
+                        <div class="icon-background">
+                            <img src="crop-pdf.png" alt="Crop PDF Icon" style="width: 50px; height: 50px;">
+                        </div>
+                    </div>
+                    
+                    <div class="page-title-text">
+                        <h1 class="page-title" data-translate="crop_pdf_title">Crop PDF Online</h1>
+                        <p class="page-description" data-translate="crop_pdf_description">
+                            Cut and crop PDF pages with precision. Remove unwanted sections, adjust borders, and create custom-sized PDFs exactly how you need them.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="tool-features">
+                    <div class="feature-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h4m0-11V9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v2m0 0v7a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2v-7z"/>
+                        </svg>
+                        <span data-translate="custom_crop">Custom Crop</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        <span data-translate="live_preview">Live Preview</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.828 14.828a4 4 0 0 1-5.656 0M9 10h1m4 0h1m-6.172 1.172a4 4 0 0 1 5.656 0L16 14H8l1.172-2.828z"/>
+                        </svg>
+                        <span data-translate="precise_control">Precise Control</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <circle cx="12" cy="16" r="1"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <span data-translate="secure_100">100% Secure</span>
+                    </div>
+                </div>
+                
+                <!-- Security Badge -->
+                <div class="security-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span data-translate="security_badge_crop">100% Secure - Files processed locally</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Section -->
+        <section class="tools-section" id="tools">
+            <div class="section-header">
+                <h2 class="section-title" data-translate="pdf_cutting_title">PDF Cutting Tool</h2>
+                <p class="section-subtitle" data-translate="pdf_cutting_subtitle">Cut and crop PDF pages with precision and preview your changes in real-time</p>
+            </div>
+
+            <div class="tools-grid">
+                <!-- Crop PDF Tool -->
+                <div class="tool-card active" data-tool="cut-pdf">
+                    <div class="privacy-badge">
+                        <span class="lock-icon">🔒</span>
+                        <span data-translate="privacy_badge">100% client‑side. Files never leave your device.</span>
+                    </div>
+
+                    <!-- Upload Method Toggle -->
+                    <div class="upload-method-toggle">
+                        <button class="upload-method-btn active" data-method="local" type="button" data-translate="upload_from_computer">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                            Upload from Computer
+                        </button>
+                        <button class="upload-method-btn" data-method="url" type="button" data-translate="import_from_url">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                            </svg>
+                            Import from URL
+                        </button>
+                    </div>
+
+                    <!-- URL Import Section -->
+                    <div class="url-import-section" id="url-import-section">
+                        <div class="url-input-container">
+                            <svg class="url-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                            </svg>
+                            <input
+                                type="url"
+                                class="url-input"
+                                id="url-input"
+                                placeholder="Paste Dropbox or Google Drive link here..."
+                                aria-label="Enter file URL from Dropbox or Google Drive"
+                            >
+                        </div>
+                        <button class="url-import-btn" id="url-import-btn" type="button">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Import File
+                        </button>
+
+                        <div class="download-progress" id="download-progress">
+                            <div class="progress-info">
+                                <span id="download-status">Downloading...</span>
+                                <span id="download-size">0 MB / 0 MB</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="download-progress-fill"></div>
+                            </div>
+                        </div>
+
+                        <div class="url-error-message" id="url-error-message"></div>
+                        <div class="url-success-message" id="url-success-message"></div>
+
+                        <div class="url-hints">
+                            <div class="url-hints-title">Supported Services:</div>
+                            <ul class="url-hints-list">
+                                <li>Dropbox: Share link and paste here</li>
+                                <li>Google Drive: Get shareable link (Anyone with the link can view)</li>
+                                <li>Direct file URLs (supported format only)</li>
+                                <li>Maximum file size: 50MB</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="upload-area" id="upload-area" data-translate="upload_area_pdf">
+                        <div class="upload-icon">
+                            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                        </div>
+                        <div class="upload-text">
+                            <p data-translate="upload_text">Click to select or drag and drop your PDF files</p>
+                            <p class="upload-subtext" data-translate="upload_pdf_subtext">PDF files • Up to 10 files • Max 50MB total batch size</p>
+                        </div>
+                        <input type="file" class="file-input" accept=".pdf" multiple>
+                    </div>
+                    
+                    <div class="files-list"></div>
+                    
+                    <!-- PDF Preview Section -->
+                    <div class="pdf-preview-section" id="pdfPreview" style="display: none;">
+                        <div class="preview-header">
+                            <h3>Select Area to Cut</h3>
+                            <div class="file-navigation" id="fileNavigation" style="display: none; margin-bottom: 1rem;">
+                                <button class="page-nav-btn" id="prevFile" disabled>Previous File</button>
+                                <span class="page-info">File <span id="currentFileNum">1</span> of <span id="totalFiles">1</span></span>
+                                <button class="page-nav-btn" id="nextFile" disabled>Next File</button>
+                                <span class="page-info" style="margin-left: 1rem;" id="currentFileName">-</span>
+                            </div>
+                            <div class="page-navigation">
+                                <button class="page-nav-btn" id="prevPage" disabled>Previous Page</button>
+                                <span class="page-info">Page <span id="currentPage">1</span> of <span id="totalPages">1</span></span>
+                                <button class="page-nav-btn" id="nextPage" disabled>Next Page</button>
+                            </div>
+                        </div>
+                        
+                        <div class="pdf-canvas-container" id="canvasContainer">
+                            <canvas id="pdfCanvas" class="pdf-canvas"></canvas>
+                            <div class="crop-overlay">
+                                <div class="crop-selection" id="cropSelection" style="display: none;">
+                                    <div class="crop-handle nw"></div>
+                                    <div class="crop-handle ne"></div>
+                                    <div class="crop-handle sw"></div>
+                                    <div class="crop-handle se"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cutting Controls -->
+                    <div class="cutting-controls" id="cuttingControls" style="display: none;">
+                        <div class="controls-header">
+                            <h3>Cutting Parameters</h3>
+                            <p>Fine-tune your crop area with precise measurements</p>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Crop Area Position & Size (pixels)</label>
+                            <div class="control-row">
+                                <div class="control-input">
+                                    <label>X Position</label>
+                                    <input type="number" id="cropX" min="0" value="0">
+                                </div>
+                                <div class="control-input">
+                                    <label>Y Position</label>
+                                    <input type="number" id="cropY" min="0" value="0">
+                                </div>
+                            </div>
+                            <div class="control-row">
+                                <div class="control-input">
+                                    <label>Width</label>
+                                    <input type="number" id="cropWidth" min="50" value="200">
+                                </div>
+                                <div class="control-input">
+                                    <label>Height</label>
+                                    <input type="number" id="cropHeight" min="50" value="200">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Quick Presets</label>
+                            <div class="preset-buttons">
+                                <button class="preset-btn" data-preset="center">Center</button>
+                                <button class="preset-btn" data-preset="fullwidth">Full Width</button>
+                                <button class="preset-btn" data-preset="fullheight">Full Height</button>
+                                <button class="preset-btn" data-preset="square">Square</button>
+                                <button class="preset-btn" data-preset="a4">A4 Ratio</button>
+                                <button class="preset-btn" data-preset="reset">Reset</button>
+                            </div>
+                        </div>
+                        
+                        <div class="cut-action-section">
+                            <button class="cut-btn" id="cutPdfBtn" disabled>Crop PDF</button>
+                        </div>
+                    </div>
+
+
+                    <div class="results"></div>
+
+                    <!-- Success State -->
+                    <div class="success-state" id="success-state" style="display: none;">
+                        <div class="success-container">
+                            <div class="success-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                            </div>
+                            <div class="success-text">
+                                <h4 id="success-title">Processing completed!</h4>
+                                <p id="success-description">Your PDF is ready for download</p>
+                            </div>
+                            <div class="download-actions">
+                                <button class="btn-download-primary" id="downloadPdfBtn">Download PDF</button>
+                                <button class="btn-download-secondary" id="convertAnotherBtn">Process Another</button>
+                            </div>
+
+                            <!-- Continue to other tools section -->
+                            <div class="continue-section">
+                                <div class="continue-title">Continue to...</div>
+                                <div class="continue-tools">
+                                    <button class="continue-tool-btn" data-tool="merge-pdf.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="merge-pdf.png" alt="Merge PDF" style="width: 35px; height: 35px; object-fit: contain;">
+                                        </div>
+                                        <span>Merge PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="rotate-pdf.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="rotate-pdf.png" alt="Rotate PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                        </div>
+                                        <span>Rotate PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="protect-pdf.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="protect-pdf.png" alt="Protect PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                        </div>
+                                        <span>Protect PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="compress-pdf.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="compress-pdf-png.png" alt="Compress PDF" style="width: 35px; height: 35px; object-fit: contain;">
+                                        </div>
+                                        <span>Compress PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="edit-pdf.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="edit-pdf-png.png" alt="Edit PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                        </div>
+                                        <span>Edit PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="sign-pdf.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="sign-pdf.png" alt="Sign PDF" style="width: 30px; height: 30px; object-fit: contain;">
+                                        </div>
+                                        <span>Sign PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="split-pdf.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="split-pdf.png" alt="Split PDF" style="width: 35px; height: 35px; object-fit: contain;">
+                                        </div>
+                                        <span>Split PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="organize-pdf.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="organize-pdf.png" alt="Organize PDF" style="width: 45px; height: 45px; object-fit: contain;">
+                                        </div>
+                                        <span>Organize PDF</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="pdf-to-jpg.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="pdf-to-jpg.png" alt="PDF to JPG" style="width: 40px; height: 40px; object-fit: contain;">
+                                        </div>
+                                        <span>PDF to JPG</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="pdf-to-word.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="pdf-to-word.png" alt="PDF to Word" style="width: 40px; height: 40px; object-fit: contain;">
+                                        </div>
+                                        <span>PDF to Word</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="pdf-to-powerpoint.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="pdf-to-powerpoint.png" alt="PDF to PowerPoint" style="width: 40px; height: 40px; object-fit: contain;">
+                                        </div>
+                                        <span>PDF to PPT</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="pdf-to-excel.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="pdf-to-excel.png" alt="PDF to Excel" style="width: 40px; height: 40px; object-fit: contain;">
+                                        </div>
+                                        <span>PDF to Excel</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="add-page-numbers.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="add-page-numbers.png" alt="Add Page Numbers" style="width: 30px; height: 30px; object-fit: contain;">
+                                        </div>
+                                        <span>Add Page Numbers</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                    <button class="continue-tool-btn" data-tool="add-watermark.html">
+                                        <div class="continue-tool-icon">
+                                            <img src="add-watermark.png" alt="Add Watermark" style="width: 30px; height: 30px; object-fit: contain;">
+                                        </div>
+                                        <span>Add Watermark</span>
+                                        <svg class="continue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9,18 15,12 9,6"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="section-header">
+                <h2 data-translate="why_choose_title">Why Choose PDFrow PDF Cropper?</h2>
+                <p data-translate="why_choose_subtitle">Professional PDF cropping with precision and ease</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 data-translate="feature_precision_cropping">Precision Cropping</h3>
+                    <p data-translate="feature_precision_cropping_desc">Crop PDF pages with pixel-perfect accuracy using our intuitive cropping interface</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👁️</div>
+                    <h3 data-translate="feature_live_preview">Live Preview</h3>
+                    <p data-translate="feature_live_preview_desc">See exactly what you're cropping with real-time preview and instant feedback</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 data-translate="feature_secure">100% Secure</h3>
+                    <p data-translate="feature_secure_desc">Your files are processed locally and automatically deleted after processing</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 data-translate="feature_lightning_fast">Lightning Fast</h3>
+                    <p data-translate="feature_lightning_fast_desc">Crop PDF pages instantly with our optimized processing engine</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works-section" id="how-it-works">
+            <div class="section-header">
+                <h2 data-translate="how_to_crop_title">How to Crop PDF Pages</h2>
+                <p data-translate="how_to_crop_subtitle">Simple 3-step process to crop and cut PDF documents</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">
+                        <span class="step-icon">📁</span>
+                        1
+                    </div>
+                    <h3 data-translate="step1_title">Upload PDF File</h3>
+                    <p data-translate="step1_desc">Select or drag and drop your PDF file to start. Preview each page and navigate through your document easily.</p>
+                    <div class="step-features">
+                        <span class="step-feature" data-translate="step1_feature1">• Supports up to 50MB files</span>
+                        <span class="step-feature" data-translate="step1_feature2">• Instant PDF preview</span>
+                        <span class="step-feature" data-translate="step1_feature3">• Page-by-page navigation</span>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">
+                        <span class="step-icon">🔲</span>
+                        2
+                    </div>
+                    <h3 data-translate="step2_title">Select Crop Area</h3>
+                    <p data-translate="step2_desc">Use the interactive cropping tool to select the exact area you want to keep. Drag handles to resize and fine-tune your selection.</p>
+                    <div class="step-features">
+                        <span class="step-feature" data-translate="step2_feature1">• <strong>Visual:</strong> Drag and drop cropping</span>
+                        <span class="step-feature" data-translate="step2_feature2">• <strong>Precise:</strong> Enter exact coordinates</span>
+                        <span class="step-feature" data-translate="step2_feature3">• <strong>Presets:</strong> Common size templates</span>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">
+                        <span class="step-icon">⬇️</span>
+                        3
+                    </div>
+                    <h3 data-translate="step3_title">Download Cropped PDF</h3>
+                    <p data-translate="step3_desc">Process your PDF and download the cut version instantly. Your original formatting and quality are preserved.</p>
+                    <div class="step-features">
+                        <span class="step-feature" data-translate="step3_feature1">• Instant processing</span>
+                        <span class="step-feature" data-translate="step3_feature2">• Quality preserved</span>
+                        <span class="step-feature" data-translate="step3_feature3">• Same format output</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <div class="logo-icon">
+                                <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                            </div>
+                            <h3 class="logo-text">PDFrow</h3>
+                        </div>
+                        <p class="footer-description" data-translate="footer_description">
+                            Next-generation document processing platform. Fast, secure, and always free.
+                        </p>
+                        <div class="footer-social">
+                            <a href="https://instagram.com/pdfrow" class="social-link" aria-label="Follow us on Instagram">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                                </svg>
+                            </a>
+                            <a href="mailto:contact@pdfrow.com" class="social-link" aria-label="Contact us via email">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4 data-translate="footer_tools_title">Tools</h4>
+                            <ul>
+                                <li><a href="compress-pdf.html" data-translate="footer_pdf_compressor">Compress PDF</a></li>
+                                <li><a href="merge-pdf.html" data-translate="footer_pdf_merger">Merge PDF</a></li>
+                                <li><a href="split-pdf.html" data-translate="footer_pdf_splitter">Split PDF</a></li>
+                                <li><a href="cut-pdf.html">Crop PDF</a></li>
+                                <li><a href="jpg-to-pdf.html">JPG to PDF</a></li>
+                            </ul>
+                        </div>
+                        
+                        
+                        <div class="footer-column">
+                            <h4 data-translate="footer_support_title">Support</h4>
+                            <ul>
+                                <li><a href="/" data-translate="footer_faq">FAQ</a></li>
+                                <li><a href="/" data-translate="footer_how_it_works">How It Works</a></li>
+                                <li><a href="/" id="footerContactLink" data-translate="footer_contact">Contact</a></li>
+                                <li><a href="terms-conditions.html" data-translate="footer_terms">Terms & Conditions</a></li>
+                                <li><a href="privacy-policy.html" data-translate="footer_privacy">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-column">
+                            <h4 data-translate="language">Language</h4>
+                            <div class="language-dropdown">
+                                <button class="language-btn" id="languageBtn">
+                                    <span class="flag" id="currentFlag">🇺🇸</span>
+                                    <span id="currentLang">English</span>
+                                    <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                        <polyline points="6,9 12,15 18,9"/>
+                                    </svg>
+                                </button>
+                                <div class="language-menu" id="languageMenu">
+                                    <div class="language-item" data-lang="en" data-flag="🇺🇸">
+                                        <span class="flag">🇺🇸</span>
+                                        <span>English</span>
+                                    </div>
+                                    <div class="language-item" data-lang="es" data-flag="🇪🇸">
+                                        <span class="flag">🇪🇸</span>
+                                        <span>Español</span>
+                                    </div>
+                                    <div class="language-item" data-lang="fr" data-flag="🇫🇷">
+                                        <span class="flag">🇫🇷</span>
+                                        <span>Français</span>
+                                    </div>
+                                    <div class="language-item" data-lang="de" data-flag="🇩🇪">
+                                        <span class="flag">🇩🇪</span>
+                                        <span>Deutsch</span>
+                                    </div>
+                                    <div class="language-item" data-lang="it" data-flag="🇮🇹">
+                                        <span class="flag">🇮🇹</span>
+                                        <span>Italiano</span>
+                                    </div>
+                                    <div class="language-item" data-lang="tr" data-flag="🇹🇷">
+                                        <span class="flag">🇹🇷</span>
+                                        <span>Türkçe</span>
+                                    </div>
+                                    <div class="language-item" data-lang="pt" data-flag="🇵🇹">
+                                        <span class="flag">🇵🇹</span>
+                                        <span>Português</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ru" data-flag="🇷🇺">
+                                        <span class="flag">🇷🇺</span>
+                                        <span>Русский</span>
+                                    </div>
+                                    <div class="language-item" data-lang="zh" data-flag="🇨🇳">
+                                        <span class="flag">🇨🇳</span>
+                                        <span>中文</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ja" data-flag="🇯🇵">
+                                        <span class="flag">🇯🇵</span>
+                                        <span>日本語</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ar" data-flag="🇸🇦">
+                                        <span class="flag">🇸🇦</span>
+                                        <span>العربية</span>
+                                    </div>
+                                    <div class="language-item" data-lang="hi" data-flag="🇮🇳">
+                                        <span class="flag">🇮🇳</span>
+                                        <span>हिन्दी</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p data-translate="footer_copyright">&copy; <span id="current-year">2025</span> PDFrow. All rights reserved. Made with ❤️ for document processing.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Support Us Modal -->
+    <div class="auth-modal" id="supportModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container support-modal-container">
+            <div class="auth-form-header">
+                <h2 data-translate="support_title">Support PDFrow ❤️</h2>
+                <p data-translate="support_subtitle">Help us keep PDFrow free and improve our services</p>
+                <button class="auth-close-btn" id="supportCloseBtn">&times;</button>
+            </div>
+            
+            <div class="support-content">
+                <div class="support-message">
+                    <p data-translate="support_message">
+                        PDFrow is completely free to use and will always remain so. Your support helps us:
+                    </p>
+                    <ul>
+                        <li data-translate="support_point_1">Keep servers running and fast</li>
+                        <li data-translate="support_point_2">Add new features regularly</li>
+                        <li data-translate="support_point_3">Maintain high security standards</li>
+                        <li data-translate="support_point_4">Provide excellent user experience</li>
+                    </ul>
+                </div>
+                
+                <div class="support-options">
+                    <div class="support-option">
+                        <h3 data-translate="support_share_title">Share PDFrow</h3>
+                        <p data-translate="support_share_desc">Tell your friends about PDFrow</p>
+                        <div class="share-buttons">
+                            <a href="https://twitter.com/intent/tweet?text=Check%20out%20PDFrow%20-%20free%20online%20PDF%20tools!&url=https://pdfrow.com" target="_blank" class="share-btn twitter">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                                <span data-translate="share_twitter">Twitter</span>
+                            </a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://pdfrow.com" target="_blank" class="share-btn facebook">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                                <span data-translate="share_facebook">Facebook</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="support-option">
+                        <h3 data-translate="support_donation_title">Make a Donation</h3>
+                        <p data-translate="support_donation_desc">Support our mission with a contribution</p>
+                        <div class="donation-buttons">
+                            <a href="https://www.paypal.com/donate/?hosted_button_id=YOUR_BUTTON_ID" target="_blank" class="donation-btn paypal">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.421c-.296-.13-.66-.198-1.084-.198h-2.99c-.524 0-.968.382-1.05.9L14.583 12.4c-.024.137-.024.273 0 .41.082.518.526.9 1.05.9h2.99c1.084 0 1.917-.198 2.482-.594.565-.396.847-.99.847-1.782 0-.99-.347-1.782-1.04-2.376z"/>
+                                </svg>
+                                <span data-translate="donate_paypal">PayPal</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="support-thanks">
+                    <p data-translate="support_thanks">
+                        Thank you for helping us keep PDFrow free for everyone! ❤️
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="auth-modal" id="loginModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container">
+            <div class="auth-form-header">
+                <h2 data-translate="login_title">Welcome Back</h2>
+                <p data-translate="login_subtitle">Sign in to access your PDFrow account</p>
+                <button class="auth-close-btn" id="loginCloseBtn">&times;</button>
+            </div>
+            
+            <div class="auth-form-content">
+                <div class="auth-input-group">
+                    <label for="loginEmail" data-translate="label_email">Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <label for="loginPassword" data-translate="label_password">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                
+                <button class="auth-submit-btn" id="loginSubmitBtn" data-translate="btn_sign_in">
+                    Sign In
+                </button>
+                
+                <div class="auth-divider">
+                    <span data-translate="auth_or">or</span>
+                </div>
+                
+                <button class="auth-google-btn" id="loginGoogleBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span data-translate="btn_continue_google">Continue with Google</span>
+                </button>
+                
+                <div class="auth-links">
+                    <a href="#" id="forgotPasswordLink" data-translate="link_forgot_password">Forgot password?</a>
+                    <span data-translate="auth_no_account">Don't have an account? 
+                        <a href="#" id="switchToSignup" data-translate="link_sign_up">Sign up</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="auth-modal" id="signupModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container">
+            <div class="auth-form-header">
+                <h2 data-translate="signup_title">Create Account</h2>
+                <p data-translate="signup_subtitle">Join PDFrow and unlock premium features</p>
+                <button class="auth-close-btn" id="signupCloseBtn">&times;</button>
+            </div>
+            
+            <div class="auth-form-content">
+                <div class="auth-input-group">
+                    <label for="signupName" data-translate="label_name">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <label for="signupEmail" data-translate="label_email">Email</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="auth-input-group">
+                    <label for="signupPassword" data-translate="label_password">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password" required>
+                </div>
+                
+                <div class="auth-checkbox-group">
+                    <label>
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span data-translate="checkbox_agree_terms">I agree to the 
+                            <a href="terms-conditions.html" target="_blank">Terms of Service</a> 
+                            and <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+                        </span>
+                    </label>
+                </div>
+                
+                <button class="auth-submit-btn" id="signupSubmitBtn" data-translate="btn_create_account">
+                    Create Account
+                </button>
+                
+                <div class="auth-divider">
+                    <span data-translate="auth_or">or</span>
+                </div>
+                
+                <button class="auth-google-btn" id="signupGoogleBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span data-translate="btn_continue_google">Continue with Google</span>
+                </button>
+                
+                <div class="auth-links">
+                    <span data-translate="auth_have_account">Already have an account? 
+                        <a href="#" id="switchToLogin" data-translate="link_sign_in">Sign in</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="auth-modal" id="contactModal">
+        <div class="auth-modal-overlay"></div>
+        <div class="auth-form-container">
+            <div class="auth-form-header">
+                <h2 data-translate="contact_title">Contact Us</h2>
+                <p data-translate="contact_subtitle">We'd love to hear from you</p>
+                <button class="auth-close-btn" id="contactCloseBtn">&times;</button>
+            </div>
+            
+            <div class="auth-form-content">
+                <form id="contactForm">
+                    <div class="auth-input-group">
+                        <label for="contactName" data-translate="label_name">Name</label>
+                        <input type="text" id="contactName" name="name" placeholder="Your name" required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="contactEmail" data-translate="label_email">Email</label>
+                        <input type="email" id="contactEmail" name="email" placeholder="Your email" required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="contactSubject" data-translate="label_subject">Subject</label>
+                        <input type="text" id="contactSubject" name="subject" placeholder="Message subject" required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="contactMessage" data-translate="label_message">Message</label>
+                        <textarea id="contactMessage" name="message" placeholder="Your message" rows="4" required></textarea>
+                    </div>
+                    
+                    <!-- hCaptcha container -->
+                    <div id="contact-hcaptcha" class="h-captcha" data-sitekey="your-hcaptcha-site-key"></div>
+                    
+                    <button type="submit" class="auth-submit-btn" id="contactSubmitBtn" data-translate="btn_send_message">
+                        Send Message
+                    </button>
+                </form>
+                
+                <div id="contactSuccess" class="success-message" style="display: none;">
+                    <p data-translate="contact_success">Thank you! Your message has been sent successfully.</p>
+                </div>
+                
+                <div id="contactError" class="error-message" style="display: none;">
+                    <p data-translate="contact_error">Sorry, there was an error sending your message. Please try again.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include required scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="support.js"></script>
+    <script src="script.js"></script>
+    <script src="url-import.js"></script>
+    <script>
+        // Initialize URL Import for PDF files
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeURLImport('pdf');
+
+            // Check for continued file from another tool
+            setTimeout(() => {
+                checkForContinuedFile();
+            }, 200);
+        });
+
+        // Function to check and load continued file
+        function checkForContinuedFile() {
+            const continuedFileData = sessionStorage.getItem('continuedFile');
+            if (continuedFileData) {
+                try {
+                    const fileInfo = JSON.parse(continuedFileData);
+
+                    // Convert base64 back to blob
+                    fetch(fileInfo.data)
+                        .then(res => res.blob())
+                        .then(blob => {
+                            // Create a File object
+                            const file = new File([blob], fileInfo.name, { type: fileInfo.type });
+
+                            // Get the file input element
+                            const fileInput = document.querySelector('.file-input');
+                            if (fileInput) {
+                                // Create a DataTransfer object to simulate file upload
+                                const dataTransfer = new DataTransfer();
+                                dataTransfer.items.add(file);
+                                fileInput.files = dataTransfer.files;
+
+                                // Trigger change event to process the file
+                                const event = new Event('change', { bubbles: true });
+                                fileInput.dispatchEvent(event);
+
+                                // Show a notification that file was loaded
+                                console.log(`File "${fileInfo.name}" automatically loaded from ${fileInfo.from}`);
+                            }
+
+                            // Clear sessionStorage after loading
+                            sessionStorage.removeItem('continuedFile');
+                        })
+                        .catch(error => {
+                            console.error('Error loading continued file:', error);
+                            sessionStorage.removeItem('continuedFile');
+                        });
+                } catch (error) {
+                    console.error('Error parsing continued file data:', error);
+                    sessionStorage.removeItem('continuedFile');
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        // Configure PDF.js first
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+
+        // Global variable to store processed files data
+        window.processedFilesData = [];
+
+        // PDF Cutting functionality - Simplified working version
+        class PDFCutter {
+            constructor() {
+                this.pdfDoc = null;
+                this.currentPage = 1;
+                this.totalPages = 0;
+                this.canvas = null;
+                this.ctx = null;
+                this.cropSelection = null;
+                this.isDragging = false;
+                this.dragStart = { x: 0, y: 0 };
+                this.cropArea = { x: 50, y: 50, width: 200, height: 200 };
+                this.currentRenderTask = null; // Track ongoing render operations
+                this.isRendering = false; // Prevent multiple simultaneous renders
+
+                // Multi-file support
+                this.uploadedFiles = [];
+                this.currentFileIndex = 0;
+
+                // Initialize when DOM is ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => this.init());
+                } else {
+                    this.init();
+                }
+            }
+            
+            init() {
+                this.canvas = document.getElementById('pdfCanvas');
+                this.ctx = this.canvas?.getContext('2d');
+                this.cropSelection = document.getElementById('cropSelection');
+                
+                if (this.canvas && this.ctx && this.cropSelection) {
+                    this.initializeFileUpload();
+                    this.initializeControls();
+                    console.log('PDF Cutter initialized successfully');
+                } else {
+                    console.error('Missing elements for PDF Cutter');
+                }
+            }
+            
+            initializeFileUpload() {
+                const fileInput = document.querySelector('.file-input');
+                const uploadArea = document.querySelector('.upload-area');
+
+                if (!fileInput || !uploadArea) return;
+
+                fileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        this.handleMultipleFiles(Array.from(e.target.files));
+                    }
+                });
+
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.add('drag-over');
+                });
+
+                uploadArea.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('drag-over');
+                });
+
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('drag-over');
+                    if (e.dataTransfer.files.length > 0) {
+                        this.handleMultipleFiles(Array.from(e.dataTransfer.files));
+                    }
+                });
+            }
+
+            handleMultipleFiles(files) {
+                // Store all uploaded files
+                this.uploadedFiles = files.filter(file =>
+                    file.name.toLowerCase().endsWith('.pdf') && file.size <= 50 * 1024 * 1024
+                );
+
+                if (this.uploadedFiles.length === 0) {
+                    alert('No valid PDF files selected. Please select PDF files under 50MB.');
+                    return;
+                }
+
+                // Start with the first file
+                this.currentFileIndex = 0;
+                this.loadPDF(this.uploadedFiles[0]);
+                this.updateFileNavigation();
+            }
+            
+            async loadPDF(file) {
+                try {
+                    console.log('Loading PDF:', file.name);
+                    
+                    // Validate file
+                    if (!file.name.toLowerCase().endsWith('.pdf')) {
+                        throw new Error('Please select a PDF file');
+                    }
+                    
+                    if (file.size > 50 * 1024 * 1024) {
+                        throw new Error('File too large (max 50MB)');
+                    }
+                    
+                    // Load PDF.js if needed
+                    if (!window.pdfjsLib) {
+                        await this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+                        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                    }
+                    
+                    // Read and load PDF
+                    const arrayBuffer = await file.arrayBuffer();
+                    this.pdfDoc = await pdfjsLib.getDocument(arrayBuffer).promise;
+                    this.totalPages = this.pdfDoc.numPages;
+                    this.currentPage = 1;
+                    
+                    // Update UI
+                    const totalPagesEl = document.getElementById('totalPages');
+                    const currentPageEl = document.getElementById('currentPage');
+                    if (totalPagesEl) totalPagesEl.textContent = this.totalPages;
+                    if (currentPageEl) currentPageEl.textContent = this.currentPage;
+                    
+                    // Show sections
+                    const pdfPreview = document.getElementById('pdfPreview');
+                    const cuttingControls = document.getElementById('cuttingControls');
+                    const canvasContainer = document.getElementById('canvasContainer');
+                    const cutBtn = document.getElementById('cutPdfBtn');
+                    
+                    if (pdfPreview) pdfPreview.style.display = 'block';
+                    if (cuttingControls) cuttingControls.style.display = 'block';
+                    if (cutBtn) cutBtn.disabled = false;
+                    
+                    // Render page
+                    await this.renderPage(this.currentPage);
+                    
+                    if (canvasContainer) canvasContainer.classList.add('active');
+                    this.setupCrop();
+                    this.updateNavigationButtons();
+                    this.initializeEventListeners();
+                    
+                    console.log('PDF loaded successfully');
+                    
+                } catch (error) {
+                    console.error('PDF loading error:', error);
+                    alert('Error loading PDF: ' + error.message);
+                }
+            }
+            
+            loadScript(src) {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.head.appendChild(script);
+                });
+            }
+            
+            async renderPage(pageNumber) {
+                try {
+                    // Wait if already rendering
+                    while (this.isRendering) {
+                        await new Promise(resolve => setTimeout(resolve, 50));
+                    }
+
+                    // Cancel any ongoing render operation and wait for it
+                    if (this.currentRenderTask) {
+                        try {
+                            this.currentRenderTask.cancel();
+                            await this.currentRenderTask.promise.catch(() => {});
+                        } catch (e) {
+                            // Ignore cancellation errors
+                        }
+                        this.currentRenderTask = null;
+                    }
+
+                    this.isRendering = true;
+
+                    const page = await this.pdfDoc.getPage(pageNumber);
+                    const viewport = page.getViewport({scale: 2.0});
+
+                    this.canvas.width = viewport.width;
+                    this.canvas.height = viewport.height;
+
+                    // Clear canvas before rendering
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+                    // Store the render task so we can cancel it if needed
+                    this.currentRenderTask = page.render({
+                        canvasContext: this.ctx,
+                        viewport: viewport
+                    });
+
+                    await this.currentRenderTask.promise;
+                    this.currentRenderTask = null;
+
+                    console.log('Page rendered:', this.canvas.width, 'x', this.canvas.height);
+
+                } catch (error) {
+                    // Ignore cancellation errors
+                    if (error.name === 'RenderingCancelledException') {
+                        console.log('Rendering cancelled');
+                        return;
+                    }
+                    console.error('Error rendering page:', error);
+                    alert('Error rendering page: ' + error.message);
+                } finally {
+                    this.isRendering = false;
+                }
+            }
+            
+            setupCrop() {
+                // Initial crop area
+                this.cropArea = {
+                    x: this.canvas.width * 0.2,
+                    y: this.canvas.height * 0.2, 
+                    width: this.canvas.width * 0.4,
+                    height: this.canvas.height * 0.4
+                };
+                
+                this.updateCropSelection();
+                this.cropSelection.style.display = 'block';
+            }
+            
+            initializeEventListeners() {
+                // Note: Page navigation listeners are in initializeControls() to avoid duplicates
+                // Only setup crop events here which need to be refreshed on each PDF load
+                this.setupCropEvents();
+            }
+
+            updateFileNavigation() {
+                const fileNavigation = document.getElementById('fileNavigation');
+                const prevFileBtn = document.getElementById('prevFile');
+                const nextFileBtn = document.getElementById('nextFile');
+                const currentFileNum = document.getElementById('currentFileNum');
+                const totalFiles = document.getElementById('totalFiles');
+                const currentFileName = document.getElementById('currentFileName');
+
+                if (this.uploadedFiles.length > 1) {
+                    if (fileNavigation) fileNavigation.style.display = 'block';
+                    if (currentFileNum) currentFileNum.textContent = this.currentFileIndex + 1;
+                    if (totalFiles) totalFiles.textContent = this.uploadedFiles.length;
+                    if (currentFileName) currentFileName.textContent = this.uploadedFiles[this.currentFileIndex]?.name || '-';
+                    if (prevFileBtn) prevFileBtn.disabled = this.currentFileIndex === 0;
+                    if (nextFileBtn) nextFileBtn.disabled = this.currentFileIndex === this.uploadedFiles.length - 1;
+                } else {
+                    if (fileNavigation) fileNavigation.style.display = 'none';
+                }
+            }
+            
+            setupCropEvents() {
+                // Canvas events for creating new crop areas
+                this.canvas.addEventListener('mousedown', (e) => this.onCanvasMouseDown(e));
+                
+                // Crop selection events for moving and resizing
+                this.cropSelection.addEventListener('mousedown', (e) => this.onCropMouseDown(e));
+                
+                // Global mouse events
+                document.addEventListener('mousemove', (e) => this.onMouseMove(e));
+                document.addEventListener('mouseup', (e) => this.onMouseUp(e));
+                
+                // Touch events
+                this.canvas.addEventListener('touchstart', (e) => this.onTouchStart(e));
+                this.cropSelection.addEventListener('touchstart', (e) => this.onTouchStart(e));
+                document.addEventListener('touchmove', (e) => this.onTouchMove(e));
+                document.addEventListener('touchend', (e) => this.onTouchEnd(e));
+            }
+            
+            onCanvasMouseDown(e) {
+                if (e.target === this.cropSelection) return; // Don't interfere with crop selection
+
+                e.preventDefault();
+                const rect = this.canvas.getBoundingClientRect();
+
+                // Calculate scale factor between displayed size and actual canvas size
+                const scaleX = this.canvas.width / rect.width;
+                const scaleY = this.canvas.height / rect.height;
+
+                // Get mouse position and convert to canvas coordinates
+                const x = (e.clientX - rect.left) * scaleX;
+                const y = (e.clientY - rect.top) * scaleY;
+
+                this.dragStart = { x, y };
+                this.cropStart = { x, y };
+                this.isDragging = true;
+
+                console.log('Starting new crop selection at:', x, y);
+            }
+            
+            onCropMouseDown(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const rect = this.cropSelection.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Check if clicking on resize handles
+                if (e.target.classList.contains('crop-handle')) {
+                    this.isResizing = true;
+                    this.resizeHandle = e.target.className.split(' ')[1]; // Get handle type (nw, ne, sw, se)
+                    console.log('Starting resize with handle:', this.resizeHandle);
+                } else {
+                    // Moving the crop area
+                    this.isMoving = true;
+                    this.dragStart = { x: e.clientX, y: e.clientY };
+                    this.cropStart = { x: this.cropArea.x, y: this.cropArea.y };
+                    console.log('Starting move');
+                }
+            }
+            
+            onMouseMove(e) {
+                if (this.isDragging) {
+                    // Creating new crop area
+                    const rect = this.canvas.getBoundingClientRect();
+
+                    // Calculate scale factor between displayed size and actual canvas size
+                    const scaleX = this.canvas.width / rect.width;
+                    const scaleY = this.canvas.height / rect.height;
+
+                    // Get mouse position and convert to canvas coordinates
+                    const x = (e.clientX - rect.left) * scaleX;
+                    const y = (e.clientY - rect.top) * scaleY;
+
+                    this.cropArea.x = Math.min(this.cropStart.x, x);
+                    this.cropArea.y = Math.min(this.cropStart.y, y);
+                    this.cropArea.width = Math.abs(x - this.cropStart.x);
+                    this.cropArea.height = Math.abs(y - this.cropStart.y);
+
+                    this.updateCropSelection();
+                    this.updateControlInputs();
+
+                } else if (this.isMoving) {
+                    // Moving existing crop area
+                    const rect = this.canvas.getBoundingClientRect();
+                    const scaleX = this.canvas.width / rect.width;
+                    const scaleY = this.canvas.height / rect.height;
+
+                    const deltaX = (e.clientX - this.dragStart.x) * scaleX;
+                    const deltaY = (e.clientY - this.dragStart.y) * scaleY;
+                    
+                    let newX = this.cropStart.x + deltaX;
+                    let newY = this.cropStart.y + deltaY;
+                    
+                    // Constrain to canvas bounds
+                    newX = Math.max(0, Math.min(newX, this.canvas.width - this.cropArea.width));
+                    newY = Math.max(0, Math.min(newY, this.canvas.height - this.cropArea.height));
+                    
+                    this.cropArea.x = newX;
+                    this.cropArea.y = newY;
+                    
+                    this.updateCropSelection();
+                    this.updateControlInputs();
+                    
+                } else if (this.isResizing) {
+                    // Resizing crop area
+                    this.handleResize(e);
+                }
+            }
+            
+            handleResize(e) {
+                const rect = this.canvas.getBoundingClientRect();
+
+                // Calculate scale factor between displayed size and actual canvas size
+                const scaleX = this.canvas.width / rect.width;
+                const scaleY = this.canvas.height / rect.height;
+
+                // Get mouse position and convert to canvas coordinates
+                const x = (e.clientX - rect.left) * scaleX;
+                const y = (e.clientY - rect.top) * scaleY;
+
+                const originalArea = { ...this.cropArea };
+                
+                switch (this.resizeHandle) {
+                    case 'nw':
+                        this.cropArea.width = originalArea.x + originalArea.width - x;
+                        this.cropArea.height = originalArea.y + originalArea.height - y;
+                        this.cropArea.x = x;
+                        this.cropArea.y = y;
+                        break;
+                    case 'ne':
+                        this.cropArea.width = x - originalArea.x;
+                        this.cropArea.height = originalArea.y + originalArea.height - y;
+                        this.cropArea.y = y;
+                        break;
+                    case 'sw':
+                        this.cropArea.width = originalArea.x + originalArea.width - x;
+                        this.cropArea.height = y - originalArea.y;
+                        this.cropArea.x = x;
+                        break;
+                    case 'se':
+                        this.cropArea.width = x - originalArea.x;
+                        this.cropArea.height = y - originalArea.y;
+                        break;
+                }
+                
+                // Ensure minimum size
+                if (this.cropArea.width < 20) {
+                    this.cropArea.width = 20;
+                    if (this.resizeHandle.includes('w')) {
+                        this.cropArea.x = originalArea.x + originalArea.width - 20;
+                    }
+                }
+                if (this.cropArea.height < 20) {
+                    this.cropArea.height = 20;
+                    if (this.resizeHandle.includes('n')) {
+                        this.cropArea.y = originalArea.y + originalArea.height - 20;
+                    }
+                }
+                
+                // Constrain to canvas bounds
+                this.cropArea.x = Math.max(0, Math.min(this.cropArea.x, this.canvas.width - this.cropArea.width));
+                this.cropArea.y = Math.max(0, Math.min(this.cropArea.y, this.canvas.height - this.cropArea.height));
+                
+                this.updateCropSelection();
+                this.updateControlInputs();
+            }
+            
+            onMouseUp(e) {
+                if (this.isDragging) {
+                    // Ensure minimum size for new crop area
+                    if (this.cropArea.width < 20) this.cropArea.width = 20;
+                    if (this.cropArea.height < 20) this.cropArea.height = 20;
+                    
+                    this.updateCropSelection();
+                    this.updateControlInputs();
+                    this.cropSelection.style.display = 'block';
+                }
+                
+                this.isDragging = false;
+                this.isMoving = false;
+                this.isResizing = false;
+                this.resizeHandle = '';
+            }
+            
+            onTouchStart(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent('mousedown', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                e.target.dispatchEvent(mouseEvent);
+            }
+            
+            onTouchMove(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent('mousemove', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                this.onMouseMove(mouseEvent);
+            }
+            
+            onTouchEnd(e) {
+                e.preventDefault();
+                this.onMouseUp({});
+            }
+            
+            updateCropSelection() {
+                if (!this.cropSelection) return;
+
+                // Get canvas display size
+                const rect = this.canvas.getBoundingClientRect();
+
+                // Calculate scale factor between actual canvas size and displayed size
+                const scaleX = rect.width / this.canvas.width;
+                const scaleY = rect.height / this.canvas.height;
+
+                // Convert from canvas coordinates to screen coordinates
+                this.cropSelection.style.left = (this.cropArea.x * scaleX) + 'px';
+                this.cropSelection.style.top = (this.cropArea.y * scaleY) + 'px';
+                this.cropSelection.style.width = (this.cropArea.width * scaleX) + 'px';
+                this.cropSelection.style.height = (this.cropArea.height * scaleY) + 'px';
+            }
+            
+            updateControlInputs() {
+                const inputs = {
+                    'cropX': Math.round(this.cropArea.x),
+                    'cropY': Math.round(this.cropArea.y),
+                    'cropWidth': Math.round(this.cropArea.width),
+                    'cropHeight': Math.round(this.cropArea.height)
+                };
+                
+                Object.entries(inputs).forEach(([id, value]) => {
+                    const input = document.getElementById(id);
+                    if (input) input.value = value;
+                });
+            }
+            
+            updateNavigationButtons() {
+                const prevBtn = document.getElementById('prevPage');
+                const nextBtn = document.getElementById('nextPage');
+                
+                if (prevBtn) prevBtn.disabled = this.currentPage === 1;
+                if (nextBtn) nextBtn.disabled = this.currentPage === this.totalPages;
+            }
+            
+            initializeControls() {
+                // Input field listeners
+                ['cropX', 'cropY', 'cropWidth', 'cropHeight'].forEach(id => {
+                    const input = document.getElementById(id);
+                    if (input) {
+                        input.addEventListener('input', () => {
+                            this.cropArea.x = parseInt(document.getElementById('cropX').value) || 0;
+                            this.cropArea.y = parseInt(document.getElementById('cropY').value) || 0;
+                            this.cropArea.width = parseInt(document.getElementById('cropWidth').value) || 50;
+                            this.cropArea.height = parseInt(document.getElementById('cropHeight').value) || 50;
+                            this.updateCropDisplay();
+                        });
+                    }
+                });
+
+                // Preset buttons
+                document.querySelectorAll('.preset-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.applyPreset(e.target.dataset.preset);
+                    });
+                });
+
+                // Action buttons
+                const cutBtn = document.getElementById('cutPdfBtn');
+
+                if (cutBtn) {
+                    cutBtn.addEventListener('click', () => this.cutPDF());
+                }
+
+                // File navigation (for multiple uploaded files)
+                const prevFileBtn = document.getElementById('prevFile');
+                const nextFileBtn = document.getElementById('nextFile');
+
+                if (prevFileBtn) {
+                    prevFileBtn.addEventListener('click', () => {
+                        if (this.currentFileIndex > 0) {
+                            this.currentFileIndex--;
+                            this.loadPDF(this.uploadedFiles[this.currentFileIndex]);
+                            this.updateFileNavigation();
+                        }
+                    });
+                }
+
+                if (nextFileBtn) {
+                    nextFileBtn.addEventListener('click', () => {
+                        if (this.currentFileIndex < this.uploadedFiles.length - 1) {
+                            this.currentFileIndex++;
+                            this.loadPDF(this.uploadedFiles[this.currentFileIndex]);
+                            this.updateFileNavigation();
+                        }
+                    });
+                }
+
+                // Page navigation (for multi-page PDFs)
+                const prevBtn = document.getElementById('prevPage');
+                const nextBtn = document.getElementById('nextPage');
+
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        if (this.currentPage > 1) {
+                            this.currentPage--;
+                            this.renderPage(this.currentPage);
+                            document.getElementById('currentPage').textContent = this.currentPage;
+                            this.updateNavigationButtons();
+                        }
+                    });
+                }
+
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        if (this.currentPage < this.totalPages) {
+                            this.currentPage++;
+                            this.renderPage(this.currentPage);
+                            document.getElementById('currentPage').textContent = this.currentPage;
+                            this.updateNavigationButtons();
+                        }
+                    });
+                }
+            }
+            
+            updateCropFromInputs() {
+                const x = parseInt(document.getElementById('cropX').value) || 0;
+                const y = parseInt(document.getElementById('cropY').value) || 0;
+                const width = parseInt(document.getElementById('cropWidth').value) || 50;
+                const height = parseInt(document.getElementById('cropHeight').value) || 50;
+                
+                this.cropArea = { x, y, width, height };
+                this.updateCropSelection();
+            }
+            
+            applyPreset(preset) {
+                if (!this.canvas) return;
+                
+                const canvasWidth = this.canvas.width;
+                const canvasHeight = this.canvas.height;
+                
+                switch (preset) {
+                    case 'center':
+                        // True center with 60% of canvas size
+                        const centerWidth = canvasWidth * 0.6;
+                        const centerHeight = canvasHeight * 0.6;
+                        this.cropArea = {
+                            x: (canvasWidth - centerWidth) / 2,
+                            y: (canvasHeight - centerHeight) / 2,
+                            width: centerWidth,
+                            height: centerHeight
+                        };
+                        break;
+                    case 'fullwidth':
+                        // Full width, centered vertically with 50% height
+                        const fwHeight = canvasHeight * 0.5;
+                        this.cropArea = {
+                            x: 0,
+                            y: (canvasHeight - fwHeight) / 2,
+                            width: canvasWidth,
+                            height: fwHeight
+                        };
+                        break;
+                    case 'fullheight':
+                        // Full height, centered horizontally with 50% width
+                        const fhWidth = canvasWidth * 0.5;
+                        this.cropArea = {
+                            x: (canvasWidth - fhWidth) / 2,
+                            y: 0,
+                            width: fhWidth,
+                            height: canvasHeight
+                        };
+                        break;
+                    case 'square':
+                        // Perfect square, centered, 70% of smallest dimension
+                        const size = Math.min(canvasWidth, canvasHeight) * 0.7;
+                        this.cropArea = {
+                            x: (canvasWidth - size) / 2,
+                            y: (canvasHeight - size) / 2,
+                            width: size,
+                            height: size
+                        };
+                        break;
+                    case 'a4':
+                        // A4 ratio (1:1.414), centered, optimized for canvas
+                        const maxA4Width = canvasWidth * 0.8;
+                        const maxA4Height = canvasHeight * 0.9;
+                        const a4Ratio = 1.414;
+                        
+                        let a4Width, a4Height;
+                        if (maxA4Width * a4Ratio <= maxA4Height) {
+                            // Width is limiting factor
+                            a4Width = maxA4Width;
+                            a4Height = maxA4Width * a4Ratio;
+                        } else {
+                            // Height is limiting factor
+                            a4Height = maxA4Height;
+                            a4Width = maxA4Height / a4Ratio;
+                        }
+                        
+                        this.cropArea = {
+                            x: (canvasWidth - a4Width) / 2,
+                            y: (canvasHeight - a4Height) / 2,
+                            width: a4Width,
+                            height: a4Height
+                        };
+                        break;
+                    case 'reset':
+                        this.resetCrop();
+                        return;
+                }
+                
+                this.updateCropSelection();
+                this.updateControlInputs();
+                this.cropSelection.style.display = 'block';
+            }
+            
+            resetCrop() {
+                if (this.canvas) {
+                    this.setupCrop();
+                }
+            }
+            
+            removePDF() {
+                // Clear canvas first before resetting references
+                if (this.canvas && this.ctx) {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                }
+                
+                // Clear crop selection
+                if (this.cropSelection) {
+                    this.cropSelection.style.display = 'none';
+                }
+                
+                // Reset all PDF-related data
+                this.pdfDoc = null;
+                this.currentPage = 1;
+                this.totalPages = 0;
+                this.cropArea = { x: 50, y: 50, width: 200, height: 200 };
+                
+                // Re-get canvas references
+                this.canvas = document.getElementById('pdfCanvas');
+                this.ctx = this.canvas?.getContext('2d');
+                this.cropSelection = document.getElementById('cropSelection');
+                
+                // Hide preview sections
+                const pdfPreview = document.getElementById('pdfPreview');
+                const cuttingControls = document.getElementById('cuttingControls');
+                const canvasContainer = document.getElementById('canvasContainer');
+                const cutBtn = document.getElementById('cutPdfBtn');
+                
+                if (pdfPreview) pdfPreview.style.display = 'none';
+                if (cuttingControls) cuttingControls.style.display = 'none';
+                if (canvasContainer) canvasContainer.classList.remove('active');
+                if (cutBtn) cutBtn.disabled = true;
+                
+                // Reset file input
+                const fileInput = document.querySelector('.file-input');
+                if (fileInput) {
+                    fileInput.value = '';
+                }
+                
+                // Clear files list
+                const filesList = document.querySelector('.files-list');
+                if (filesList) {
+                    filesList.innerHTML = '';
+                }
+                
+                // Reset upload area to original state
+                this.hideLoadingState();
+                
+                console.log('PDF removed successfully');
+            }
+            
+            
+            updateNavigationButtons() {
+                const prevBtn = document.getElementById('prevPage');
+                const nextBtn = document.getElementById('nextPage');
+                
+                if (prevBtn) prevBtn.disabled = this.currentPage === 1;
+                if (nextBtn) nextBtn.disabled = this.currentPage === this.totalPages;
+            }
+            
+            async cutPDF() {
+                if (!this.pdfDoc) {
+                    alert('No PDF loaded');
+                    return;
+                }
+
+                try {
+                    console.log('Cutting PDF...');
+
+                    // Clear previous processed files
+                    window.processedFilesData = [];
+
+                    // Load jsPDF if needed
+                    if (!window.jsPDF) {
+                        await this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+                    }
+
+                    // Create cropped canvas
+                    const croppedCanvas = document.createElement('canvas');
+                    const croppedCtx = croppedCanvas.getContext('2d');
+
+                    croppedCanvas.width = this.cropArea.width;
+                    croppedCanvas.height = this.cropArea.height;
+
+                    // Copy cropped region
+                    croppedCtx.drawImage(
+                        this.canvas,
+                        this.cropArea.x, this.cropArea.y, this.cropArea.width, this.cropArea.height,
+                        0, 0, this.cropArea.width, this.cropArea.height
+                    );
+
+                    // Create PDF with jsPDF
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF({
+                        orientation: this.cropArea.width > this.cropArea.height ? 'landscape' : 'portrait'
+                    });
+
+                    // Convert to image and add to PDF
+                    const imgData = croppedCanvas.toDataURL('image/jpeg', 0.95);
+
+                    const pdfWidth = pdf.internal.pageSize.getWidth();
+                    const pdfHeight = (this.cropArea.height / this.cropArea.width) * pdfWidth;
+
+                    pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+
+                    // Generate blob and store instead of auto-downloading
+                    const pdfBlob = pdf.output('blob');
+                    const fileName = `cropped-pdf-page-${this.currentPage}.pdf`;
+                    const url = URL.createObjectURL(pdfBlob);
+
+                    window.processedFilesData.push({
+                        blob: pdfBlob,
+                        name: fileName,
+                        url: url
+                    });
+
+                    console.log('PDF cropped successfully');
+
+                    // Show success state
+                    const successState = document.getElementById('success-state');
+                    if (successState) {
+                        successState.style.display = 'block';
+                    }
+
+                    // Hide the results div
+                    const results = document.querySelector('.results');
+                    if (results) {
+                        results.style.display = 'none';
+                    }
+
+                } catch (error) {
+                    console.error('Crop PDF error:', error);
+                    alert('Error cutting PDF: ' + error.message);
+                }
+            }
+            
+            getCroppedCanvas() {
+                const croppedCanvas = document.createElement('canvas');
+                const croppedCtx = croppedCanvas.getContext('2d');
+                
+                croppedCanvas.width = this.cropArea.width;
+                croppedCanvas.height = this.cropArea.height;
+                
+                // Draw the cropped portion
+                croppedCtx.drawImage(
+                    this.canvas,
+                    this.cropArea.x,
+                    this.cropArea.y,
+                    this.cropArea.width,
+                    this.cropArea.height,
+                    0,
+                    0,
+                    this.cropArea.width,
+                    this.cropArea.height
+                );
+                
+                return croppedCanvas;
+            }
+            
+            // Loading state methods
+            showLoadingState(message = 'Processing...') {
+                console.log('Loading state:', message);
+                
+                // Try to show loading in upload area
+                const uploadArea = document.querySelector('.upload-area');
+                if (uploadArea) {
+                    uploadArea.innerHTML = `
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 2rem;">
+                            <div style="width: 40px; height: 40px; border: 4px solid #ddd; border-top: 4px solid var(--accent-primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                            <div style="color: var(--text-primary); font-weight: 500;">${message}</div>
+                        </div>
+                    `;
+                }
+            }
+            
+            hideLoadingState() {
+                console.log('Hiding loading state');
+                
+                // Restore upload area
+                const uploadArea = document.querySelector('.upload-area');
+                if (uploadArea) {
+                    uploadArea.innerHTML = `
+                        <div class="upload-icon">
+                            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                        </div>
+                        <div class="upload-text">
+                            <p data-translate="upload_crop_text">Click to select or drag and drop your PDF file</p>
+                            <p class="upload-subtext" data-translate="upload_crop_subtext">PDF files • Up to 10MB per file • Single file only</p>
+                        </div>
+                        <input type="file" class="file-input" accept=".pdf" multiple>
+                    `;
+                    
+                    // Re-initialize file upload listeners
+                    setTimeout(() => this.initializeFileUpload(), 100);
+                }
+            }
+            
+            showError(message) {
+                console.error('Showing error:', message);
+                
+                const uploadArea = document.querySelector('.upload-area');
+                if (uploadArea) {
+                    uploadArea.innerHTML = `
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 2rem; color: #dc2626;">
+                            <div style="font-size: 2rem;">⚠️</div>
+                            <div style="font-weight: 600; text-align: center;">${message}</div>
+                            <button onclick="location.reload()" style="padding: 0.5rem 1rem; background: var(--accent-primary); color: white; border: none; border-radius: 4px; cursor: pointer;">Try Again</button>
+                        </div>
+                    `;
+                }
+                
+                // Also show alert
+                alert(message);
+            }
+        }
+
+
+        // Initialize PDF Cutter
+        window.pdfCutter = new PDFCutter();
+
+        // Add event listeners for download and "Process Another" buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            const downloadBtn = document.getElementById('downloadPdfBtn');
+            const convertAnotherBtn = document.getElementById('convertAnotherBtn');
+
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function() {
+                    // Download all processed files
+                    window.processedFilesData.forEach((file, index) => {
+                        setTimeout(() => {
+                            const link = document.createElement('a');
+                            link.href = file.url;
+                            link.download = file.name;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        }, index * 500); // Stagger downloads
+                    });
+                });
+            }
+
+            if (convertAnotherBtn) {
+                convertAnotherBtn.addEventListener('click', function() {
+                    // Reset the tool state
+                    const successState = document.getElementById('success-state');
+                    const results = document.querySelector('.results');
+                    const filesList = document.querySelector('.files-list');
+                    const fileInput = document.querySelector('.file-input');
+                    const uploadArea = document.getElementById('upload-area');
+                    const pdfPreview = document.getElementById('pdfPreview');
+                    const cuttingControls = document.getElementById('cuttingControls');
+                    const canvasContainer = document.getElementById('canvasContainer');
+                    const cutBtn = document.getElementById('cutPdfBtn');
+
+                    if (successState) successState.style.display = 'none';
+                    if (results) {
+                        results.style.display = 'block';
+                        results.innerHTML = '';
+                    }
+                    if (filesList) filesList.innerHTML = '';
+                    if (fileInput) fileInput.value = '';
+                    if (uploadArea) uploadArea.style.display = 'block';
+                    if (pdfPreview) pdfPreview.style.display = 'none';
+                    if (cuttingControls) cuttingControls.style.display = 'none';
+                    if (canvasContainer) canvasContainer.classList.remove('active');
+                    if (cutBtn) cutBtn.disabled = true;
+
+                    // Clean up blob URLs
+                    window.processedFilesData.forEach(file => {
+                        if (file.url) URL.revokeObjectURL(file.url);
+                    });
+
+                    // Clear processed files
+                    window.processedFilesData = [];
+
+                    // Reset PDF cutter state
+                    if (window.pdfCutter) {
+                        window.pdfCutter.pdfDoc = null;
+                        window.pdfCutter.currentPage = 1;
+                        window.pdfCutter.totalPages = 0;
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Continue workflow functionality -->
+    <script>
+        (function() {
+            document.addEventListener('DOMContentLoaded', function() {
+                // Handle continue button clicks
+                const continueButtons = document.querySelectorAll('.continue-tool-btn');
+
+                continueButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const targetTool = this.getAttribute('data-tool');
+
+                        // Get the cropped PDF data from processedFilesData
+                        if (window.processedFilesData && window.processedFilesData.length > 0) {
+                            const croppedFile = window.processedFilesData[0]; // Get the first cropped PDF
+
+                            // Convert blob to base64 and store in sessionStorage
+                            const reader = new FileReader();
+                            reader.onloadend = function() {
+                                const base64data = reader.result;
+
+                                const fileData = {
+                                    name: croppedFile.name,
+                                    type: 'application/pdf',
+                                    data: base64data,
+                                    from: 'crop-pdf',
+                                    timestamp: Date.now()
+                                };
+
+                                // Store in sessionStorage
+                                sessionStorage.setItem('continuedFile', JSON.stringify(fileData));
+
+                                // Navigate to the selected tool
+                                window.location.href = targetTool;
+                            };
+
+                            reader.readAsDataURL(croppedFile.blob);
+                        } else {
+                            console.error('No cropped PDF available to continue with');
+                            alert('Please crop your PDF first before continuing to another tool.');
+                        }
+                    });
+                });
+            });
+        })();
+    </script>
+
+    <!-- Translation Script -->
+    <script src="crop-pdf-translations.js"></script>
+</body>
+</html>

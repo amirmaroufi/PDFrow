@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+
+# Block sensitive areas
+Disallow: /backend/
+Disallow: /.env
+Disallow: /config/
+Disallow: /admin/
+
+# Allow specific crawling
+Allow: /index.html
+Allow: /blog-post.html
+Allow: /all-posts.html
+Allow: /blog/
+Allow: /blog/*
+Allow: /terms-conditions.html
+Allow: /privacy-policy.html
+
+# Sitemap location
+Sitemap: https://pdfrow.com/sitemap.xml
+
+# Crawl delay (optional - be respectful to servers)
+Crawl-delay: 1
+
+# Block access to certain file types
+Disallow: /*.env$
+Disallow: /*.log$
+Disallow: /*.config$

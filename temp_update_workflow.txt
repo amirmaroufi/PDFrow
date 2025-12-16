@@ -1,0 +1,117 @@
+CSS Section to add (after continue-btn styles):
+
+        /* Continue Section Styles */
+        .continue-section {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid #4b5563;
+        }
+
+        .continue-title {
+            color: #d1d5db;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        .continue-tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .continue-tool-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            background: #1f2937;
+            border: 1px solid #374151;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #e5e7eb;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .continue-tool-btn:hover {
+            background: #374151;
+            border-color: #7c3aed;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+        }
+
+        .continue-tool-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .continue-tool-icon svg {
+            stroke: white;
+        }
+
+        .continue-tool-btn span {
+            flex: 1;
+            text-align: left;
+        }
+
+        .continue-arrow {
+            stroke: #9ca3af;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .continue-tool-btn:hover .continue-arrow {
+            transform: translateX(3px);
+            stroke: #7c3aed;
+        }
+
+        /* Light mode adjustments for continue section */
+        body:not(.dark-mode) .continue-section {
+            border-top-color: #d1d5db;
+        }
+
+        body:not(.dark-mode) .continue-title {
+            color: #374151;
+        }
+
+        body:not(.dark-mode) .continue-tool-btn {
+            background: #ffffff;
+            border-color: #e5e7eb;
+            color: #374151;
+        }
+
+        body:not(.dark-mode) .continue-tool-btn:hover {
+            background: #f9fafb;
+            border-color: #7c3aed;
+        }
+
+        body:not(.dark-mode) .continue-arrow {
+            stroke: #6b7280;
+        }
+
+        body:not(.dark-mode) .continue-tool-btn:hover .continue-arrow {
+            stroke: #7c3aed;
+        }
+
+        /* Responsive design for continue section */
+        @media (max-width: 768px) {
+            .continue-tools {
+                grid-template-columns: 1fr;
+            }
+        }
+
+JavaScript fixes:
+1. Change .continue-btn to .continue-tool-btn
+2. Change window.location.href = targetTool; to window.location.href = `${targetTool}.html`;

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Banner Demo - PDFrow</title>
+
+    <!-- PDFrow Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cookie-banner.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 2rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .demo-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .demo-header h1 {
+            font-size: 2.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .demo-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        .demo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .demo-card h2 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .demo-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .demo-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .demo-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .demo-btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .demo-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow-violet-sm);
+        }
+
+        .demo-btn-secondary {
+            background: transparent;
+            color: var(--accent-secondary);
+            border: 2px solid var(--accent-secondary);
+        }
+
+        .demo-btn-secondary:hover {
+            background: var(--accent-secondary);
+            color: white;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .theme-toggle-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .status-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+        }
+
+        .status-box code {
+            color: var(--accent-secondary);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .feature-list li::before {
+            content: "✓ ";
+            color: var(--accent-primary);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .demo-header h1 {
+                font-size: 2rem;
+            }
+
+            .demo-card {
+                padding: 1.5rem;
+            }
+
+            .theme-toggle {
+                position: static;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle">
+        <button class="theme-toggle-btn" onclick="toggleTheme()">
+            🌓 Toggle Theme
+        </button>
+    </div>
+
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>Cookie Banner Demo</h1>
+            <p>GDPR/CCPA Compliant Cookie Consent for PDFrow</p>
+        </div>
+
+        <div class="demo-card">
+            <h2>📋 Demo Controls</h2>
+            <p>Use the buttons below to test the cookie banner functionality:</p>
+
+            <div class="demo-buttons">
+                <button class="demo-btn demo-btn-primary" onclick="window.resetCookieConsent()">
+                    Reset & Show Banner
+                </button>
+                <button class="demo-btn demo-btn-secondary" onclick="checkStatus()">
+                    Check Consent Status
+                </button>
+            </div>
+
+            <div id="statusDisplay" class="status-box" style="display: none;">
+                <strong>Current Status:</strong><br>
+                <code id="statusText">No consent recorded</code>
+            </div>
+        </div>
+
+        <div class="demo-card">
+            <h2>✨ Features</h2>
+            <ul class="feature-list">
+                <li>Fixed bottom position with smooth slide-up animation</li>
+                <li>Dark/light theme support (toggle above to test)</li>
+                <li>Three action buttons: Accept All, Necessary Only, Learn More</li>
+                <li>LocalStorage persistence - shows only once per user</li>
+                <li>Fully responsive design (resize your browser to test)</li>
+                <li>GDPR/CCPA compliant with granular consent options</li>
+                <li>Matches PDFrow's violet/teal design system</li>
+                <li>Accessible with keyboard navigation and focus states</li>
+            </ul>
+        </div>
+
+        <div class="demo-card">
+            <h2>🚀 How to Integrate</h2>
+            <p>Follow these simple steps to add the cookie banner to your website:</p>
+
+            <ol style="color: var(--text-secondary); line-height: 1.8; margin-left: 1.5rem;">
+                <li>Add <code style="color: var(--accent-secondary);">cookie-banner.css</code> to your HTML <code>&lt;head&gt;</code></li>
+                <li>Add the banner HTML before the closing <code>&lt;/body&gt;</code> tag</li>
+                <li>Add <code style="color: var(--accent-secondary);">cookie-banner.js</code> script after the banner HTML</li>
+            </ol>
+
+            <p style="margin-top: 1rem;">
+                📖 Check the <strong>COOKIE-BANNER-INTEGRATION.md</strong> file for complete documentation.
+            </p>
+        </div>
+
+        <div class="demo-card">
+            <h2>🧪 Testing Instructions</h2>
+            <p><strong>Test 1:</strong> Theme Switching</p>
+            <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>Click "Toggle Theme" button above</li>
+                <li>Banner should adapt to light/dark mode</li>
+            </ul>
+
+            <p><strong>Test 2:</strong> Banner Functionality</p>
+            <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>The banner should appear at the bottom (wait 1 second after page load)</li>
+                <li>Click "Accept All" - banner disappears and choice is saved</li>
+                <li>Refresh page - banner stays hidden (consent remembered)</li>
+                <li>Click "Reset & Show Banner" to show it again</li>
+            </ul>
+
+            <p><strong>Test 3:</strong> Responsive Design</p>
+            <ul style="color: var(--text-secondary); margin-left: 1.5rem;">
+                <li>Open DevTools (F12) and toggle device toolbar</li>
+                <li>Test on mobile, tablet, and desktop sizes</li>
+                <li>Banner should stack vertically on mobile</li>
+            </ul>
+        </div>
+
+        <div class="demo-card">
+            <h2>🎨 Customization</h2>
+            <p>The banner uses your existing CSS variables, so it automatically matches your theme:</p>
+            <ul style="color: var(--text-secondary); margin-left: 1.5rem;">
+                <li><code style="color: var(--accent-primary);">--card-bg</code>: Banner background</li>
+                <li><code style="color: var(--accent-primary);">--text-primary</code>: Title text</li>
+                <li><code style="color: var(--accent-primary);">--text-secondary</code>: Description text</li>
+                <li><code style="color: var(--accent-primary);">--gradient-primary</code>: Violet gradient for buttons</li>
+                <li><code style="color: var(--accent-primary);">--accent-secondary</code>: Teal accents</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- GDPR Cookie Consent Banner -->
+    <div id="cookieConsentBanner" class="cookie-consent-banner" style="display: none;">
+        <div class="cookie-consent-container">
+            <div class="cookie-consent-content">
+                <div class="cookie-consent-text">
+                    <h3 class="cookie-consent-title">We value your privacy</h3>
+                    <p class="cookie-consent-description">
+                        We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic.
+                        By clicking "Accept All", you consent to our use of cookies.
+                    </p>
+                </div>
+                <div class="cookie-consent-actions">
+                    <button id="cookieNecessaryOnly" class="cookie-btn cookie-btn-secondary">
+                        Necessary Only
+                    </button>
+                    <button id="cookieLearnMore" class="cookie-btn cookie-btn-tertiary">
+                        Learn More
+                    </button>
+                    <button id="cookieAcceptAll" class="cookie-btn cookie-btn-primary">
+                        Accept All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="cookie-banner.js"></script>
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        }
+
+        // Load saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+            }
+        });
+
+        // Check consent status
+        function checkStatus() {
+            const statusDisplay = document.getElementById('statusDisplay');
+            const statusText = document.getElementById('statusText');
+            const consent = window.getCookieConsent();
+
+            statusDisplay.style.display = 'block';
+
+            if (consent) {
+                const data = JSON.parse(localStorage.getItem('pdfrow_cookie_consent'));
+                statusText.innerHTML = `
+                    Type: <strong style="color: var(--accent-primary);">${data.type}</strong><br>
+                    Timestamp: ${new Date(data.timestamp).toLocaleString()}<br>
+                    Version: ${data.version}
+                `;
+            } else {
+                statusText.innerHTML = '<strong style="color: var(--text-muted);">No consent recorded yet</strong>';
+            }
+        }
+    </script>
+</body>
+</html>

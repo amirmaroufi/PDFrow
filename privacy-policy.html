@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<!-- Updated: 2025-01-11 - Using main site header/footer design -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - PDFrow</title>
+    <meta name="description" content="Privacy policy for PDFrow - Learn how we protect your data and ensure your privacy while using our free PDF tools.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Privacy Policy - PDFrow">
+    <meta property="og:description" content="Privacy policy for PDFrow - Learn how we protect your data and ensure your privacy while using our free PDF tools.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pdfrow.com/privacy-policy.html">
+    <meta property="og:site_name" content="PDFrow">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Privacy Policy - PDFrow">
+    <meta name="twitter:description" content="Privacy policy for PDFrow - Learn how we protect your data and ensure your privacy while using our free PDF tools.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://pdfrow.com/privacy-policy.html">
+
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/svg+xml" href="Official Logo PDFrow.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0066ff">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="cookie-banner.css">
+
+    <!-- Logo Size Customization -->
+    <style>
+        .logo-image {
+            width: 56px !important;
+            height: 56px !important;
+        }
+        
+        .logo-text {
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .footer .logo-image {
+            width: 48px !important;
+            height: 48px !important;
+        }
+        
+        .footer .logo-text {
+            font-size: 1.3rem !important;
+        }
+        
+        .logo {
+            align-items: center !important;
+            gap: 0.75rem !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        .privacy-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .privacy-main {
+            flex: 1;
+            padding: 2rem 0;
+            background: var(--bg-primary);
+        }
+        
+        .privacy-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .privacy-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            line-height: 1.7;
+        }
+        
+        .privacy-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .privacy-header h1 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .privacy-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin: 0;
+        }
+        
+        .last-updated {
+            background: rgba(0, 102, 255, 0.1);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .highlight-box {
+            background: rgba(0, 102, 255, 0.05);
+            border: 1px solid var(--accent-primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .highlight-box h3 {
+            color: var(--accent-primary);
+            margin: 0 0 1rem 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .highlight-box p {
+            margin: 0;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .privacy-content h2 {
+            color: var(--text-primary);
+            margin: 2rem 0 1rem 0;
+            font-size: 1.5rem;
+            border-left: 4px solid var(--accent-primary);
+            padding-left: 1rem;
+            font-weight: 600;
+        }
+        
+        .privacy-content h2:first-of-type {
+            margin-top: 0;
+        }
+        
+        .privacy-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .privacy-content ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+        
+        .privacy-content li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .privacy-content strong {
+            color: var(--text-primary);
+        }
+        
+        .privacy-content a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .privacy-content a:hover {
+            color: var(--accent-secondary);
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .privacy-container {
+                padding: 0 1rem;
+            }
+            
+            .privacy-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .privacy-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode privacy-page">
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                    </div>
+                    <h1 class="logo-text">PDFrow</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html#tools" class="nav-link" data-translate="nav_tools">Tools</a>
+                    <a href="index.html#features" class="nav-link" data-translate="nav_features">Features</a>
+                    <a href="index.html#how-it-works" class="nav-link" data-translate="nav_how_it_works">How It Works</a>
+                    <a href="index.html#blog" class="nav-link" data-translate="nav_blog">Blog</a>
+                    <a href="index.html#faq" class="nav-link" data-translate="nav_faq">FAQ</a>
+                    <button class="support-btn" id="supportBtn" data-translate="nav_support">Support Us ❤️</button>
+                </div>
+
+                <div class="nav-actions">
+                    <!-- Auth Buttons (shown when not logged in) -->
+                    <div id="auth-buttons" class="auth-buttons">
+                        <button class="btn-auth btn-login" id="loginBtn" data-translate="nav_login">Login</button>
+                        <button class="btn-auth btn-signup" id="signupBtn" data-translate="nav_signup">Sign Up</button>
+                    </div>
+
+                    <!-- User Menu (shown when logged in) -->
+                    <div id="user-menu" class="user-menu" style="display: none;">
+                        <div class="user-avatar" id="userAvatar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-email"></span>
+                            <div class="user-dropdown">
+                                <button class="dropdown-item" id="profileBtn" data-translate="nav_profile">Profile</button>
+                                <button class="dropdown-item" id="logoutBtn" data-translate="nav_logout">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="theme-toggle" id="theme-toggle">
+                        <div class="theme-toggle-track">
+                            <div class="theme-toggle-thumb">
+                                <svg class="theme-icon sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="5"/>
+                                    <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                                </svg>
+                                <svg class="theme-icon dimmed-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 3a6.364 6.364 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                                    <path d="M20 3v4m-2-2h4"/>
+                                </svg>
+                                <svg class="theme-icon moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="privacy-main">
+            <div class="privacy-container">
+                <div class="privacy-content">
+                    <div class="privacy-header">
+                        <h1>Privacy Policy</h1>
+                        <p>Your privacy is important to us. Learn how we protect your data.</p>
+                    </div>
+                    
+                    <div class="last-updated">
+                        <strong>Last Updated:</strong> January 2025
+                    </div>
+
+                    <div class="highlight-box">
+                        <h3>Our Privacy-First Approach</h3>
+                        <p>PDFrow is developed in Switzerland and operates under European data protection regulations. We employ a hybrid processing model designed to maximize your privacy and security:</p>
+                        <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem;">
+                            <li><strong>PDF Tools (Compress, Merge, Edit, etc.):</strong> Processed 100% in your browser - files never leave your device</li>
+                            <li><strong>Office Document Conversions (Word, Excel, PowerPoint):</strong> Processed on our secure European servers with automatic file deletion within 1 hour</li>
+                            <li><strong>GDPR Compliant:</strong> All server infrastructure located in the European Union, ensuring compliance with EU data protection standards</li>
+                        </ul>
+                    </div>
+
+                    <h2>1. Data We Collect & Process</h2>
+
+                    <h3 style="color: var(--text-primary); font-size: 1.2rem; margin: 1.5rem 0 0.75rem 0; font-weight: 600;">File Processing</h3>
+                    <ul>
+                        <li><strong>PDF Tools:</strong> Your files are processed entirely in your browser and never transmitted to our servers</li>
+                        <li><strong>Office Conversions:</strong> Files are temporarily uploaded to our secure servers, automatically deleted after processing (within 1 hour maximum)</li>
+                        <li><strong>No File Storage:</strong> We do not permanently store any of your documents or conversion results</li>
+                    </ul>
+
+                    <h3 style="color: var(--text-primary); font-size: 1.2rem; margin: 1.5rem 0 0.75rem 0; font-weight: 600;">Analytics & Usage Data</h3>
+                    <ul>
+                        <li>Anonymous usage statistics (tool popularity, feature usage)</li>
+                        <li>Basic performance metrics to improve service reliability</li>
+                        <li>No personal identification or file content tracking</li>
+                    </ul>
+
+                    <h3 style="color: var(--text-primary); font-size: 1.2rem; margin: 1.5rem 0 0.75rem 0; font-weight: 600;">Account Data (Optional)</h3>
+                    <ul>
+                        <li>If you create an account: email address and basic profile information</li>
+                        <li>Your processing history and preferences (if you choose to save them)</li>
+                    </ul>
+
+                    <h2>2. How We Use Your Data</h2>
+                    <ul>
+                        <li>To provide and maintain our document processing services</li>
+                        <li>To improve tool performance and user experience</li>
+                        <li>To develop new features based on usage patterns</li>
+                        <li>To ensure service security and prevent abuse</li>
+                    </ul>
+
+                    <h2>3. Data Sharing & Disclosure</h2>
+                    <p>We do not sell, trade, or rent your personal data to third parties. Limited data sharing occurs only in these circumstances:</p>
+                    <ul>
+                        <li><strong>Service Providers:</strong> Trusted third parties that help us operate our website and services (hosting, analytics)</li>
+                        <li><strong>Legal Compliance:</strong> When required by law, regulation, or legal process</li>
+                        <li><strong>Business Transfers:</strong> In connection with a merger, acquisition, or sale of assets</li>
+                    </ul>
+
+                    <h2>4. Security Measures</h2>
+
+                    <h3 style="color: var(--text-primary); font-size: 1.2rem; margin: 1.5rem 0 0.75rem 0; font-weight: 600;">Client-Side Security</h3>
+                    <ul>
+                        <li>PDF tools process locally in your browser using modern web technologies</li>
+                        <li>No network transmission for client-side processed files</li>
+                        <li>Your files remain entirely under your control</li>
+                    </ul>
+
+                    <h3 style="color: var(--text-primary); font-size: 1.2rem; margin: 1.5rem 0 0.75rem 0; font-weight: 600;">Server-Side Security</h3>
+                    <ul>
+                        <li>All server infrastructure hosted in the European Union</li>
+                        <li>SSL/TLS encryption during file transfer</li>
+                        <li>Isolated processing environments on secure data centers</li>
+                        <li>Automatic file deletion within 1 hour of processing completion</li>
+                        <li>Regular security audits and monitoring</li>
+                        <li>Full compliance with GDPR and European data protection standards</li>
+                    </ul>
+
+                    <h3 style="color: var(--text-primary); font-size: 1.2rem; margin: 1.5rem 0 0.75rem 0; font-weight: 600;">General Security</h3>
+                    <ul>
+                        <li>HTTPS encryption for all website traffic</li>
+                        <li>Regular security updates and patches</li>
+                        <li>Secure infrastructure with access controls</li>
+                    </ul>
+
+                    <h2>5. Data Retention</h2>
+
+                    <h3 style="color: var(--text-primary); font-size: 1.2rem; margin: 1.5rem 0 0.75rem 0; font-weight: 600;">Files & Documents</h3>
+                    <ul>
+                        <li><strong>Client-side processing:</strong> No retention - files never leave your device</li>
+                        <li><strong>Server-side processing:</strong> Maximum 1 hour retention, automatic deletion</li>
+                        <li><strong>Account data:</strong> Retained until account deletion (if you create an account)</li>
+                    </ul>
+
+                    <h3 style="color: var(--text-primary); font-size: 1.2rem; margin: 1.5rem 0 0.75rem 0; font-weight: 600;">Analytics Data</h3>
+                    <ul>
+                        <li>Anonymous usage data retained for up to 24 months</li>
+                        <li>Aggregated statistics kept indefinitely for service improvement</li>
+                    </ul>
+
+                    <h2>6. Your Rights & Control</h2>
+                    <p>You have the right to:</p>
+                    <ul>
+                        <li>Access any personal data we hold about you</li>
+                        <li>Correct inaccurate personal data</li>
+                        <li>Delete your account and associated data</li>
+                        <li>Export your data in a portable format</li>
+                        <li>Opt-out of non-essential data collection</li>
+                    </ul>
+                    <p>Since most processing happens client-side, you maintain ultimate control over your files.</p>
+
+                    <h2>7. Cookies & Tracking</h2>
+                    <p>We use minimal, privacy-respecting cookies for:</p>
+                    <ul>
+                        <li>Essential site functionality and security</li>
+                        <li>Remembering your language and display preferences</li>
+                        <li>Anonymous analytics to improve our services</li>
+                        <li>User authentication (if you create an account)</li>
+                    </ul>
+                    <p>You can control cookie settings through your browser preferences.</p>
+
+                    <h2>8. GDPR Compliance & Data Protection</h2>
+                    <p>PDFrow operates in full compliance with the European Union's General Data Protection Regulation (GDPR). All server infrastructure is located within the European Union, ensuring your data is protected under European data protection laws.</p>
+
+                    <h3 style="color: var(--text-primary); font-size: 1.2rem; margin: 1.5rem 0 0.75rem 0; font-weight: 600;">Your Rights Under GDPR:</h3>
+                    <ul>
+                        <li><strong>Right to Access:</strong> Request access to your personal data</li>
+                        <li><strong>Right to Rectification:</strong> Correct inaccurate personal data</li>
+                        <li><strong>Right to Erasure:</strong> Request deletion of your data</li>
+                        <li><strong>Right to Data Portability:</strong> Receive your data in a structured format</li>
+                        <li><strong>Right to Object:</strong> Object to processing of your personal data</li>
+                        <li><strong>Right to Withdraw Consent:</strong> Withdraw consent for data processing at any time</li>
+                    </ul>
+
+                    <h2>9. Children's Privacy</h2>
+                    <p>PDFrow is not intended for users under the age of 13. We do not knowingly collect personal information from children under 13.</p>
+
+                    <h2>10. Contact Us</h2>
+                    <p>If you have questions about this Privacy Policy or wish to exercise your GDPR rights, please contact us:</p>
+                    <p style="margin-left: 1rem;">
+                        <strong>Data Controller:</strong> PDFrow<br>
+                        <strong>Location:</strong> Switzerland<br>
+                        <strong>Email:</strong> privacy@pdfrow.com<br>
+                        <strong>Contact Form:</strong> Available on our website
+                    </p>
+                    <p>We will respond to your request within 30 days as required by GDPR.</p>
+
+                    <h2>11. Changes to This Policy</h2>
+                    <p>We may update this Privacy Policy to reflect changes in our practices or services. We will notify you of significant changes by posting the updated policy on this page with a new "Last Updated" date and, where appropriate, through other notification methods.</p>
+
+                    <hr style="border: none; border-top: 1px solid var(--border-color); margin: 2rem 0;">
+                    <p style="text-align: center; font-style: italic; color: var(--text-secondary);">By using PDFrow, you acknowledge that you have read and understood this Privacy Policy.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <div class="logo-icon">
+                                <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                            </div>
+                            <h3 class="logo-text">PDFrow</h3>
+                        </div>
+                        <p class="footer-description" data-translate="footer_description">
+                            Next-generation document processing platform. Fast, secure, and always free.
+                        </p>
+                        <div class="footer-social">
+                            <a href="#" class="social-link">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="social-link">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4 data-translate="footer_tools_title">Tools</h4>
+                            <ul>
+                                <li><a href="compress-pdf.html" data-translate="footer_pdf_compressor">Compress PDF</a></li>
+                                <li><a href="merge-pdf.html" data-translate="footer_pdf_merger">Merge PDF</a></li>
+                                <li><a href="split-pdf.html">Split PDF</a></li>
+                                <li><a href="jpg-to-pdf.html">JPG to PDF</a></li>
+                            </ul>
+                        </div>
+                        
+                        
+                        <div class="footer-column">
+                            <h4 data-translate="footer_support_title">Support</h4>
+                            <ul>
+                                <li><a href="index.html#faq" data-translate="footer_faq">FAQ</a></li>
+                                <li><a href="index.html#how-it-works" data-translate="footer_how_it_works">How It Works</a></li>
+                                <li><a href="index.html#contact" data-translate="footer_contact">Contact</a></li>
+                                <li><a href="terms-conditions.html" data-translate="footer_terms">Terms & Conditions</a></li>
+                                <li><a href="privacy-policy.html" data-translate="footer_privacy">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-column">
+                            <h4 data-translate="language">Language</h4>
+                            <div class="language-dropdown">
+                                <button class="language-btn" id="languageBtn">
+                                    <span class="flag" id="currentFlag">🇺🇸</span>
+                                    <span id="currentLang">English</span>
+                                    <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6,9 12,15 18,9"/>
+                                    </svg>
+                                </button>
+                                <div class="language-menu" id="languageMenu">
+                                    <div class="language-item" data-lang="en" data-flag="🇺🇸">
+                                        <span class="flag">🇺🇸</span>
+                                        <span>English</span>
+                                    </div>
+                                    <div class="language-item" data-lang="es" data-flag="🇪🇸">
+                                        <span class="flag">🇪🇸</span>
+                                        <span>Español</span>
+                                    </div>
+                                    <div class="language-item" data-lang="fr" data-flag="🇫🇷">
+                                        <span class="flag">🇫🇷</span>
+                                        <span>Français</span>
+                                    </div>
+                                    <div class="language-item" data-lang="de" data-flag="🇩🇪">
+                                        <span class="flag">🇩🇪</span>
+                                        <span>Deutsch</span>
+                                    </div>
+                                    <div class="language-item" data-lang="it" data-flag="🇮🇹">
+                                        <span class="flag">🇮🇹</span>
+                                        <span>Italiano</span>
+                                    </div>
+                                    <div class="language-item" data-lang="tr" data-flag="🇹🇷">
+                                        <span class="flag">🇹🇷</span>
+                                        <span>Türkçe</span>
+                                    </div>
+                                    <div class="language-item" data-lang="pt" data-flag="🇵🇹">
+                                        <span class="flag">🇵🇹</span>
+                                        <span>Português</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ru" data-flag="🇷🇺">
+                                        <span class="flag">🇷🇺</span>
+                                        <span>Русский</span>
+                                    </div>
+                                    <div class="language-item" data-lang="zh" data-flag="🇨🇳">
+                                        <span class="flag">🇨🇳</span>
+                                        <span>中文</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ja" data-flag="🇯🇵">
+                                        <span class="flag">🇯🇵</span>
+                                        <span>日本語</span>
+                                    </div>
+                                    <div class="language-item" data-lang="ar" data-flag="🇸🇦">
+                                        <span class="flag">🇸🇦</span>
+                                        <span>العربية</span>
+                                    </div>
+                                    <div class="language-item" data-lang="hi" data-flag="🇮🇳">
+                                        <span class="flag">🇮🇳</span>
+                                        <span>हिन्दी</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p data-translate="footer_copyright">&copy; <span id="current-year">2025</span> PDFrow. All rights reserved. Made with ❤️ for document processing.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- hCaptcha -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <script src="hcaptcha-config.js"></script>
+    
+    <!-- Supabase Authentication -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="support.js"></script>
+    <script src="script.js"></script>
+
+    <!-- GDPR Cookie Consent Banner -->
+    <div id="cookieConsentBanner" class="cookie-consent-banner" style="display: none;">
+        <div class="cookie-consent-container">
+            <div class="cookie-consent-content">
+                <div class="cookie-consent-text">
+                    <h3 class="cookie-consent-title">We value your privacy</h3>
+                    <p class="cookie-consent-description">
+                        We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic.
+                        By clicking "Accept All", you consent to our use of cookies.
+                    </p>
+                </div>
+                <div class="cookie-consent-actions">
+                    <button id="cookieNecessaryOnly" class="cookie-btn cookie-btn-secondary">
+                        Necessary Only
+                    </button>
+                    <button id="cookieLearnMore" class="cookie-btn cookie-btn-tertiary">
+                        Learn More
+                    </button>
+                    <button id="cookieAcceptAll" class="cookie-btn cookie-btn-primary">
+                        Accept All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="cookie-banner.js"></script>
+</body>
+</html>

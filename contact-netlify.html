@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form - Netlify Forms</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Logo Size Customization -->
+    <style>
+        .logo-image {
+            width: 56px !important;
+            height: 56px !important;
+        }
+        
+        .logo-text {
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .footer .logo-image {
+            width: 48px !important;
+            height: 48px !important;
+        }
+        
+        .footer .logo-text {
+            font-size: 1.3rem !important;
+        }
+        
+        .logo {
+            align-items: center !important;
+            gap: 0.75rem !important;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <img src="Official Logo PDFrow.png" alt="PDFrow Logo" class="logo-image">
+                    </div>
+                    <h1 class="logo-text">PDFrow</h1>
+                </a>
+            </div>
+        </nav>
+
+        <div class="contact-modal active" id="contactModal">
+            <div class="contact-modal-overlay" id="contactOverlay"></div>
+            <div class="contact-form-container">
+                <div class="contact-form-header">
+                    <h2>How can we help you today?</h2>
+                    <p>Questions, bug reports, feature requests, or general feedback</p>
+                </div>
+                
+                <!-- Netlify Forms (works if deployed on Netlify) -->
+                <form 
+                    name="contact" 
+                    method="POST" 
+                    data-netlify="true" 
+                    data-netlify-honeypot="bot-field"
+                    action="/thank-you.html"
+                    class="contact-form"
+                    id="contact-form"
+                >
+                    <!-- Honeypot for spam protection -->
+                    <input type="hidden" name="bot-field" />
+                    
+                    <div class="form-group">
+                        <div class="input-container">
+                            <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            <input 
+                                type="text" 
+                                class="contact-input" 
+                                id="contactName"
+                                name="name"
+                                placeholder="Your full name" 
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="email-input-container">
+                            <svg class="email-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            <input 
+                                type="email" 
+                                class="contact-email" 
+                                id="contactEmail" 
+                                name="email"
+                                placeholder="Your email address" 
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <select class="contact-select" id="contactType" name="subject" required>
+                            <option value="">Select a topic</option>
+                            <option value="General Question">General Question</option>
+                            <option value="Bug Report">Bug Report</option>
+                            <option value="Feature Request">Feature Request</option>
+                            <option value="General Feedback">General Feedback</option>
+                            <option value="Business Inquiry">Business Inquiry</option>
+                            <option value="Technical Support">Technical Support</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea 
+                            class="contact-textarea" 
+                            id="contactMessage" 
+                            name="message"
+                            rows="6" 
+                            placeholder="Tell us more details..." 
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="file-upload-area">
+                            <input type="file" id="contactFile" name="attachment" class="file-input" accept=".pdf,.jpg,.jpeg,.png,.txt,.doc,.docx">
+                            <label for="contactFile" class="file-upload-label">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66L9.64 16.2a2 2 0 0 1-2.83-2.83l8.49-8.49"/>
+                                </svg>
+                                <span>Attach a file (optional)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="contactTerms" name="terms" required>
+                            <span class="checkmark"></span>
+                            <span class="checkbox-text">
+                                <span>I've read and accepted the</span>
+                                <a href="terms-conditions.html" target="_blank" class="terms-link">Terms & Conditions</a>
+                                <span>and</span>
+                                <a href="privacy-policy.html" target="_blank" class="privacy-link">Privacy Policy</a>.
+                            </span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="contact-submit-btn">Send Message</button>
+                </form>
+
+                <div class="contact-footer">
+                    <p>All your information will be treated confidentially</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple form validation and loading state
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            const submitBtn = document.querySelector('.contact-submit-btn');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            // Form will submit naturally to Netlify
+        });
+    </script>
+</body>
+</html>

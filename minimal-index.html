@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Blog Test - PDFrow</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <!-- Basic Navigation -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <h1 class="logo-text">PDFrow</h1>
+                </a>
+                <div class="nav-links">
+                    <a href="#blog" class="nav-link">Blog</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Blog Section -->
+        <section id="blog" class="blog-section">
+            <div class="blog-container">
+                <div class="section-header">
+                    <h2 class="section-title">Latest from Our Blog</h2>
+                    <p class="section-subtitle">Tips, tutorials, and insights to help you work smarter with documents</p>
+                </div>
+                
+                <div class="blog-grid" id="blogGrid">
+                    <!-- Blog posts will be dynamically inserted here -->
+                    <div style="color: #fff; padding: 20px;">Loading blog posts...</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="blog-data.js"></script>
+    <script>
+        console.log('Page loaded, checking blog data...');
+        
+        // Check if blogData is loaded
+        if (typeof blogData !== 'undefined') {
+            console.log('Blog data found:', Object.keys(blogData).length, 'posts');
+            
+            // Get blog grid element
+            const blogGrid = document.getElementById('blogGrid');
+            if (blogGrid) {
+                console.log('Blog grid element found');
+                
+                // Get posts
+                if (typeof getAllBlogPosts === 'function') {
+                    const posts = getAllBlogPosts().slice(0, 4);
+                    console.log('Posts to display:', posts.length);
+                    
+                    // Render posts
+                    blogGrid.innerHTML = posts.map(post => `
+                        <div class="blog-card" style="background-color: ${post.color}">
+                            <div class="blog-card-content">
+                                <div class="blog-card-category">${post.category}</div>
+                                <h3 class="blog-card-title">${post.title}</h3>
+                                <p class="blog-card-excerpt">${post.excerpt}</p>
+                                <div class="blog-card-meta">
+                                    <span class="blog-card-date">${post.date}</span>
+                                    <span class="blog-card-read-time">${post.readTime}</span>
+                                </div>
+                                <a href="${getBlogPostUrl ? getBlogPostUrl(post) : `blog-post.html?post=${post.id}`}" class="blog-card-link">
+                                    Read More →
+                                </a>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    console.log('Blog posts rendered successfully');
+                } else {
+                    console.error('getAllBlogPosts function not found');
+                    blogGrid.innerHTML = '<div style="color: red;">Error: getAllBlogPosts function not found</div>';
+                }
+            } else {
+                console.error('Blog grid element not found');
+            }
+        } else {
+            console.error('Blog data not loaded');
+            const blogGrid = document.getElementById('blogGrid');
+            if (blogGrid) {
+                blogGrid.innerHTML = '<div style="color: red;">Error: Blog data not loaded</div>';
+            }
+        }
+    </script>
+</body>
+</html>
