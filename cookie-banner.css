@@ -1,0 +1,231 @@
+/* GDPR Cookie Consent Banner Styles */
+/* Matches PDFrow design system with dark/light theme support */
+
+.cookie-consent-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.cookie-consent-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+}
+
+.cookie-consent-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.cookie-consent-text {
+    flex: 1;
+    min-width: 280px;
+}
+
+.cookie-consent-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.cookie-consent-description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.cookie-consent-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Button Styles - Matching PDFrow design system */
+.cookie-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+}
+
+.cookie-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.cookie-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Primary Button - Violet Gradient */
+.cookie-btn-primary {
+    background: var(--gradient-primary);
+    color: var(--text-on-violet);
+    box-shadow: var(--shadow-glow-violet-sm);
+}
+
+.cookie-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow-violet);
+}
+
+.cookie-btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Secondary Button - Outlined Violet */
+.cookie-btn-secondary {
+    background: transparent;
+    color: var(--accent-primary);
+    border: 2px solid var(--accent-primary);
+}
+
+.cookie-btn-secondary:hover {
+    background: var(--accent-primary);
+    color: var(--text-on-violet);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow-violet-sm);
+}
+
+.cookie-btn-secondary:active {
+    transform: translateY(0);
+}
+
+/* Tertiary Button - Subtle */
+.cookie-btn-tertiary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.cookie-btn-tertiary:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-secondary);
+    color: var(--accent-secondary);
+    transform: translateY(-2px);
+}
+
+.cookie-btn-tertiary:active {
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cookie-consent-container {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .cookie-consent-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.25rem;
+    }
+
+    .cookie-consent-text {
+        text-align: center;
+    }
+
+    .cookie-consent-title {
+        font-size: 1rem;
+    }
+
+    .cookie-consent-description {
+        font-size: 0.8125rem;
+    }
+
+    .cookie-consent-actions {
+        flex-direction: column;
+        gap: 0.625rem;
+    }
+
+    .cookie-btn {
+        width: 100%;
+        padding: 0.875rem 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cookie-consent-container {
+        padding: 1rem;
+    }
+
+    .cookie-consent-title {
+        font-size: 0.9375rem;
+    }
+
+    .cookie-consent-description {
+        font-size: 0.75rem;
+    }
+
+    .cookie-btn {
+        font-size: 0.8125rem;
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* Light Mode Specific Adjustments */
+body.light-mode .cookie-consent-banner {
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .cookie-btn-tertiary {
+    background: var(--bg-secondary);
+}
+
+body.light-mode .cookie-btn-tertiary:hover {
+    background: var(--bg-tertiary);
+}
+
+/* Accessibility */
+.cookie-btn:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+/* Hide banner when dismissed */
+.cookie-consent-banner.hidden {
+    display: none !important;
+}

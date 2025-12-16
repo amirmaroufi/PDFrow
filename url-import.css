@@ -1,0 +1,261 @@
+/* URL Import Feature CSS */
+
+/* Upload Method Toggle */
+.upload-method-toggle {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.upload-method-btn {
+    flex: 1;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid transparent;
+    background: transparent;
+    color: var(--text-secondary);
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.upload-method-btn:hover {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.upload-method-btn.active {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+    box-shadow: 0 4px 12px rgba(var(--accent-primary-rgb), 0.3);
+}
+
+.upload-method-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* URL Import Section */
+.url-import-section {
+    display: none;
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.url-import-section.active {
+    display: block;
+}
+
+.url-input-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.url-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.url-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.15);
+}
+
+.url-input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.url-import-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.url-import-btn:hover:not(:disabled) {
+    background: var(--accent-primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--accent-primary-rgb), 0.35);
+}
+
+.url-import-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.url-import-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.url-import-btn.loading::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.url-hints {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.url-hints-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.url-hints-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.url-hints-list li {
+    padding: 0.25rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.url-hints-list li::before {
+    content: "✓";
+    color: var(--accent-primary);
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.url-error-message {
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(244, 67, 54, 0.1);
+    border: 1px solid rgba(244, 67, 54, 0.3);
+    border-radius: 8px;
+    color: #f44336;
+    font-size: 0.9rem;
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.url-error-message.show {
+    display: block;
+}
+
+.url-success-message {
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(76, 175, 80, 0.1);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    border-radius: 8px;
+    color: #4CAF50;
+    font-size: 0.9rem;
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.url-success-message.show {
+    display: block;
+}
+
+/* Download Progress */
+.download-progress {
+    margin-top: 1rem;
+    display: none;
+}
+
+.download-progress.show {
+    display: block;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .upload-method-toggle {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .upload-method-btn {
+        width: 100%;
+    }
+
+    .url-input {
+        padding-left: 2.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Dark mode adjustments */
+.dark-mode .url-input {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .url-error-message {
+    background: rgba(244, 67, 54, 0.15);
+    color: #EF5350;
+}
+
+.dark-mode .url-success-message {
+    background: rgba(76, 175, 80, 0.15);
+    color: #81C784;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
